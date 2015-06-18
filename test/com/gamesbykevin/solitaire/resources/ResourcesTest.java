@@ -114,27 +114,55 @@ public class ResourcesTest
     }
     
     @Test
-    public void getGameImageTest()
+    public void getGameImageTest() throws Exception
     {
-        //resources.getGameImage(this);
+        //continue updating until loading resources is complete
+        load();
+        
+        //check each resource
+        for (GameImages.Keys key : GameImages.Keys.values())
+        {
+            assertNotNull(resources.getGameImage(key));
+        }
     }
     
     @Test
-    public void getGameTextTest()
+    public void getGameTextTest() throws Exception
     {
-        //resources.getGameText();
+        //continue updating until loading resources is complete
+        load();
+        
+        //check each resource
+        for (GameText.Keys key : GameText.Keys.values())
+        {
+            assertNotNull(resources.getGameText(key));
+        }
     }
     
     @Test
-    public void playGameAudioTest()
+    public void playGameAudioTest() throws Exception
     {
-        //resources.playGameAudio(object, false);
+        //continue updating until loading resources is complete
+        load();
+        
+        //check each resource
+        for (GameAudio.Keys key : GameAudio.Keys.values())
+        {
+            resources.playGameAudio(key, false);
+        }
     }
     
     @Test
-    public void stopGameAudioTest()
+    public void stopGameAudioTest() throws Exception
     {
-        //resources.stopGameAudio(object);
+        //continue updating until loading resources is complete
+        load();
+        
+        //check each resource
+        for (GameAudio.Keys key : GameAudio.Keys.values())
+        {
+            resources.stopGameAudio(key);
+        }
     }
     
     @Test
@@ -143,7 +171,11 @@ public class ResourcesTest
         //continue updating until loading resources is complete
         load();
         
-        assertNotNull(resources.getFont(GameFont.Keys.Default));
+        //check each resource
+        for (GameFont.Keys key : GameFont.Keys.values())
+        {
+            assertNotNull(resources.getFont(key));
+        }
     }
     
     @Test
@@ -152,7 +184,11 @@ public class ResourcesTest
         //continue updating until loading resources is complete
         load();
         
-        resources.setFont(GameFont.Keys.Default, null);
+        //check each resource
+        for (GameFont.Keys key : GameFont.Keys.values())
+        {
+            resources.setFont(key, null);
+        }
     }
     
     @Test
