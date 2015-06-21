@@ -229,13 +229,18 @@ public final class Holder extends Entity implements Disposable
     }
     
     /**
-     * Is there a card here?
+     * Is there a card here?<br>
+     * False will be returned if no cards exist
      * @param x x-coordinate
      * @param y y-coordinate
      * @return true if there is a card at this location, false otherwise
      */
     public boolean hasCard(final int x, final int y)
     {
+        //we can't have a card if none exist
+        if (isEmpty())
+            return false;
+        
         return (getCard(x, y) != null);
     }
     
@@ -311,10 +316,18 @@ public final class Holder extends Entity implements Disposable
     /**
      * Get the card
      * @param index The index in the list of the card we want
-     * @return The card in this holder
+     * @return The card in this holder, if not found or empty null is returned
      */
     public Card getCard(final int index)
     {
+        //if no cards exist return null
+        if (isEmpty())
+            return null;
+        
+        //if index out of range, return null
+        if (index < 0 || index >= getCards().size())
+            return null;
+        
         return getCards().get(index);
     }
     
@@ -337,7 +350,8 @@ public final class Holder extends Entity implements Disposable
     }
     
     /**
-     * Are all cards at the destination?
+     * Are all cards at the destination?<br>
+     * If no cards are found true will be returned.
      * @return true if all cards are at their assigned destination, false otherwise
      */
     public boolean hasDestination()
@@ -366,9 +380,6 @@ public final class Holder extends Entity implements Disposable
             {
                 getCard(index).moveTowardsDestination(time);
             }
-            else
-            {
-            }
         }
     }
     
@@ -392,9 +403,10 @@ public final class Holder extends Entity implements Disposable
         super.setX(x);
         super.setY(y);
         
-        if (getFirstCard() != null)
+        //make sure cards exist
+        if (!isEmpty())
         {
-            //now update the remaining children
+            //now update the cards
             for (int index = 0; index < getSize(); index++)
             {
                 getCard(index).setLocation(getDestinationPoint(index));

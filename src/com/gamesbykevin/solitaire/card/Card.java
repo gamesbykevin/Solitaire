@@ -17,7 +17,7 @@ public class Card extends Entity implements Disposable
     /**
      * The key for hiding the card and displaying
      */
-    private enum Mode
+    protected enum Mode
     {
         //animation for face value card
         Face, 
@@ -87,7 +87,7 @@ public class Card extends Entity implements Disposable
     /**
      * The amount of time it will take to place the card at the destination
      */
-    private static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(175L);
+    protected static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(175L);
     
     public Card(final Suit suit, final Value value, final Back back, final Object sourceHolderKey) throws Exception
     {
@@ -244,15 +244,6 @@ public class Card extends Entity implements Disposable
     private Point getDestination()
     {
         return this.destination;
-    }
-    
-    /**
-     * Is this card at the absolute location?
-     * @return true if the current location matches the start location and destination location, false otherwise
-     */
-    public boolean hasAbsoluteLocation()
-    {
-        return (getStart().equals(getDestination()) && getStart().x == getX() && getStart().y == getY());
     }
     
     /**
@@ -597,6 +588,12 @@ public class Card extends Entity implements Disposable
     @Override
     public void dispose()
     {
+        start = null;
+        destinationHolderKey = null;
+        sourceHolderKey = null;
+        timer.dispose();
+        timer = null;
+    
         super.dispose();
     }
     
@@ -661,12 +658,32 @@ public class Card extends Entity implements Disposable
     
     /**
      * Does this card have a matching suit?
+     * @param card The card we want to check
+     * @return true if matching, false otherwise
+     */
+    public boolean hasSuit(final Card card)
+    {
+        return hasSuit(card.getSuit());
+    }
+    
+    /**
+     * Does this card have a matching suit?
      * @param suit The suit we want to check
      * @return true if matching, false otherwise
      */
     public boolean hasSuit(final Suit suit)
     {
         return (getSuit() == suit);
+    }
+    
+    /**
+     * Does this card have a matching face value?
+     * @param card The card we want to check
+     * @return true if matching, false otherwise
+     */
+    public boolean hasValue(final Card card)
+    {
+        return (hasValue(card.getValue()));
     }
     
     /**

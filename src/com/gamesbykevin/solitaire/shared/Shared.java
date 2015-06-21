@@ -34,6 +34,10 @@ public final class Shared
     //what is the name of our game
     public static final String GAME_NAME = "Solitaire";
     
+    //an invisible pixel we can use to hide the mouse
+    public static final BufferedImage INVISIBLE_PIXEL = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+    
     //blank cursor created here to hide the mouse cursor
-    public static final Cursor CURSOR = Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "blank cursor");
+    public static final Cursor CURSOR = Toolkit.getDefaultToolkit().createCustomCursor(INVISIBLE_PIXEL, new Point(0, 0), "blank cursor");
+    
 }

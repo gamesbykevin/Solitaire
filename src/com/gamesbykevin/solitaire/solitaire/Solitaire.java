@@ -74,7 +74,7 @@ public abstract class Solitaire extends Entity implements ISolitaire
      * @param key The key of the holder we want
      * @return The holder containing the cards
      */
-    protected Holder getHolder(final Object key)
+    public Holder getHolder(final Object key)
     {
         return holders.get(key);
     }
@@ -84,7 +84,7 @@ public abstract class Solitaire extends Entity implements ISolitaire
      * @param key The key to access this holder
      * @param holder The holder we want to add
      */
-    protected void addHolder(final Object key, final Holder holder)
+    public void addHolder(final Object key, final Holder holder)
     {
         holders.put(key, holder);
     }

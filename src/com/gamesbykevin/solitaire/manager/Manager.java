@@ -1,5 +1,6 @@
 package com.gamesbykevin.solitaire.manager;
 
+import com.gamesbykevin.solitaire.solitaire.klondike.Klondike;
 import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.menu.CustomMenu;
 import com.gamesbykevin.solitaire.menu.CustomMenu.*;

@@ -16,7 +16,11 @@ public class SharedTest
     @BeforeClass
     public static void setUpClass() throws Exception
     {
-        
+        assertTrue(Shared.CONTAINER_HEIGHT == Shared.ORIGINAL_HEIGHT);
+        assertTrue(Shared.CONTAINER_WIDTH == Shared.ORIGINAL_WIDTH);
+        assertTrue(Shared.DEFAULT_UPS > 0);
+        assertNotNull(Shared.CURSOR);
+        assertNotNull(Shared.INVISIBLE_PIXEL);
     }
     
     @AfterClass
@@ -43,5 +47,6 @@ public class SharedTest
         assertTrue(Shared.CONTAINER_WIDTH == Shared.ORIGINAL_WIDTH);
         assertTrue(Shared.DEFAULT_UPS > 0);
         assertNotNull(Shared.CURSOR);
+        assertNotNull(Shared.INVISIBLE_PIXEL);
     }
 }
