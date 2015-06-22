@@ -47,14 +47,18 @@ public abstract class Solitaire extends Entity implements ISolitaire
     /**
      * Create our solitaire game
      * @param image The sprite sheet containing the card graphics
+     * @param stackType The stack type for our default holder
      */
-    protected Solitaire(final Image image)
+    protected Solitaire(final Image image, final StackType stackType)
     {
         //create container for all of the holders
         this.holders = new HashMap<>();
         
         //store the sprite sheet
         super.setImage(image);
+        
+        //create default holder
+        this.holder = new Holder(stackType);
     }
     
     /**
@@ -64,11 +68,6 @@ public abstract class Solitaire extends Entity implements ISolitaire
     protected Holder getDefaultHolder()
     {
        return this.holder; 
-    }
-    
-    protected void createDefaultHolder(final Holder.StackType stackType)
-    {
-        this.holder = new Holder(stackType);
     }
     
     /**

@@ -86,7 +86,7 @@ public final class Pyramid extends Solitaire
     public Pyramid(final Image image)
     {
         //store the sprite sheet image
-        super(image);
+        super(image, StackType.Same);
         
         //the total number of columns
         int cols = 1;
@@ -125,9 +125,6 @@ public final class Pyramid extends Solitaire
         
         //create holder for the destination
         addHolder(Key.Destination, DESTINATION_LOCATION, StackType.Same);
-        
-        //create the default holder that the player controls
-        createDefaultHolder(Holder.StackType.Same);
     }
     
     /**

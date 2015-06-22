@@ -18,7 +18,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Pyramid Helper unit test
  * @author GOD
  */
 public class PyramidHelperTest 

@@ -70,7 +70,7 @@ public final class Klondike extends Solitaire
     public Klondike(final Image image)
     {
         //store the sprite sheet image
-        super(image);
+        super(image, StackType.Vertical);
         
         //add the holder locations in the game
         addHolder(Key.Destination1, DESTINATION_LOCATION_1, StackType.Same);
@@ -86,9 +86,6 @@ public final class Klondike extends Solitaire
         addHolder(Key.Playable7, PLAYABLE_LOCATION_7, StackType.Vertical);
         addHolder(Key.OptionalPile, OPTIONAL_PILE_START_LOCATION, StackType.Same);
         addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
-        
-        //create the default holder that the player controls
-        createDefaultHolder(StackType.Vertical);
     }
     
     /**
