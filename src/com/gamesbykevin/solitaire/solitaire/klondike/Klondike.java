@@ -16,7 +16,7 @@ import java.util.Random;
  * The Classic solitaire game (Klondike )
  * @author GOD
  */
-public class Klondike extends Solitaire
+public final class Klondike extends Solitaire
 {
     /**
      * The unique key to access each place holder
@@ -89,22 +89,6 @@ public class Klondike extends Solitaire
         
         //create the default holder that the player controls
         createDefaultHolder(StackType.Vertical);
-    }
-    
-    /**
-     * Add card holder to the list
-     * @param key Unique key to access the holder in the future
-     * @param location The location (x,y) of the holder
-     * @param type How will the cards look in the holder
-     */
-    private void addHolder(final Key key, final Point location, final StackType type)
-    {
-        //create a holder and set location
-        Holder holder = new Holder(type);
-        holder.setLocation(location);
-        
-        //add to list
-        super.addHolder(key, holder);
     }
     
     /**

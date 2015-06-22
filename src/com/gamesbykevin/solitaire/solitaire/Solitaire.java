@@ -2,11 +2,13 @@ package com.gamesbykevin.solitaire.solitaire;
 
 import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Holder;
+import com.gamesbykevin.solitaire.card.Holder.StackType;
 import com.gamesbykevin.solitaire.entity.Entity;
 
 import java.awt.Graphics;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -77,6 +79,34 @@ public abstract class Solitaire extends Entity implements ISolitaire
     public Holder getHolder(final Object key)
     {
         return holders.get(key);
+    }
+    
+    /**
+     * Create and add holder to container
+     * @param key The key to access this holder
+     * @param location The (x,y) coordinate of the holder
+     * @param type The way to stack cards on the holder
+     */
+    protected void addHolder(final Object key, final Point location, final StackType type)
+    {
+        addHolder(key, location.x, location.y, type);
+    }
+    
+    /**
+     * Create and add holder to container
+     * @param key The key to access this holder
+     * @param x The (x,y) coordinate of the holder
+     * @param y The (x,y) coordinate of the holder
+     * @param type The way to stack cards on the holder
+     */
+    protected void addHolder(final Object key, final int x, final int y, final StackType type)
+    {
+        //create a holder and set location
+        Holder holder = new Holder(type);
+        holder.setLocation(x, y);
+        
+        //add to list
+        addHolder(key, holder);
     }
     
     /**

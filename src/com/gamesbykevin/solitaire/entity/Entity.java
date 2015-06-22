@@ -20,17 +20,27 @@ public abstract class Entity extends Sprite implements Disposable
     /**
      * Original width of a card
      */
-    public static final int CARD_WIDTH = 140;
+    public static final int ORIGINAL_CARD_WIDTH = 140;
     
     /**
      * Original height of a card
      */
-    public static final int CARD_HEIGHT = 190;
+    public static final int ORIGINAL_CARD_HEIGHT = 190;
 
     /**
      * The display size dimensions of the card a fraction of the original size
      */
-    protected static final double CARD_SIZE_RATIO = .5;
+    public static final double CARD_SIZE_RATIO = .5;
+    
+    /**
+     * Adjusted width of a card
+     */
+    public static final int CARD_WIDTH = (int)(ORIGINAL_CARD_WIDTH * CARD_SIZE_RATIO);
+    
+    /**
+     * Adjusted height of a card
+     */
+    public static final int CARD_HEIGHT = (int)(ORIGINAL_CARD_HEIGHT * CARD_SIZE_RATIO);
     
     /**
      * Default animation key to use
@@ -45,8 +55,8 @@ public abstract class Entity extends Sprite implements Disposable
         /**
          * Set the card dimensions
          */
-        super.setWidth(CARD_WIDTH * CARD_SIZE_RATIO);
-        super.setHeight(CARD_HEIGHT * CARD_SIZE_RATIO);
+        super.setWidth(CARD_WIDTH);
+        super.setHeight(CARD_HEIGHT);
     }
     
     /**
@@ -129,7 +139,7 @@ public abstract class Entity extends Sprite implements Disposable
      */
     protected int getX(final int col)
     {
-        return (col * CARD_WIDTH);
+        return (col * ORIGINAL_CARD_WIDTH);
     }
     
     /**
@@ -139,7 +149,7 @@ public abstract class Entity extends Sprite implements Disposable
      */
     protected int getY(final int row)
     {
-        return (row * CARD_HEIGHT);
+        return (row * ORIGINAL_CARD_HEIGHT);
     }
     
     /**

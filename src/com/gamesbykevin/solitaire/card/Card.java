@@ -6,6 +6,8 @@ import com.gamesbykevin.framework.util.Timers;
 
 import com.gamesbykevin.solitaire.entity.Entity;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -23,7 +25,10 @@ public class Card extends Entity implements Disposable
         Face, 
         
         //value for the back of the card when hidden
-        Hide
+        Hide,
+        
+        //overlay to display over a selected card
+        Selected,
     }
     
     /**
@@ -64,10 +69,11 @@ public class Card extends Entity implements Disposable
      */
     private Value value;
     
-    /**
-     * Do we hide the card
-     */
+    //Do we hide the card
     private boolean hide = false;
+    
+    //should we highlight the card
+    private boolean selected = false;
     
     //the location the card needs to be at
     private Point destination;
@@ -122,6 +128,25 @@ public class Card extends Entity implements Disposable
         
         //set the default animation
         setHidden(true);
+    }
+    
+    /**
+     * Flag this card as selected
+     * @param selected true=yes, false=no
+     */
+    public void setSelected(final boolean selected)
+    {
+        this.selected = selected;
+    }
+    
+    /**
+     * Is this card selected?<br>
+     * If this card is selected we will draw a transparent overlay over the card.
+     * @return true=yes, false=no
+     */
+    public boolean isSelected()
+    {
+        return this.selected;
     }
     
     /**
@@ -264,63 +289,63 @@ public class Card extends Entity implements Disposable
         switch (back)
         {
             case Back1:
-                addAnimation(Mode.Hide, getX(6), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(6), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back2:
-                addAnimation(Mode.Hide, getX(7), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(7), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back3:
-                addAnimation(Mode.Hide, getX(8), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(8), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back4:
-                addAnimation(Mode.Hide, getX(6), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(6), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back5:
-                addAnimation(Mode.Hide, getX(7), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(7), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back6:
-                addAnimation(Mode.Hide, getX(8), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(8), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back7:
-                addAnimation(Mode.Hide, getX(6), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(6), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back8:
-                addAnimation(Mode.Hide, getX(7), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(7), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back9:
-                addAnimation(Mode.Hide, getX(8), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(8), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back10:
-                addAnimation(Mode.Hide, getX(6), getY(3), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(6), getY(3), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back11:
-                addAnimation(Mode.Hide, getX(7), getY(3), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(7), getY(3), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back12:
-                addAnimation(Mode.Hide, getX(8), getY(3), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(8), getY(3), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back13:
-                addAnimation(Mode.Hide, getX(6), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(6), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back14:
-                addAnimation(Mode.Hide, getX(7), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(7), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             case Back15:
-                addAnimation(Mode.Hide, getX(8), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                addAnimation(Mode.Hide, getX(8), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                 break;
                 
             default:
@@ -341,55 +366,55 @@ public class Card extends Entity implements Disposable
                 switch (getValue())
                 {
                     case Ace:
-                        addAnimation(Mode.Face, getX(1), getY(7), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(7), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Two:
-                        addAnimation(Mode.Face, getX(5), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(5), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Three:
-                        addAnimation(Mode.Face, getX(2), getY(5), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(5), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Four:
-                        addAnimation(Mode.Face, getX(2), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Five:
-                        addAnimation(Mode.Face, getX(2), getY(3), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(3), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Six:
-                        addAnimation(Mode.Face, getX(2), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Seven:
-                        addAnimation(Mode.Face, getX(2), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Eight:
-                        addAnimation(Mode.Face, getX(2), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Nine:
-                        addAnimation(Mode.Face, getX(1), getY(9), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(9), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Ten:
-                        addAnimation(Mode.Face, getX(1), getY(8), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(8), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Jack:
-                        addAnimation(Mode.Face, getX(1), getY(6), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(6), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Queen:
-                        addAnimation(Mode.Face, getX(1), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case King:
-                        addAnimation(Mode.Face, getX(1), getY(5), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(5), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     default:
@@ -402,55 +427,55 @@ public class Card extends Entity implements Disposable
                 switch (getValue())
                 {
                     case Ace:
-                        addAnimation(Mode.Face, getX(0), getY(3), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(3), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Two:
-                        addAnimation(Mode.Face, getX(1), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Three:
-                        addAnimation(Mode.Face, getX(1), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Four:
-                        addAnimation(Mode.Face, getX(1), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(1), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Five:
-                        addAnimation(Mode.Face, getX(0), getY(9), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(9), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Six:
-                        addAnimation(Mode.Face, getX(0), getY(8), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(8), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Seven:
-                        addAnimation(Mode.Face, getX(0), getY(7), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(7), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Eight:
-                        addAnimation(Mode.Face, getX(0), getY(6), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(6), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Nine:
-                        addAnimation(Mode.Face, getX(0), getY(5), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(5), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Ten:
-                        addAnimation(Mode.Face, getX(0), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Jack:
-                        addAnimation(Mode.Face, getX(0), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Queen:
-                        addAnimation(Mode.Face, getX(0), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case King:
-                        addAnimation(Mode.Face, getX(0), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(0), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     default:
@@ -463,55 +488,55 @@ public class Card extends Entity implements Disposable
                 switch (getValue())
                 {
                     case Ace:
-                        addAnimation(Mode.Face, getX(3), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Two:
-                        addAnimation(Mode.Face, getX(3), getY(9), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(9), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Three:
-                        addAnimation(Mode.Face, getX(3), getY(8), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(8), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Four:
-                        addAnimation(Mode.Face, getX(3), getY(7), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(7), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Five:
-                        addAnimation(Mode.Face, getX(3), getY(6), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(6), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Six:
-                        addAnimation(Mode.Face, getX(3), getY(5), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(5), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Seven:
-                        addAnimation(Mode.Face, getX(3), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Eight:
-                        addAnimation(Mode.Face, getX(3), getY(3), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(3), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Nine:
-                        addAnimation(Mode.Face, getX(3), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Ten:
-                        addAnimation(Mode.Face, getX(3), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(3), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Jack:
-                        addAnimation(Mode.Face, getX(2), getY(9), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(9), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Queen:
-                        addAnimation(Mode.Face, getX(2), getY(7), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(7), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case King:
-                        addAnimation(Mode.Face, getX(2), getY(8), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(8), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     default:
@@ -524,55 +549,55 @@ public class Card extends Entity implements Disposable
                 switch (getValue())
                 {
                     case Ace:
-                        addAnimation(Mode.Face, getX(4), getY(3), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(3), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Two:
-                        addAnimation(Mode.Face, getX(2), getY(6), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(2), getY(6), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Three:
-                        addAnimation(Mode.Face, getX(5), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(5), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Four:
-                        addAnimation(Mode.Face, getX(5), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(5), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Five:
-                        addAnimation(Mode.Face, getX(4), getY(9), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(9), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Six:
-                        addAnimation(Mode.Face, getX(4), getY(8), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(8), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Seven:
-                        addAnimation(Mode.Face, getX(4), getY(7), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(7), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Eight:
-                        addAnimation(Mode.Face, getX(4), getY(6), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(6), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Nine:
-                        addAnimation(Mode.Face, getX(4), getY(5), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(5), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Ten:
-                        addAnimation(Mode.Face, getX(4), getY(4), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(4), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Jack:
-                        addAnimation(Mode.Face, getX(4), getY(2), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(2), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case Queen:
-                        addAnimation(Mode.Face, getX(4), getY(0), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(0), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     case King:
-                        addAnimation(Mode.Face, getX(4), getY(1), CARD_WIDTH, CARD_HEIGHT);
+                        addAnimation(Mode.Face, getX(4), getY(1), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
                         break;
                         
                     default:
@@ -583,18 +608,25 @@ public class Card extends Entity implements Disposable
             default:
                 throw new Exception("Suit not found here (" + getSuit().toString() + ")");
         }
+        
+        //add the selected animation as well
+        addAnimation(Mode.Selected, getX(6), getY(6), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
     }
     
     @Override
     public void dispose()
     {
+        super.dispose();
+        
         start = null;
         destinationHolderKey = null;
         sourceHolderKey = null;
-        timer.dispose();
-        timer = null;
-    
-        super.dispose();
+        
+        if (timer != null)
+        {
+            timer.dispose();
+            timer = null;
+        }
     }
     
     /**
@@ -694,5 +726,29 @@ public class Card extends Entity implements Disposable
     public boolean hasValue(final Value value)
     {
         return (getValue() == value);
+    }
+    
+    @Override
+    public void render(final Graphics graphics, final Image image) throws Exception
+    {
+        //draw the card
+        super.render(graphics, image);
+        
+        //if selected draw overlay
+        if (isSelected())
+        {
+            //store the previous
+            Object previous = getSpriteSheet().getCurrent();
+            
+            //set the animation to selected
+            setAnimation(Mode.Selected);
+            
+            //draw the overlay
+            super.render(graphics, image);
+            
+            //restore the animation
+            setAnimation(previous);
+        }
+        
     }
 }

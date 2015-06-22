@@ -42,8 +42,11 @@ public class CardTest
                     assertTrue(card.hasSuit(suit));
                     assertTrue(card.hasValue(value));
                     assertNotNull(card.getSourceHolderKey());
-                    assertTrue(card.hasAnimation(Mode.Face));
-                    assertTrue(card.hasAnimation(Mode.Hide));
+                    
+                    for (Mode mode : Mode.values())
+                    {
+                        assertTrue(card.hasAnimation(mode));
+                    }
                 }
             }
         }
@@ -112,6 +115,23 @@ public class CardTest
     public void setStartTest()
     {
         card.setStart();
+    }
+    
+    @Test
+    public void setSelectedTest()
+    {
+        card.setSelected(true);
+        card.setSelected(false);
+    }
+    
+    @Test
+    public void isSelectedTest()
+    {
+        card.setSelected(true);
+        assertTrue(card.isSelected());
+        
+        card.setSelected(false);
+        assertFalse(card.isSelected());
     }
     
     @Test

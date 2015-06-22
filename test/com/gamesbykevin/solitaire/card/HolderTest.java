@@ -183,10 +183,39 @@ public class HolderTest
     }
     
     @Test
+    public void removeAllTest() throws Exception
+    {
+        //create our holder
+        holder = new Holder(StackType.Vertical);
+        
+        //add card to holder
+        holder.add(card);
+        
+        Card card1 = new Card(Suit.Clubs, Value.Ace, Back.Back1, null);
+        Card card2 = new Card(Suit.Spades, Value.Ace, Back.Back1, null);
+        
+        //add more cards
+        holder.add(card1);
+        holder.add(card2);
+        
+        //assume the holder is not empty
+        assertFalse(holder.isEmpty());
+        
+        //remove all cards
+        holder.removeAll();
+        
+        //now assume all cards are gone
+        assertTrue(holder.isEmpty());
+    }
+    
+    @Test
     public void hasCardTest() throws Exception
     {
         //create our holder
         holder = new Holder(StackType.Vertical);
+        
+        //no cards have been added yet
+        assertFalse(holder.hasCard(card));
         
         final int x1 = 10;
         final int y1 = 10;
@@ -197,6 +226,9 @@ public class HolderTest
         //now add card
         card.setLocation(0, 0);
         holder.add(card);
+        
+        //assume the card itself is here, regardless of coordinates
+        assertTrue(holder.hasCard(card));
         
         //assume card is there
         assertTrue(holder.hasCard(x1, y1));

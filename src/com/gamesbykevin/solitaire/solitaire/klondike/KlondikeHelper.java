@@ -1,10 +1,8 @@
 package com.gamesbykevin.solitaire.solitaire.klondike;
 
 import com.gamesbykevin.solitaire.card.Card;
-import com.gamesbykevin.solitaire.card.Card.Suit;
 import com.gamesbykevin.solitaire.card.Card.Value;
 import com.gamesbykevin.solitaire.card.Holder;
-import com.gamesbykevin.solitaire.solitaire.klondike.Klondike;
 
 /**
  * This class will provide convenient methods to manage our game
@@ -68,6 +66,10 @@ public final class KlondikeHelper
      */
     protected static boolean canPlaceCardInDestination(final Card card1, final Card card2) throws Exception
     {
+        //if the suit does not match
+        if (!card1.hasSuit(card2))
+            return false;
+        
         switch (card1.getValue())
         {
             case Ace:

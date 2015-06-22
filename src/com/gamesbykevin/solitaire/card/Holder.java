@@ -57,6 +57,8 @@ public final class Holder extends Entity implements Disposable
     
     public Holder(final StackType stackType)
     {
+        super();
+        
         //track how we are storing the cards
         this.stackType = stackType;
         
@@ -64,7 +66,7 @@ public final class Holder extends Entity implements Disposable
         this.cards = new ArrayList<>();
         
         //add mapping for place holder
-        addAnimation(DEFAULT_ANIMATION_KEY, getX(6), getY(5), CARD_WIDTH, CARD_HEIGHT);
+        addAnimation(DEFAULT_ANIMATION_KEY, getX(6), getY(5), ORIGINAL_CARD_WIDTH, ORIGINAL_CARD_HEIGHT);
         
         //set this as the animation
         setAnimation(DEFAULT_ANIMATION_KEY);
@@ -226,6 +228,36 @@ public final class Holder extends Entity implements Disposable
             if (getCards().get(i).getId() == card.getId())
                 getCards().remove(i);
         }
+    }
+    
+    /**
+     * Remove all cards
+     */
+    public void removeAll()
+    {
+        //continue until all cards have been removed
+        while (!isEmpty())
+        {
+            remove(getFirstCard());
+        }
+    }
+    
+    /**
+     * Do we have this card?
+     * @param card The card we want to check
+     * @return true if this card is already part of the holder, false otherwise
+     */
+    public boolean hasCard(final Card card)
+    {
+        for (int i = 0; i < getCards().size(); i++)
+        {
+            //if the id's match we already have this card
+            if (getCards().get(i).getId() == card.getId())
+                return true;
+        }
+        
+        //we don't have this card
+        return false;
     }
     
     /**

@@ -1,6 +1,7 @@
 package com.gamesbykevin.solitaire.manager;
 
 import com.gamesbykevin.solitaire.solitaire.klondike.Klondike;
+import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid;
 import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.menu.CustomMenu;
 import com.gamesbykevin.solitaire.menu.CustomMenu.*;
@@ -44,8 +45,9 @@ public final class Manager implements IManager
     @Override
     public void reset(final Engine engine) throws Exception
     {
-        if (this.solitaire == null)
-            this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //if (this.solitaire == null)
+            //this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
         
         //get the difficulty
         //final int difficultyIndex = engine.getMenu().getOptionSelectionIndex(LayerKey.Options, OptionKey.Difficulty);
