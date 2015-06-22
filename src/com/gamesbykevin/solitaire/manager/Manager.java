@@ -3,6 +3,7 @@ package com.gamesbykevin.solitaire.manager;
 import com.gamesbykevin.solitaire.solitaire.golf.Golf;
 import com.gamesbykevin.solitaire.solitaire.klondike.Klondike;
 import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid;
+import com.gamesbykevin.solitaire.solitaire.yukon.Yukon;
 import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.menu.CustomMenu;
 import com.gamesbykevin.solitaire.menu.CustomMenu.*;
@@ -48,7 +49,8 @@ public final class Manager implements IManager
     {
         //if (this.solitaire == null)
         
-        this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        this.solitaire = new Yukon(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
         

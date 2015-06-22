@@ -12,7 +12,7 @@ import java.util.Random;
  * Golf Solitaire
  * @author GOD
  */
-public final class Golf  extends Solitaire
+public final class Golf extends Solitaire
 {
     /**
      * The unique key to access each place holder
@@ -71,6 +71,7 @@ public final class Golf  extends Solitaire
         addHolder(Key.Column6, COLUMN_1_START_LOCATION.x + (5 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
         addHolder(Key.Column7, COLUMN_1_START_LOCATION.x + (6 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
     }
+    
     /**
      * Create the deck
      * @param random Object used to make random decisions

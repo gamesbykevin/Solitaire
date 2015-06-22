@@ -20,7 +20,7 @@ public final class KlondikeHelper
      * @param y y-coordinate
      * @throws Exception 
      */
-    protected static void assignCards(final Holder defaultHolder, final Holder holder, final Klondike.Key sourceHolderKey, final int x, final int y) throws Exception
+    public static void assignCards(final Holder defaultHolder, final Holder holder, final Object sourceHolderKey, final int x, final int y) throws Exception
     {
         for (int i = holder.getSize() - 1; i >= 0; i--)
         {
@@ -64,7 +64,7 @@ public final class KlondikeHelper
      * @return true if card2 can be placed as a child of card1, false otherwise
      * @throws Exception if unknown suit or face value
      */
-    protected static boolean canPlaceCardInDestination(final Card card1, final Card card2) throws Exception
+    public static boolean canPlaceCardInDestination(final Card card1, final Card card2) throws Exception
     {
         //if the suit does not match
         if (!card1.hasSuit(card2))
@@ -151,7 +151,7 @@ public final class KlondikeHelper
      * @return true if card2 can be placed as a child of card1, false otherwise
      * @throws Exception if unknown suit or face value
      */
-    protected static boolean canPlaceCardInPlayable(final Card card1, final Card card2) throws Exception
+    public static boolean canPlaceCardInPlayable(final Card card1, final Card card2) throws Exception
     {
         //first make sure the suits are compatible
         switch (card1.getSuit())
@@ -279,7 +279,7 @@ public final class KlondikeHelper
      * @return true if a card(s) was placed, false otherwise
      * @throws Exception 
      */
-    protected static boolean placePlayableCards(final Holder sourceHolder, final Holder destinationHolder, final Klondike.Key key) throws Exception
+    public static boolean placePlayableCards(final Holder sourceHolder, final Holder destinationHolder, final Object key) throws Exception
     {
         if (!destinationHolder.isEmpty())
         {
@@ -324,7 +324,7 @@ public final class KlondikeHelper
      * @return true if a card(s) was placed, false otherwise
      * @throws Exception 
      */
-    protected static boolean placeDestinationCards(final Holder sourceHolder, final Holder destinationHolder, final Klondike.Key key) throws Exception
+    public static boolean placeDestinationCards(final Holder sourceHolder, final Holder destinationHolder, final Object key) throws Exception
     {
         if (!destinationHolder.isEmpty())
         {
