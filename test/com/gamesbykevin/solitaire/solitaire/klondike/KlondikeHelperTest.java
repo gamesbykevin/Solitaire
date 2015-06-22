@@ -19,7 +19,7 @@ public class KlondikeHelperTest
     //default holder
     private Holder holder1, holder2;
     
-    //test card
+    //test cards
     private Card card1, card2;
     
     @BeforeClass

@@ -12,19 +12,19 @@ import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid.Key;
 public final class PyramidHelper 
 {
     //the score for each card
-    private static final int SCORE_ACE   = 1;
-    private static final int SCORE_TWO   = 2;
-    private static final int SCORE_THREE = 3;
-    private static final int SCORE_FOUR  = 4;
-    private static final int SCORE_FIVE  = 5;
-    private static final int SCORE_SIX   = 6;
-    private static final int SCORE_SEVEN = 7;
-    private static final int SCORE_EIGHT = 8;
-    private static final int SCORE_NINE  = 9;
-    private static final int SCORE_TEN   = 10;
-    private static final int SCORE_JACK  = 11;
-    private static final int SCORE_QUEEN = 12;
-    private static final int SCORE_KING  = 13;
+    protected static final int SCORE_ACE   = 1;
+    protected static final int SCORE_TWO   = 2;
+    protected static final int SCORE_THREE = 3;
+    protected static final int SCORE_FOUR  = 4;
+    protected static final int SCORE_FIVE  = 5;
+    protected static final int SCORE_SIX   = 6;
+    protected static final int SCORE_SEVEN = 7;
+    protected static final int SCORE_EIGHT = 8;
+    protected static final int SCORE_NINE  = 9;
+    protected static final int SCORE_TEN   = 10;
+    protected static final int SCORE_JACK  = 11;
+    protected static final int SCORE_QUEEN = 12;
+    protected static final int SCORE_KING  = 13;
     
     protected static int getScore(final Holder holder) throws Exception
     {
@@ -46,7 +46,7 @@ public final class PyramidHelper
      * @return The score for the specified card's face value
      * @throws Exception if the value specified is not handled
      */
-    private static int getScore(final Card card) throws Exception
+    protected static int getScore(final Card card) throws Exception
     {
         switch (card.getValue())
         {
