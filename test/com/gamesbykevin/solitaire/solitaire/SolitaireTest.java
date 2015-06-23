@@ -1,7 +1,7 @@
 package com.gamesbykevin.solitaire.solitaire;
 
+import com.gamesbykevin.framework.util.Timers;
 import com.gamesbykevin.solitaire.engine.Engine;
-import com.gamesbykevin.solitaire.shared.Shared;
 
 import java.awt.Rectangle;
 
@@ -23,10 +23,15 @@ public class SolitaireTest
     //we need a game engine to test
     private Engine engine;
     
+    /**
+     * The amount of time to deduct per update
+     */
+    private static final long DEFAULT_UPDATE_DURATION = Timers.toNanoSeconds(1000L);
+    
     @BeforeClass
     public static void setUpClass() throws Exception
     {
-        Engine engine = new Engine(new Rectangle(0,0,1,1), 100);
+        Engine engine = new Engine(new Rectangle(0,0,1,1), DEFAULT_UPDATE_DURATION);
         
         assertTrue(Solitaire.SHUFFLE_LIMIT == 3);
     }
@@ -34,7 +39,7 @@ public class SolitaireTest
     @AfterClass
     public static void tearDownClass() throws Exception
     {
-        Engine engine = new Engine(new Rectangle(0,0,1,1), 100);
+        Engine engine = new Engine(new Rectangle(0,0,1,1), DEFAULT_UPDATE_DURATION);
         engine.dispose();
         engine = null;
     }
@@ -42,7 +47,7 @@ public class SolitaireTest
     @Before
     public void setUp() throws Exception
     {
-        engine = new Engine(new Rectangle(0,0,1,1), 100);
+        engine = new Engine(new Rectangle(0,0,1,1), DEFAULT_UPDATE_DURATION);
         
         assertNotNull(engine);
     }

@@ -1,7 +1,9 @@
 package com.gamesbykevin.solitaire.manager;
 
+import com.gamesbykevin.solitaire.solitaire.bakers.Bakers;
 import com.gamesbykevin.solitaire.solitaire.golf.Golf;
 import com.gamesbykevin.solitaire.solitaire.klondike.Klondike;
+import com.gamesbykevin.solitaire.solitaire.poker.Poker;
 import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid;
 import com.gamesbykevin.solitaire.solitaire.yukon.Yukon;
 import com.gamesbykevin.solitaire.engine.Engine;
@@ -49,7 +51,9 @@ public final class Manager implements IManager
     {
         //if (this.solitaire == null)
         
-        this.solitaire = new Yukon(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        this.solitaire = new Bakers(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //this.solitaire = new Poker(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //this.solitaire = new Yukon(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
@@ -130,7 +134,28 @@ public final class Manager implements IManager
     public void update(final Engine engine) throws Exception
     {
         if (solitaire != null)
-            solitaire.update(engine);
+        {
+            //if the game is over no need to continue
+            if (solitaire.hasGameover())
+                return;
+        
+            if (!solitaire.isCreateComplete())
+            {
+                solitaire.create(engine.getRandom());
+            }
+            else if (!solitaire.isShuffleComplete())
+            {
+                solitaire.shuffle(engine.getRandom());
+            }
+            else if (!solitaire.isDealComplete())
+            {
+                solitaire.deal(engine.getTime());
+            }
+            else
+            {
+                solitaire.update(engine);
+            }
+        }
     }
     
     /**

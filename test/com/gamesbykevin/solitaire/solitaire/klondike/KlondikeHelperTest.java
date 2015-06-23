@@ -411,4 +411,27 @@ public class KlondikeHelperTest
         //assume true because cards are the same suit and the are not in the correct order
         assertTrue(KlondikeHelper.placeDestinationCards(holder1, holder2, Klondike.Key.Deck));
     }
+    
+    @Test
+    public void showPlayableCardTest() throws Exception
+    {
+        //remove all cards
+        holder1.removeAll();
+        
+        //create test cards and hide
+        card1 = new Card(Suit.Clubs, Value.Two, Back.Back1, Klondike.Key.Playable1);
+        card2 = new Card(Suit.Clubs, Value.Ace, Back.Back1, Klondike.Key.Playable1);
+        card1.setHidden(true);
+        card2.setHidden(true);
+        
+        //add cards to holder
+        holder1.add(card1);
+        holder1.add(card2);
+        
+        KlondikeHelper.showPlayableCard(holder1);
+        
+        //assume the following
+        assertTrue(holder1.getFirstCard().isHidden());
+        assertFalse(holder1.getLastCard().isHidden());
+    }
 }

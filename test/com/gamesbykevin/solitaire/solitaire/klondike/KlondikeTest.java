@@ -86,10 +86,25 @@ public class KlondikeTest extends SolitaireTest
     @Test
     public void validateTest() throws Exception
     {
-        klondike.create(getEngine().getRandom());
-        klondike.shuffle(getEngine().getRandom(), klondike.getHolder(Key.Deck));
-        klondike.deal(getEngine().getTime());
+        while (!klondike.isCreateComplete())
+        {
+            klondike.create(getEngine().getRandom());
+        }
+        
+        while (!klondike.isShuffleComplete())
+        {
+            klondike.shuffle(getEngine().getRandom(), klondike.getHolder(Key.Deck));
+        }
+        
+        while (!klondike.isDealComplete())
+        {
+            klondike.deal(getEngine().getTime());
+        }
+        
         klondike.validate();
+        
+        //assume the game is not over
+        assertFalse(klondike.hasGameover());
     }
     
     @Test

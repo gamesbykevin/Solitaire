@@ -1,5 +1,6 @@
 package com.gamesbykevin.solitaire.card;
 
+import com.gamesbykevin.framework.util.Timers;
 import com.gamesbykevin.solitaire.card.Card.*;
 
 import java.awt.Point;
@@ -37,6 +38,31 @@ public class CardTest
                 {
                     //create new card
                     Card card = new Card(suit, value, back, DEFAULT_KEY);
+                    
+                    assertEquals(card.getSourceHolderKey(), DEFAULT_KEY);
+                    assertTrue(card.hasSuit(suit));
+                    assertTrue(card.hasValue(value));
+                    assertNotNull(card.getSourceHolderKey());
+                    
+                    for (Mode mode : Mode.values())
+                    {
+                        assertTrue(card.hasAnimation(mode));
+                    }
+                    
+                    //also use other instructor
+                    card = new Card(suit, value, back, DEFAULT_KEY, Timers.toNanoSeconds(10L));
+                    
+                    assertEquals(card.getSourceHolderKey(), DEFAULT_KEY);
+                    assertTrue(card.hasSuit(suit));
+                    assertTrue(card.hasValue(value));
+                    assertNotNull(card.getSourceHolderKey());
+                    
+                    for (Mode mode : Mode.values())
+                    {
+                        assertTrue(card.hasAnimation(mode));
+                    }
+                    
+                    card = new Card(suit, value, back, DEFAULT_KEY, 0);
                     
                     assertEquals(card.getSourceHolderKey(), DEFAULT_KEY);
                     assertTrue(card.hasSuit(suit));

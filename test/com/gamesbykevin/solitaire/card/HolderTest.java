@@ -409,4 +409,38 @@ public class HolderTest
         holder.render(graphics, Shared.INVISIBLE_PIXEL, true);
         holder.render(graphics, Shared.INVISIBLE_PIXEL, false);
     }
+    
+    @Test
+    public void hasSourceHolderKeyTest() throws Exception
+    {
+        holder = new Holder(StackType.Same);
+        
+        //create test card
+        card = new Card(Suit.Clubs, Value.Ace, Back.Back1, DEFAULT_KEY);
+        
+        //add card
+        holder.add(card);
+        
+        //assume we have the holder key
+        assertTrue(holder.hasSourceHolderKey(DEFAULT_KEY));
+        
+        //remove all cards
+        holder.removeAll();
+        
+        //assume we won't have the holder key since the holder is empty
+        assertFalse(holder.hasSourceHolderKey(DEFAULT_KEY));
+        
+        
+        //remove all cards
+        holder.removeAll();
+        
+        //create test card
+        card = new Card(Suit.Clubs, Value.Ace, Back.Back1, null);
+        
+        //add card
+        holder.add(card);
+        
+        //assume we won't have the holder key
+        assertFalse(holder.hasSourceHolderKey(DEFAULT_KEY));
+    }
 }

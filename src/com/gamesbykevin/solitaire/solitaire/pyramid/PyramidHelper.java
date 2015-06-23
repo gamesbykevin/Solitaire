@@ -1,6 +1,7 @@
 package com.gamesbykevin.solitaire.solitaire.pyramid;
 
 import com.gamesbykevin.solitaire.card.Card;
+import com.gamesbykevin.solitaire.card.Card.Value;
 import com.gamesbykevin.solitaire.card.Holder;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid.Key;
@@ -116,166 +117,168 @@ public final class PyramidHelper
     }
     
     /**
-     * Can we select the placeholder?
+     * Is the key of the specified holder blocked?<br>
+     * Blocked means there are holders in front of it that have a card.
      * @param solitaire The game containing all holder objects
+     * @param holder The holder containing existing selected cards
      * @param key The key of the holder we want to select
-     * @return true if there are no holders blocking the specified, false otherwise
+     * @return true if there are holders with cards blocking the specified holder, false otherwise
      */
-    protected static boolean canSelect(final Solitaire solitaire, final Key key) throws Exception
+    protected static boolean isBlocked(final Solitaire solitaire, final Holder holder, final Key key) throws Exception
     {
         switch (key)
         {
             //we can always select the options card (if cards exist)
             case OptionalCard:
                 if (solitaire.getHolder(Key.OptionalCard).isEmpty())
-                    return false;
+                    return true;
                 break;
                 
             case Row_1_Column_1:
-                if (!solitaire.getHolder(Key.Row_2_Column_1).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_2_Column_2).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_2_Column_1).isEmpty() || holder.hasSourceHolderKey(Key.Row_2_Column_1))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_2_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_2_Column_1))
+                    return true;
                 break;
                 
             case Row_2_Column_1:
-                if (!solitaire.getHolder(Key.Row_3_Column_1).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_3_Column_2).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_3_Column_1).isEmpty() || holder.hasSourceHolderKey(Key.Row_3_Column_1))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_3_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_3_Column_2))
+                    return true;
                 break;
                 
             case Row_2_Column_2:
-                if (!solitaire.getHolder(Key.Row_3_Column_2).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_3_Column_3).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_3_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_3_Column_2))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_3_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_3_Column_3))
+                    return true;
                 break;
                 
             case Row_3_Column_1:
-                if (!solitaire.getHolder(Key.Row_4_Column_1).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_4_Column_2).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_4_Column_1).isEmpty() || holder.hasSourceHolderKey(Key.Row_4_Column_1))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_4_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_4_Column_2))
+                    return true;
                 break;
                 
             case Row_3_Column_2:
-                if (!solitaire.getHolder(Key.Row_4_Column_2).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_4_Column_3).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_4_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_4_Column_2))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_4_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_4_Column_3))
+                    return true;
                 break;
                 
             case Row_3_Column_3:
-                if (!solitaire.getHolder(Key.Row_4_Column_3).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_4_Column_4).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_4_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_4_Column_3))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_4_Column_4).isEmpty() || holder.hasSourceHolderKey(Key.Row_4_Column_4))
+                    return true;
                 break;
                 
             case Row_4_Column_1:
-                if (!solitaire.getHolder(Key.Row_5_Column_1).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_5_Column_2).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_5_Column_1).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_1))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_5_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_2))
+                    return true;
                 break;
                 
             case Row_4_Column_2:
-                if (!solitaire.getHolder(Key.Row_5_Column_2).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_5_Column_3).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_5_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_2))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_5_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_3))
+                    return true;
                 break;
                 
             case Row_4_Column_3:
-                if (!solitaire.getHolder(Key.Row_5_Column_3).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_5_Column_4).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_5_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_3))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_5_Column_4).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_4))
+                    return true;
                 break;
                 
             case Row_4_Column_4:
-                if (!solitaire.getHolder(Key.Row_5_Column_4).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_5_Column_5).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_5_Column_4).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_4))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_5_Column_5).isEmpty() || holder.hasSourceHolderKey(Key.Row_5_Column_5))
+                    return true;
                 break;
                 
             case Row_5_Column_1:
-                if (!solitaire.getHolder(Key.Row_6_Column_1).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_6_Column_2).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_6_Column_1).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_1))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_6_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_2))
+                    return true;
                 break;
                 
             case Row_5_Column_2:
-                if (!solitaire.getHolder(Key.Row_6_Column_2).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_6_Column_3).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_6_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_2))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_6_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_3))
+                    return true;
                 break;
                 
             case Row_5_Column_3:
-                if (!solitaire.getHolder(Key.Row_6_Column_3).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_6_Column_4).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_6_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_3))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_6_Column_4).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_4))
+                    return true;
                 break;
                 
             case Row_5_Column_4:
-                if (!solitaire.getHolder(Key.Row_6_Column_4).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_6_Column_5).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_6_Column_4).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_4))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_6_Column_5).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_5))
+                    return true;
                 break;
                 
             case Row_5_Column_5:
-                if (!solitaire.getHolder(Key.Row_6_Column_5).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_6_Column_6).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_6_Column_5).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_5))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_6_Column_6).isEmpty() || holder.hasSourceHolderKey(Key.Row_6_Column_6))
+                    return true;
                 break;
                 
             case Row_6_Column_1:
-                if (!solitaire.getHolder(Key.Row_7_Column_1).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_7_Column_2).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_7_Column_1).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_1))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_7_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_2))
+                    return true;
                 break;
                 
             case Row_6_Column_2:
-                if (!solitaire.getHolder(Key.Row_7_Column_2).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_7_Column_3).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_7_Column_2).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_2))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_7_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_3))
+                    return true;
                 break;
                 
             case Row_6_Column_3:
-                if (!solitaire.getHolder(Key.Row_7_Column_3).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_7_Column_4).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_7_Column_3).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_3))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_7_Column_4).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_4))
+                    return true;
                 break;
                 
             case Row_6_Column_4:
-                if (!solitaire.getHolder(Key.Row_7_Column_4).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_7_Column_5).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_7_Column_4).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_4))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_7_Column_5).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_5))
+                    return true;
                 break;
                 
             case Row_6_Column_5:
-                if (!solitaire.getHolder(Key.Row_7_Column_5).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_7_Column_6).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_7_Column_5).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_5))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_7_Column_6).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_6))
+                    return true;
                 break;
                 
             case Row_6_Column_6:
-                if (!solitaire.getHolder(Key.Row_7_Column_6).isEmpty())
-                    return false;
-                if (!solitaire.getHolder(Key.Row_7_Column_7).isEmpty())
-                    return false;
+                if (!solitaire.getHolder(Key.Row_7_Column_6).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_6))
+                    return true;
+                if (!solitaire.getHolder(Key.Row_7_Column_7).isEmpty() || holder.hasSourceHolderKey(Key.Row_7_Column_7))
+                    return true;
                 break;
                 
             //all holders on the front row are selectable
@@ -286,13 +289,33 @@ public final class PyramidHelper
             case Row_7_Column_5:
             case Row_7_Column_6:
             case Row_7_Column_7:
-                return true;
+                return false;
                 
             default:
                 throw new Exception("Holder not handled here " + key.toString());
         }
         
-        //we can select the holder
+        //this holder is not blocked
+        return false;
+    }
+    
+    /**
+     * Can we make another selection?<br>
+     * We will check the size of the holder and if the first card is a king.
+     * @param holder The holder containing cards we want to check.
+     * @return true if we can select another card, false otherwise
+     */
+    protected static boolean canSelect(final Holder holder)
+    {
+        //if we meet/exceed the limit, we can't make a selection
+        if (holder.getSize() >= Pyramid.SELECT_LIMIT)
+            return false;
+        
+        //if the first card is a king, we can't make a selection
+        if (!holder.isEmpty() && holder.getFirstCard().getValue() == Value.King)
+            return false;
+        
+        //we can make a selection
         return true;
     }
 }

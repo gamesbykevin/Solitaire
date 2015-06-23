@@ -360,4 +360,15 @@ public final class KlondikeHelper
         //no cards were placed
         return false;
     }
+    
+    /**
+     * Show the playable card.<br>
+     * If there are cards in the holder, the last card will be visible
+     * @param holder The holder we want to check
+     */
+    public static void showPlayableCard(final Holder holder)
+    {
+        if (!holder.isEmpty())
+            holder.getLastCard().setHidden(false);
+    }
 }

@@ -33,10 +33,9 @@ public interface ISolitaire extends IElement
     /**
      * A method to shuffle the cards
      * @param random Object used to make random decisions
-     * @param holder The holder containing the cards we want to shuffle
      * @throws Exception 
      */
-    public void shuffle(final Random random, final Holder holder) throws Exception;
+    public void shuffle(final Random random) throws Exception;
     
     /**
      * Flag the shuffle as complete

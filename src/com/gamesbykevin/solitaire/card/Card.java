@@ -97,6 +97,11 @@ public class Card extends Entity implements Disposable
     
     public Card(final Suit suit, final Value value, final Back back, final Object sourceHolderKey) throws Exception
     {
+        this(suit, value, back, sourceHolderKey, MOVE_CARD_DURATION);
+    }
+    
+    public Card(final Suit suit, final Value value, final Back back, final Object sourceHolderKey, long duration) throws Exception
+    {
         //create a new destination
         this.destination = new Point();
         
@@ -106,8 +111,12 @@ public class Card extends Entity implements Disposable
         //store the starting location
         this.start = new Point();
         
+        //make sure a minimum duration is entered
+        if (duration < Timers.toNanoSeconds(1L))
+            duration = Timers.toNanoSeconds(1L);
+        
         //create new timer of specified duration
-        this.timer = new Timer(MOVE_CARD_DURATION);
+        this.timer = new Timer(duration);
         this.timer.reset();
         
         /**

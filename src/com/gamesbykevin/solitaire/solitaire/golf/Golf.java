@@ -72,6 +72,12 @@ public final class Golf extends Solitaire
         addHolder(Key.Column7, COLUMN_1_START_LOCATION.x + (6 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
     }
     
+    @Override
+    public void shuffle(final Random random) throws Exception
+    {
+        super.shuffle(random, getHolder(Key.Deck));
+    }
+    
     /**
      * Create the deck
      * @param random Object used to make random decisions
@@ -101,27 +107,53 @@ public final class Golf extends Solitaire
      * Check if we have a winner or if the game is over
      */
     @Override
-    public void validate()
+    public void validate() throws Exception
     {
-        if (!getDefaultHolder().isEmpty())
-            return;
         
-        for (Key key : Key.values())
+        //if all columns are empty we won
+        if (getHolder(Key.Column1).isEmpty() && 
+            getHolder(Key.Column2).isEmpty() && 
+            getHolder(Key.Column3).isEmpty() && 
+            getHolder(Key.Column4).isEmpty() && 
+            getHolder(Key.Column5).isEmpty() && 
+            getHolder(Key.Column6).isEmpty() && 
+            getHolder(Key.Column7).isEmpty())
         {
-            //skip these holders
-            if (key == Key.Deck)
-                continue;
-            if (key == Key.GarbagePile)
-                continue;
-            
-            //if cards exist, don't continue
-            if (!getHolder(key).isEmpty())
-                return;
+            //flag game over and loser
+            super.setGameover(true);
+            super.setWinner(true);
         }
         
-        //flag game over and winner
-        super.setGameover(true);
-        super.setWinner(true);
+        //if there are cards in the deck, the game can't be over
+        if (!getHolder(Key.Deck).isEmpty())
+            return;
+        
+        //there has to be cards in the garbage pile or else valid move(s) still exist
+        if (!getHolder(Key.GarbagePile).isEmpty())
+        {
+            //get the top card in the garbage pile
+            final Card card = getHolder(Key.GarbagePile).getLastCard();
+            
+            //if the garbage card is a neighbor to this column, the game isn't over
+            if (!getHolder(Key.Column1).isEmpty() && GolfHelper.isNeighbor(card, getHolder(Key.Column1).getLastCard()))
+                return;
+            if (!getHolder(Key.Column2).isEmpty() && GolfHelper.isNeighbor(card, getHolder(Key.Column2).getLastCard()))
+                return;
+            if (!getHolder(Key.Column3).isEmpty() && GolfHelper.isNeighbor(card, getHolder(Key.Column3).getLastCard()))
+                return;
+            if (!getHolder(Key.Column4).isEmpty() && GolfHelper.isNeighbor(card, getHolder(Key.Column4).getLastCard()))
+                return;
+            if (!getHolder(Key.Column5).isEmpty() && GolfHelper.isNeighbor(card, getHolder(Key.Column5).getLastCard()))
+                return;
+            if (!getHolder(Key.Column6).isEmpty() && GolfHelper.isNeighbor(card, getHolder(Key.Column6).getLastCard()))
+                return;
+            if (!getHolder(Key.Column7).isEmpty() && GolfHelper.isNeighbor(card, getHolder(Key.Column7).getLastCard()))
+                return;
+
+            //flag game over and loser
+            super.setGameover(true);
+            super.setWinner(false);
+        }
     }
     
     /**
@@ -201,35 +233,6 @@ public final class Golf extends Solitaire
     @Override
     public void update(final Engine engine) throws Exception
     {
-        //if the game is over no need to continue
-        if (hasGameover())
-            return;
-        
-        if (!isCreateComplete())
-        {
-            //create the deck
-            create(engine.getRandom());
-            
-            //no need to continue
-            return;
-        }
-        else if (!isShuffleComplete())
-        {
-            //shuffle it
-            shuffle(engine.getRandom(), getHolder(Key.Deck));
-            
-            //no need to continue
-            return;
-        }
-        else if (!isDealComplete())
-        {
-            //deal the cards
-            deal(engine.getTime());
-            
-            //no need to continue
-            return;
-        }
-        
         //if the default holder is empty, we can pick cards
         if (getDefaultHolder().isEmpty())
         {

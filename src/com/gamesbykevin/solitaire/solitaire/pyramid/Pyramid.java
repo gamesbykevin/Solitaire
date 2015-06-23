@@ -1,5 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.pyramid;
 
+import com.gamesbykevin.framework.util.Timers;
 import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Card.*;
 import com.gamesbykevin.solitaire.card.Holder;
@@ -38,10 +39,13 @@ public final class Pyramid extends Solitaire
         Destination
     }
     
+    //the amount of time to move the cards from one point to the next
+    private static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(100L);
+    
     /**
      * The number of cards to select
      */
-    private static final int SELECT_LIMIT = 2;
+    protected static final int SELECT_LIMIT = 2;
     
     /**
      * The target score to remove the cards
@@ -127,6 +131,12 @@ public final class Pyramid extends Solitaire
         addHolder(Key.Destination, DESTINATION_LOCATION, StackType.Same);
     }
     
+    @Override
+    public void shuffle(final Random random) throws Exception
+    {
+        super.shuffle(random, getHolder(Key.Deck));
+    }
+    
     /**
      * Create the deck
      * @param random Object used to make random decisions
@@ -144,7 +154,7 @@ public final class Pyramid extends Solitaire
             for (Value value : Value.values())
             {
                 //add to our deck
-                getHolder(Key.Deck).add(new Card(suit, value, back, Key.Deck));
+                getHolder(Key.Deck).add(new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION));
             }
         }
         
@@ -158,9 +168,6 @@ public final class Pyramid extends Solitaire
     @Override
     public void validate()
     {
-        if (!getDefaultHolder().isEmpty())
-            return;
-        
         for (Key key : Key.values())
         {
             if (key == Key.Deck)
@@ -267,94 +274,67 @@ public final class Pyramid extends Solitaire
     @Override
     public void update(final Engine engine) throws Exception
     {
-        //if the game is over no need to continue
-        if (hasGameover())
-            return;
-        
-        if (!isCreateComplete())
+        //if we can make more selections
+        if (PyramidHelper.canSelect(getDefaultHolder()))
         {
-            //create the deck
-            create(engine.getRandom());
-            
-            //no need to continue
-            return;
-        }
-        else if (!isShuffleComplete())
-        {
-            //shuffle it
-            shuffle(engine.getRandom(), getHolder(Key.Deck));
-            
-            //no need to continue
-            return;
-        }
-        else if (!isDealComplete())
-        {
-            //deal the cards
-            deal(engine.getTime());
-            
-            //no need to continue
-            return;
-        }
-        
-        //check user input
-        if (engine.getMouse().isMouseDragged() || engine.getMouse().isMouseReleased())
-        {
-            //get the mouse location
-            final int x = engine.getMouse().getLocation().x;
-            final int y = engine.getMouse().getLocation().y;
-            
-            if (getHolder(Key.Deck).hasLocation(x, y))
+            //check user input
+            if (engine.getMouse().isMouseDragged() || engine.getMouse().isMouseReleased())
             {
-                //make sure cards exist
-                if (!getHolder(Key.Deck).isEmpty())
-                {
-                    //get the card we want to move
-                    final Card card = getHolder(Key.Deck).getLastCard();
-                    
-                    //show the card
-                    card.setHidden(false);
+                //get the mouse location
+                final int x = engine.getMouse().getLocation().x;
+                final int y = engine.getMouse().getLocation().y;
 
-                    //set this holder as the source
-                    card.setSourceHolderKey(Key.OptionalCard);
-                    
-                    //add to optional holder
-                    getHolder(Key.OptionalCard).add(card);
-                    
-                    //remove from deck
-                    getHolder(Key.Deck).remove(card);
+                if (getHolder(Key.Deck).hasLocation(x, y))
+                {
+                    //make sure cards exist
+                    if (!getHolder(Key.Deck).isEmpty())
+                    {
+                        //get the card we want to move
+                        final Card card = getHolder(Key.Deck).getLastCard();
+
+                        //show the card
+                        card.setHidden(false);
+
+                        //set this holder as the source
+                        card.setSourceHolderKey(Key.OptionalCard);
+
+                        //add to optional holder
+                        getHolder(Key.OptionalCard).add(card);
+
+                        //remove from deck
+                        getHolder(Key.Deck).remove(card);
+                    }
                 }
-            }
-            else
-            {
-                //select cards until we have 2, or we seleced a king first
-                if (getDefaultHolder().getSize() < SELECT_LIMIT || getDefaultHolder().getFirstCard().getValue() != Card.Value.King)
+                else
                 {
                     //check the other holders
                     for (Key key : Key.values())
                     {
-                        //never check the destination
+                        //don't check these places
                         if (key == Key.Destination)
                             continue;
-                        
+                        if (key == Key.Deck)
+                            continue;
+
                         //if the mouse location is within this holder and a card exists
                         if (getHolder(key).hasLocation(x, y) && !getHolder(key).isEmpty())
                         {
                             //if we already have a card from this holder, we can't have another one
                             if (PyramidHelper.hasKey(getDefaultHolder(), key))
                                 break;
-                        
+
                             //if we can select this holder
-                            if (PyramidHelper.canSelect(this, key))
+                            if (!PyramidHelper.isBlocked(this, getDefaultHolder(), key))
                             {
                                 //get the top card
                                 final Card card = getHolder(key).getLastCard();
-                                
+
                                 //make sure we don't already have the card
                                 if (!getDefaultHolder().hasCard(card))
                                 {
                                     //mark as selected
                                     card.setSelected(true);
-                                    
+
                                     //add card to the default holder
                                     getDefaultHolder().add(card);
 
@@ -363,12 +343,11 @@ public final class Pyramid extends Solitaire
 
                                     //retain the location of the card
                                     card.setLocation(getHolder(key));
-                                    
+
                                     //no need to continue
                                     break;
                                 }
                             }
-                            
                         }
                     }
                 }
@@ -376,46 +355,50 @@ public final class Pyramid extends Solitaire
         }
         else
         {
-            //if cards exist
-            if (!getDefaultHolder().isEmpty())
-            {
-                //check score if we select 2 cards or if the first card is a king
-                if (getDefaultHolder().getSize() == SELECT_LIMIT || getDefaultHolder().getFirstCard().getValue() == Card.Value.King)
-                {
-                    //get the score
-                    final int score = PyramidHelper.getScore(getDefaultHolder());
-                    
-                    //now handle the cards
-                    for (int index = 0; index < getDefaultHolder().getSize(); index++)
-                    {
-                        final Card card = getDefaultHolder().getCard(index);
-                        
-                        if (score == MATCH_SCORE)
-                        {
-                            //add to the destination deck
-                            getHolder(Key.Destination).add(card);
+            //if we can't make a selection it is time to score the selection(s)
+            scoreSelections();
+        }
+    }
+    
+    /**
+     * Score the current selections.<br>
+     * If the matching score is met the cards will be removed from the pyramid etc.....<br>
+     * We will also check if the game has ended
+     * @throws Exception 
+     */
+    private void scoreSelections() throws Exception
+    {
+        //if we can't make a selection it is time to score the selection(s)
+        final int score = PyramidHelper.getScore(getDefaultHolder());
 
-                            //remove from the source holder as well
-                            getHolder(card.getSourceHolderKey()).remove(card);
-                        }
-                        else
-                        {
-                            //no longer mark this as selected
-                            card.setSelected(false);
-                            
-                            //add back to the source
-                            getHolder(card.getSourceHolderKey()).add(card);
-                        }
-                    }
-                    
-                    //now remove all cards from default holder
-                    getDefaultHolder().removeAll();
-                    
-                    //validate and check if the game has ended
-                    validate();
-                }
+        //now handle the cards
+        for (int index = 0; index < getDefaultHolder().getSize(); index++)
+        {
+            final Card card = getDefaultHolder().getCard(index);
+
+            if (score == MATCH_SCORE)
+            {
+                //add to the destination deck
+                getHolder(Key.Destination).add(card);
+
+                //remove from the source holder as well
+                getHolder(card.getSourceHolderKey()).remove(card);
+            }
+            else
+            {
+                //no longer mark this as selected
+                card.setSelected(false);
+
+                //add back to the source
+                getHolder(card.getSourceHolderKey()).add(card);
             }
         }
+
+        //now remove all cards from default holder
+        getDefaultHolder().removeAll();
+
+        //validate and check if the game has ended
+        validate();
     }
     
     @Override

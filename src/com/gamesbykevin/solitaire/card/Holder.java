@@ -447,6 +447,24 @@ public final class Holder extends Entity implements Disposable
     }
     
     /**
+     * Do any of the specified cards have the source holder key
+     * @param key The key indicating the source of the card
+     * @return true if at least 1 card has the source key, false otherwise
+     */
+    public boolean hasSourceHolderKey(final Object key)
+    {
+        for (int index = 0; index < getSize(); index++)
+        {
+            //if we have a match, return true
+            if (getCard(index).getSourceHolderKey() == key)
+                return true;
+        }
+        
+        //none of the cards have the source key
+        return false;
+    }
+    
+    /**
      * Recycle objects
      */
     @Override

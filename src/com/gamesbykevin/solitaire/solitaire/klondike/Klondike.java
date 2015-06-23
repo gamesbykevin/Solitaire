@@ -88,13 +88,10 @@ public final class Klondike extends Solitaire
         addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
     }
     
-    /**
-     * Clean resources
-     */
     @Override
-    public void dispose()
+    public void shuffle(final Random random) throws Exception
     {
-        super.dispose();
+        super.shuffle(random, getHolder(Key.Deck));
     }
     
     /**
@@ -260,35 +257,6 @@ public final class Klondike extends Solitaire
     @Override
     public void update(final Engine engine) throws Exception
     {
-        //if the game is over no need to continue
-        if (hasGameover())
-            return;
-        
-        if (!isCreateComplete())
-        {
-            //create the deck
-            create(engine.getRandom());
-            
-            //no need to continue
-            return;
-        }
-        else if (!isShuffleComplete())
-        {
-            //shuffle it
-            shuffle(engine.getRandom(), getHolder(Key.Deck));
-            
-            //no need to continue
-            return;
-        }
-        else if (!isDealComplete())
-        {
-            //deal the cards
-            deal(engine.getTime());
-            
-            //no need to continue
-            return;
-        }
-        
         //check user input
         if (engine.getMouse().isMouseDragged() && !engine.getMouse().isMouseReleased())
         {
@@ -330,66 +298,51 @@ public final class Klondike extends Solitaire
             //check if the cards can be placed, or should be brought back to their source
             if (!getDefaultHolder().isEmpty())
             {
+                //only 1 card can be placed on the destination at a time
+                if (getDefaultHolder().getSize() == 1)
+                {
+                    for (Key key : Key.values())
+                    {
+                        //only check the destination for now
+                        if (key != Key.Destination1 && key != Key.Destination2 &&
+                            key != Key.Destination3 && key != Key.Destination4)
+                            continue;
+                        
+                        //make sure we have this location
+                        if (getHolder(key).hasLocation(x, y))
+                        {
+                            //if cards were placed no need to continue
+                            if (KlondikeHelper.placeDestinationCards(getDefaultHolder(), getHolder(key), key))
+                                return;
+                        }
+                    }
+                }
+                
+                //now check the playable
+                for (Key key : Key.values())
+                {
+                    //dont check these
+                    if (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || 
+                        key == Key.Destination4 || key == Key.Deck || key == Key.OptionalPile)
+                        continue;
+                    
+                    //make sure we have this location
+                    if (getHolder(key).hasLocation(x, y))
+                    {
+                        //if cards were placed no need to continue
+                        if (KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(key), key))
+                            return;
+                    }
+                }
+                
                 //get the first card
                 final Card tmp = getDefaultHolder().getFirstCard();
                 
-                //don't continue if the card is from the deck
-                if (tmp.getSourceHolderKey() == Key.Deck)
-                    return;
-                
-                //determine if the card(s) can be added in these places
-                if (getHolder(Key.Destination1).hasLocation(x, y))
-                {
-                    KlondikeHelper.placeDestinationCards(getDefaultHolder(), getHolder(Key.Destination1), Key.Destination1);
-                }
-                else if (getHolder(Key.Destination2).hasLocation(x, y))
-                {
-                    KlondikeHelper.placeDestinationCards(getDefaultHolder(), getHolder(Key.Destination2), Key.Destination2);
-                }
-                else if (getHolder(Key.Destination3).hasLocation(x, y))
-                {
-                    KlondikeHelper.placeDestinationCards(getDefaultHolder(), getHolder(Key.Destination3), Key.Destination3);
-                }
-                else if (getHolder(Key.Destination4).hasLocation(x, y))
-                {
-                    KlondikeHelper.placeDestinationCards(getDefaultHolder(), getHolder(Key.Destination4), Key.Destination4);
-                }
-                else if (getHolder(Key.Playable1).hasLocation(x, y))
-                {
-                    KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(Key.Playable1), Key.Playable1);
-                }
-                else if (getHolder(Key.Playable2).hasLocation(x, y))
-                {
-                    KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(Key.Playable2), Key.Playable2);
-                }
-                else if (getHolder(Key.Playable3).hasLocation(x, y))
-                {
-                    KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(Key.Playable3), Key.Playable3);
-                }
-                else if (getHolder(Key.Playable4).hasLocation(x, y))
-                {
-                    KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(Key.Playable4), Key.Playable4);
-                }
-                else if (getHolder(Key.Playable5).hasLocation(x, y))
-                {
-                    KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(Key.Playable5), Key.Playable5);
-                }
-                else if (getHolder(Key.Playable6).hasLocation(x, y))
-                {
-                    KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(Key.Playable6), Key.Playable6);
-                }
-                else if (getHolder(Key.Playable7).hasLocation(x, y))
-                {
-                    KlondikeHelper.placePlayableCards(getDefaultHolder(), getHolder(Key.Playable7), Key.Playable7);
-                }
-                else
-                {
-                    //set the destination for all cards
-                    getDefaultHolder().setDestination(getHolder(tmp.getSourceHolderKey()), tmp.getSourceHolderKey());
+                //set the destination for all cards
+                getDefaultHolder().setDestination(getHolder(tmp.getSourceHolderKey()), tmp.getSourceHolderKey());
 
-                    //set the start location for all
-                    getDefaultHolder().setStart();
-                }
+                //set the start location for all
+                getDefaultHolder().setStart();
             }
             else
             {
@@ -471,22 +424,14 @@ public final class Klondike extends Solitaire
      */
     private void showPlayableCards()
     {
-        if (!getHolder(Key.OptionalPile).isEmpty())
-            getHolder(Key.OptionalPile).getLastCard().setHidden(false);
-        if (!getHolder(Key.Playable1).isEmpty())
-            getHolder(Key.Playable1).getLastCard().setHidden(false);
-        if (!getHolder(Key.Playable2).isEmpty())
-            getHolder(Key.Playable2).getLastCard().setHidden(false);
-        if (!getHolder(Key.Playable3).isEmpty())
-            getHolder(Key.Playable3).getLastCard().setHidden(false);
-        if (!getHolder(Key.Playable4).isEmpty())
-            getHolder(Key.Playable4).getLastCard().setHidden(false);
-        if (!getHolder(Key.Playable5).isEmpty())
-            getHolder(Key.Playable5).getLastCard().setHidden(false);
-        if (!getHolder(Key.Playable6).isEmpty())
-            getHolder(Key.Playable6).getLastCard().setHidden(false);
-        if (!getHolder(Key.Playable7).isEmpty())
-            getHolder(Key.Playable7).getLastCard().setHidden(false);
+        KlondikeHelper.showPlayableCard(getHolder(Key.OptionalPile));
+        KlondikeHelper.showPlayableCard(getHolder(Key.Playable1));
+        KlondikeHelper.showPlayableCard(getHolder(Key.Playable2));
+        KlondikeHelper.showPlayableCard(getHolder(Key.Playable3));
+        KlondikeHelper.showPlayableCard(getHolder(Key.Playable4));
+        KlondikeHelper.showPlayableCard(getHolder(Key.Playable5));
+        KlondikeHelper.showPlayableCard(getHolder(Key.Playable6));
+        KlondikeHelper.showPlayableCard(getHolder(Key.Playable7));
     }
     
     @Override

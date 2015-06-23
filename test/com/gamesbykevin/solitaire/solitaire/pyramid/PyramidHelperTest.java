@@ -205,35 +205,89 @@ public class PyramidHelperTest
     @Test
     public void canSelectTest() throws Exception
     {
+        holder1 = new Holder(StackType.Same);
+        
+        //create test card
+        card1 = new Card(Suit.Clubs, Value.Ace, Back.Back1, Key.Row_7_Column_3);
+        
+        //add card to holder
+        holder1.add(card1);
+        
+        //we only have 1 card that isn't a king
+        assertTrue(PyramidHelper.canSelect(holder1));
+
+        
+        //create test card
+        card1 = new Card(Suit.Clubs, Value.Ace, Back.Back1, Key.Row_7_Column_3);
+        
+        //add another card to holder
+        holder1.add(card1);
+        
+        //we have reached our limit
+        assertFalse(PyramidHelper.canSelect(holder1));
+        
+        
+        //remove all cards
+        holder1.removeAll();
+        
+        //create test card
+        card1 = new Card(Suit.Clubs, Value.King, Back.Back1, Key.Row_7_Column_3);
+        
+        //add card to holder
+        holder1.add(card1);
+        
+        //we only have 1 card, but it is a king, so we can't make any more selections
+        assertFalse(PyramidHelper.canSelect(holder1));
+    }
+    
+    @Test
+    public void isBlockedTest() throws Exception
+    {
+        //create holder
+        holder1 = new Holder(StackType.Same);
+        
         //assert true since there are no existing cards
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_1_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_2_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_2_Column_2));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_3_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_3_Column_2));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_3_Column_3));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_2));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_3));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_4));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_2));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_3));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_4));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_5));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_2));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_3));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_4));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_5));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_6));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_2));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_3));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_4));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_5));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_6));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_7));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_1_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_2_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_2_Column_2));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_3_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_3_Column_2));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_3_Column_3));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_2));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_3));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_4));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_2));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_3));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_4));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_5));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_2));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_3));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_4));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_5));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_6));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_2));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_3));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_4));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_5));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_6));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_7));
+        
+        //add a card that will block
+        card1 = new Card(Suit.Clubs, Value.Ace, Back.Back1, Key.Row_5_Column_1);
+        holder1.add(card1);
+        
+        //assume this location is blocked because one of the holder cards is in front of this location
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_1));
+        
+        //assume this location is not blocked because there are no cards blocking this location
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_4));
+        
+        //now remove all cards
+        holder1.removeAll();
         
         while(true)
         {
@@ -258,33 +312,34 @@ public class PyramidHelperTest
             }
         }
         
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_1_Column_1));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_2_Column_1));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_2_Column_2));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_3_Column_1));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_3_Column_2));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_3_Column_3));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_1));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_2));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_3));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_4_Column_4));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_1));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_2));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_3));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_4));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_5_Column_5));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_1));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_2));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_3));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_4));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_5));
-        assertFalse(PyramidHelper.canSelect(pyramid, Key.Row_6_Column_6));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_1));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_2));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_3));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_4));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_5));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_6));
-        assertTrue(PyramidHelper.canSelect(pyramid, Key.Row_7_Column_7));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_1_Column_1));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_2_Column_1));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_2_Column_2));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_3_Column_1));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_3_Column_2));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_3_Column_3));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_1));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_2));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_3));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_4_Column_4));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_1));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_2));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_3));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_4));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_5_Column_5));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_1));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_2));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_3));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_4));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_5));
+        assertTrue(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_6_Column_6));
+        
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_1));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_2));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_3));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_4));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_5));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_6));
+        assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_7_Column_7));
     }
 }

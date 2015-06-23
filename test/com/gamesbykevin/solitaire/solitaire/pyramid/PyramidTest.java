@@ -30,6 +30,9 @@ public final class PyramidTest extends SolitaireTest
         //there will be 7 rows in the game
         assertTrue(Pyramid.ROWS == 7);
         
+        //user can select up to 2 cards
+        assertTrue(Pyramid.SELECT_LIMIT == 2);
+
         Solitaire pyramid = new Pyramid(Shared.INVISIBLE_PIXEL);
         
         //assume all animations have been added
@@ -94,12 +97,29 @@ public final class PyramidTest extends SolitaireTest
     @Test
     public void validateTest() throws Exception
     {
-        pyramid.create(getEngine().getRandom());
-        pyramid.shuffle(getEngine().getRandom(), pyramid.getHolder(Key.Deck));
-        pyramid.deal(getEngine().getTime());
+        while (!pyramid.isCreateComplete())
+        {
+            pyramid.create(getEngine().getRandom());
+        }
+        
+        while (!pyramid.isShuffleComplete())
+        {
+            pyramid.shuffle(getEngine().getRandom(), pyramid.getHolder(Key.Deck));
+        }
+        
+        while (!pyramid.isDealComplete())
+        {
+            pyramid.deal(getEngine().getTime());
+        }
         
         //assume false because we haven't checked validate yet
         assertFalse(pyramid.hasGameover());
+        
+        //remove all cards
+        for (Key key : Key.values())
+        {
+            pyramid.getHolder(key).removeAll();
+        }
         
         pyramid.validate();
         

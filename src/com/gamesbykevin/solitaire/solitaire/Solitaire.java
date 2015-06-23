@@ -119,9 +119,11 @@ public abstract class Solitaire extends Entity implements ISolitaire
     }
     
     /**
-     * Shuffle the deck
+     * Shuffle the cards
+     * @param random Object used to make random decisions
+     * @param holder The holder containing cards we want to shuffle
+     * @throws Exception 
      */
-    @Override
     public void shuffle(final Random random, final Holder holder) throws Exception
     {
         //shuffle this many times
