@@ -51,12 +51,12 @@ public final class Manager implements IManager
     {
         //if (this.solitaire == null)
         
-        this.solitaire = new Bakers(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //this.solitaire = new Bakers(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Poker(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Yukon(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
         
         //get the difficulty
         //final int difficultyIndex = engine.getMenu().getOptionSelectionIndex(LayerKey.Options, OptionKey.Difficulty);

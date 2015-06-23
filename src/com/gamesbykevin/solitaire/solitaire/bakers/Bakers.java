@@ -165,15 +165,58 @@ public final class Bakers extends Solitaire
     @Override
     public void validate() throws Exception
     {
-        for (Key key : Key.values())
+        //if any of these still have cards, the game is not over
+        if (!getHolder(Key.Playable1).isEmpty())
         {
-            //don't check these
-            if (key == Key.Destination1 || key == Key.Destination2 ||
-                key == Key.Destination3 || key == Key.Destination4 || key == Key.Deck)
-            
-            //we will continue playing until all cards are removed from the playable holders
-            if (!getHolder(key).isEmpty())
-                return;
+            return;
+        }
+        else if (!getHolder(Key.Playable2).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable3).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable4).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable5).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable6).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable7).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable8).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable9).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable10).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable11).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable12).isEmpty())
+        {
+            return;
+        }
+        else if (!getHolder(Key.Playable13).isEmpty())
+        {
+            return;
         }
         
         //flag game over
@@ -271,6 +314,9 @@ public final class Bakers extends Solitaire
                     //did we click in this holder deck and are there cards here
                     if (getHolder(key).hasCard(x, y))
                     {
+                        //update location
+                        getDefaultHolder().setLocation(getHolder(key));
+                        
                         //assign the selected cards
                         KlondikeHelper.assignCards(getDefaultHolder(), getHolder(key), key, x, y);
                     }

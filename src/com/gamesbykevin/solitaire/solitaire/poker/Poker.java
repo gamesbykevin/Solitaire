@@ -338,7 +338,7 @@ public final class Poker extends Solitaire
         if (getDefaultHolder().isEmpty())
         {
             //check user input
-            if (engine.getMouse().isMouseDragged() || engine.getMouse().isMouseReleased())
+            if (engine.getMouse().isMouseDragged() || engine.getMouse().isMousePressed())
             {
                 //get the mouse location
                 final int x = engine.getMouse().getLocation().x;
@@ -387,7 +387,7 @@ public final class Poker extends Solitaire
                 
                 for (Key key : Key.values())
                 {
-                    //don't check the deck
+                    //no need to check this
                     if (key == Key.Deck)
                         continue;
                     
@@ -408,7 +408,7 @@ public final class Poker extends Solitaire
                 //none found, set the deck as the destination
                 getDefaultHolder().setDestination(getHolder(Key.Deck), Key.Deck);
             }
-            else if (!engine.getMouse().isMouseDragged() && !engine.getMouse().isMouseReleased())
+            else if (!engine.getMouse().isMouseDragged() && !engine.getMouse().isMouseReleased() && !engine.getMouse().isMousePressed())
             {
                 //if not at destination yet
                 if (!getDefaultHolder().hasDestination())
