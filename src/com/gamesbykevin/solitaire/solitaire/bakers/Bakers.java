@@ -37,6 +37,9 @@ public final class Bakers extends Solitaire
     private static final Point ROW_1_START_LOCATION = new Point(100, 100);
     private static final Point ROW_2_START_LOCATION = new Point(100, 350);
     
+    /**
+     * Where the destination holders will be placed
+     */
     private static final Point DESTINATION_LOCATION = new Point(650, 100);
     
     //the new dimensions of the card
@@ -287,6 +290,7 @@ public final class Bakers extends Solitaire
             }
         }
     }
+    
     /**
      * Update the main game elements
      * @param engine Object containing all game objects

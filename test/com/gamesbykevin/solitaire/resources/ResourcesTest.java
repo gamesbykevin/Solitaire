@@ -6,6 +6,7 @@ import com.gamesbykevin.solitaire.resources.GameAudio;
 import com.gamesbykevin.solitaire.resources.GameFont;
 import com.gamesbykevin.solitaire.resources.GameImages;
 import com.gamesbykevin.solitaire.resources.GameText;
+import com.gamesbykevin.solitaire.shared.Shared;
 
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
@@ -84,11 +85,13 @@ public class ResourcesTest
     @Test
     public void isLoadingTest() throws Exception
     {
+        //assume we are loading
         assertTrue(resources.isLoading());
         
         //continue updating until loading resources is complete
         load();
         
+        //now assume loading complete
         assertFalse(resources.isLoading());
     }
     
@@ -194,8 +197,7 @@ public class ResourcesTest
     @Test
     public void renderTest() throws Exception
     {
-        BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
-        Graphics graphics = image.createGraphics();
+        Graphics graphics = Shared.INVISIBLE_PIXEL.createGraphics();
         
         resources.render(graphics, engine.getScreen());
         

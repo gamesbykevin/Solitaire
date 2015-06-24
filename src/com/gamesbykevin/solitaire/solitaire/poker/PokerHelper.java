@@ -340,13 +340,13 @@ public final class PokerHelper
     }
     
     /**
-     * 
-     * @param card1
-     * @param card2
-     * @param card3
-     * @param card4
-     * @param card5
-     * @return
+     * Do we have 1 pair?
+     * @param card1 Card 1
+     * @param card2 Card 2
+     * @param card3 Card 3
+     * @param card4 Card 4
+     * @param card5 Card 5
+     * @return true if 2 cards have the same face value, false otherwise
      * @throws Exception 
      */
     public static final boolean isOnePair(final Card card1, final Card card2, final Card card3, final Card card4, final Card card5) throws Exception

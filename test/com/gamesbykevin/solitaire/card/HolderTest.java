@@ -443,4 +443,80 @@ public class HolderTest
         //assume we won't have the holder key
         assertFalse(holder.hasSourceHolderKey(DEFAULT_KEY));
     }
+    
+    @Test
+    public void hasValueTest() throws Exception
+    {
+        //create a new holder
+        holder = new Holder(StackType.Same);
+        
+        //create test card
+        card = new Card(Suit.Clubs, Value.Ace, Back.Back1, DEFAULT_KEY);
+        
+        //add card to holder
+        holder.add(card);
+        
+        //assume true
+        assertTrue(holder.hasValue(Value.Ace));
+        
+        //assume not true
+        assertFalse(holder.hasValue(Value.Two));
+        
+        //suit doesn't count, but just check (in case)
+        for (Suit suit : Suit.values())
+        {
+            for (Value value : Value.values())
+            {
+                //remove all cards
+                holder.removeAll();
+
+                //create test card
+                card = new Card(suit, value, Back.Back1, DEFAULT_KEY);
+
+                //add card to holder
+                holder.add(card);
+
+                //assume true
+                assertTrue(holder.hasValue(value));
+            }
+        }
+    }
+    
+    @Test
+    public void hasSuitTest() throws Exception
+    {
+        //create a new holder
+        holder = new Holder(StackType.Same);
+        
+        //create test card
+        card = new Card(Suit.Clubs, Value.Ace, Back.Back1, DEFAULT_KEY);
+        
+        //add card to holder
+        holder.add(card);
+        
+        //assume true
+        assertTrue(holder.hasSuit(Suit.Clubs));
+        
+        //assume not true
+        assertFalse(holder.hasSuit(Suit.Hearts));
+        
+        //suit doesn't count, but just check (in case)
+        for (Suit suit : Suit.values())
+        {
+            for (Value value : Value.values())
+            {
+                //remove all cards
+                holder.removeAll();
+
+                //create test card
+                card = new Card(suit, value, Back.Back1, DEFAULT_KEY);
+
+                //add card to holder
+                holder.add(card);
+
+                //assume true
+                assertTrue(holder.hasSuit(suit));
+            }
+        }
+    }
 }

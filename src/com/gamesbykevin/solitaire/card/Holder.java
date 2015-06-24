@@ -2,6 +2,8 @@ package com.gamesbykevin.solitaire.card;
 
 import com.gamesbykevin.framework.resources.Disposable;
 
+import com.gamesbykevin.solitaire.card.Card.Value;
+import com.gamesbykevin.solitaire.card.Card.Suit;
 import com.gamesbykevin.solitaire.entity.Entity;
 
 import java.awt.Graphics;
@@ -70,6 +72,42 @@ public final class Holder extends Entity implements Disposable
         
         //set this as the animation
         setAnimation(DEFAULT_ANIMATION_KEY);
+    }
+    
+    /**
+     * Do any cards have this value?
+     * @param value The face value we want to check
+     * @return true if at least 1 card has the same face value, false otherwise
+     */
+    public boolean hasValue(final Value value)
+    {
+        for (int index = 0; index < getSize(); index++)
+        {
+            //if this card has the value return true
+            if (getCard(index).hasValue(value))
+                return true;
+        }
+        
+        //we did not find any cards with that face value
+        return false;
+    }
+    
+    /**
+     * Do any cards have this suit?
+     * @param suit The suit we want to check
+     * @return true if at least 1 card has the same suit, false otherwise
+     */
+    public boolean hasSuit(final Suit suit)
+    {
+        for (int index = 0; index < getSize(); index++)
+        {
+            //if this card has the suit return true
+            if (getCard(index).hasSuit(suit))
+                return true;
+        }
+        
+        //we did not find any cards with that suit
+        return false;
     }
     
     /**

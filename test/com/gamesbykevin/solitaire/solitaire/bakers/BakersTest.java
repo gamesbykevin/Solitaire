@@ -115,15 +115,20 @@ public final class BakersTest extends SolitaireTest
         //validate
         bakers.validate();
         
-        for (Key key : Key.values())
-        {
-            //don't check these
-            if (key == Key.Destination1 || key == Key.Destination2 ||
-                key == Key.Destination3 || key == Key.Destination4 || key == Key.Deck)
-            
-            //remove all cards
-            bakers.getHolder(key).removeAll();
-        }
+        //remove all cards
+        bakers.getHolder(Key.Playable1).removeAll();
+        bakers.getHolder(Key.Playable2).removeAll();
+        bakers.getHolder(Key.Playable3).removeAll();
+        bakers.getHolder(Key.Playable4).removeAll();
+        bakers.getHolder(Key.Playable5).removeAll();
+        bakers.getHolder(Key.Playable6).removeAll();
+        bakers.getHolder(Key.Playable7).removeAll();
+        bakers.getHolder(Key.Playable8).removeAll();
+        bakers.getHolder(Key.Playable9).removeAll();
+        bakers.getHolder(Key.Playable10).removeAll();
+        bakers.getHolder(Key.Playable11).removeAll();
+        bakers.getHolder(Key.Playable12).removeAll();
+        bakers.getHolder(Key.Playable13).removeAll();
         
         //validate again
         bakers.validate();
