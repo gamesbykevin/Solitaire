@@ -28,6 +28,9 @@ public final class LittleSpiderTest extends SolitaireTest
     @BeforeClass
     public static void setUpClass() 
     {
+        //assume true
+        assertTrue(LittleSpider.HOLDER_SIZE == 6);
+        
         Solitaire littleSpider = new LittleSpider(Shared.INVISIBLE_PIXEL);
         
         //assume all holders have been added
