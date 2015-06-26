@@ -237,7 +237,7 @@ public final class Golf extends Solitaire
         if (getDefaultHolder().isEmpty())
         {
             //check user input
-            if (engine.getMouse().isMouseDragged() || engine.getMouse().isMouseReleased())
+            if (engine.getMouse().isMouseReleased())
             {
                 //get the mouse location
                 final int x = engine.getMouse().getLocation().x;

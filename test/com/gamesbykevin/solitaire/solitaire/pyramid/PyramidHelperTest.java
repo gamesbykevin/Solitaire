@@ -246,7 +246,7 @@ public class PyramidHelperTest
         //create holder
         holder1 = new Holder(StackType.Same);
         
-        //assert true since there are no existing cards
+        //assert false since there are no existing cards
         assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_1_Column_1));
         assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_2_Column_1));
         assertFalse(PyramidHelper.isBlocked(pyramid, holder1, Key.Row_2_Column_2));

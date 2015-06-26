@@ -17,7 +17,7 @@ public final class GolfHelper
      * @return true if the face value of one card is within the other, false otherwise
      * @throws Exception will be thrown if a unspecified face value is not handled here
      */
-    protected static boolean isNeighbor(final Card card1, final Card card2) throws Exception
+    public static boolean isNeighbor(final Card card1, final Card card2) throws Exception
     {
         switch (card1.getValue())
         {

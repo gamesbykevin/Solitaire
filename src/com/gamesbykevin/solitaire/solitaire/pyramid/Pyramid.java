@@ -278,7 +278,7 @@ public final class Pyramid extends Solitaire
         if (PyramidHelper.canSelect(getDefaultHolder()))
         {
             //check user input
-            if (engine.getMouse().isMouseDragged() || engine.getMouse().isMouseReleased())
+            if (engine.getMouse().isMouseReleased())
             {
                 //get the mouse location
                 final int x = engine.getMouse().getLocation().x;

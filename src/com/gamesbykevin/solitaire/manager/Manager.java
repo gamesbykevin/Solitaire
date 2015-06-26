@@ -4,8 +4,10 @@ import com.gamesbykevin.solitaire.solitaire.bakers.Bakers;
 import com.gamesbykevin.solitaire.solitaire.golf.Golf;
 import com.gamesbykevin.solitaire.solitaire.goodmeasure.GoodMeasure;
 import com.gamesbykevin.solitaire.solitaire.klondike.Klondike;
+import com.gamesbykevin.solitaire.solitaire.littlespider.LittleSpider;
 import com.gamesbykevin.solitaire.solitaire.poker.Poker;
 import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid;
+import com.gamesbykevin.solitaire.solitaire.pyramidgolf.PyramidGolf;
 import com.gamesbykevin.solitaire.solitaire.yukon.Yukon;
 import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.menu.CustomMenu;
@@ -58,7 +60,9 @@ public final class Manager implements IManager
         //this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        this.solitaire = new GoodMeasure(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //this.solitaire = new GoodMeasure(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //this.solitaire = new PyramidGolf(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        this.solitaire = new LittleSpider(engine.getResources().getGameImage(GameImages.Keys.Cards));
         
         //get the difficulty
         //final int difficultyIndex = engine.getMenu().getOptionSelectionIndex(LayerKey.Options, OptionKey.Difficulty);
