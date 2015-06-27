@@ -49,7 +49,17 @@ public class KlondikeHelperTest
     @After
     public void tearDown() 
     {
+        holder1.dispose();
+        holder1 = null;
         
+        holder2.dispose();
+        holder2 = null;
+        
+        card1.dispose();
+        card1 = null;
+        
+        card2.dispose();
+        card2 = null;
     }
 
     @Test

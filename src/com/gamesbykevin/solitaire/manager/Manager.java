@@ -2,6 +2,7 @@ package com.gamesbykevin.solitaire.manager;
 
 import com.gamesbykevin.solitaire.solitaire.bakers.Bakers;
 import com.gamesbykevin.solitaire.solitaire.blockten.BlockTen;
+import com.gamesbykevin.solitaire.solitaire.freecell.FreeCell;
 import com.gamesbykevin.solitaire.solitaire.golf.Golf;
 import com.gamesbykevin.solitaire.solitaire.goodmeasure.GoodMeasure;
 import com.gamesbykevin.solitaire.solitaire.klondike.Klondike;
@@ -64,7 +65,9 @@ public final class Manager implements IManager
         //this.solitaire = new GoodMeasure(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new PyramidGolf(engine.getResources().getGameImage(GameImages.Keys.Cards));
         //this.solitaire = new LittleSpider(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        this.solitaire = new BlockTen(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //this.solitaire = new BlockTen(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        this.solitaire = new FreeCell(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        
         
         //get the difficulty
         //final int difficultyIndex = engine.getMenu().getOptionSelectionIndex(LayerKey.Options, OptionKey.Difficulty);
