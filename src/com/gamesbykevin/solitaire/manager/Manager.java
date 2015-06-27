@@ -56,18 +56,58 @@ public final class Manager implements IManager
     {
         //if (this.solitaire == null)
         
-        //this.solitaire = new Bakers(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new Poker(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new Yukon(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new GoodMeasure(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new PyramidGolf(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new LittleSpider(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        //this.solitaire = new BlockTen(engine.getResources().getGameImage(GameImages.Keys.Cards));
-        this.solitaire = new FreeCell(engine.getResources().getGameImage(GameImages.Keys.Cards));
+        //see what game we selected
+        final int gameSelection = engine.getMenu().getOptionSelectionIndex(LayerKey.Options, OptionKey.Game);
         
+        switch (gameSelection)
+        {
+            case CustomMenu.GAME_CLASSIC:
+                this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+            
+            case CustomMenu.GAME_POKER:
+                this.solitaire = new Poker(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_GOLF:
+                this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_PYRAMID:
+                this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_PYRAMID_GOLF:
+                this.solitaire = new PyramidGolf(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_BAKERS:
+                this.solitaire = new Bakers(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_YUKON:
+                this.solitaire = new Yukon(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_LITTLE_SPIDER:
+                this.solitaire = new LittleSpider(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_FREE_CELL:
+                this.solitaire = new FreeCell(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_BLOCK_TEN:
+                this.solitaire = new BlockTen(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            case CustomMenu.GAME_GOOD_MEASURE:
+                this.solitaire = new GoodMeasure(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                break;
+                
+            default:
+                throw new Exception("Game selection is not found here " + gameSelection);
+        }
         
         //get the difficulty
         //final int difficultyIndex = engine.getMenu().getOptionSelectionIndex(LayerKey.Options, OptionKey.Difficulty);

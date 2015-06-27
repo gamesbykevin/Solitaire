@@ -39,7 +39,10 @@ public class KlondikeHelperTest
     {
         //create holders
         holder1 = new Holder(Holder.StackType.Same);
+        holder1.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
+        
         holder2 = new Holder(Holder.StackType.Same);
+        holder2.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
         
         //create test cards
         card1 = new Card(Suit.Clubs, Value.Ace, Back.Back1, Klondike.Key.Playable1);

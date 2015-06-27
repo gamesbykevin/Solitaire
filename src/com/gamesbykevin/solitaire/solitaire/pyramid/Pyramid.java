@@ -102,16 +102,16 @@ public final class Pyramid extends Solitaire
         for (int row = 0; row < ROWS; row++)
         {
             //the y coordinate for this row
-            final int y = (int)(ROW_1_COLUMN_1_START_LOCATION.y + (row * (Card.CARD_HEIGHT * PLACE_CARD_HEIGHT_RATIO)));
+            final int y = (int)(ROW_1_COLUMN_1_START_LOCATION.y + (row * (getDefaultHeight() * PLACE_CARD_HEIGHT_RATIO)));
             
             //the start x coordinate
-            int startX = (int)(ROW_1_COLUMN_1_START_LOCATION.x - (cols * (Card.CARD_WIDTH / 2)));
+            int startX = (int)(ROW_1_COLUMN_1_START_LOCATION.x - (cols * (getDefaultWidth() / 2)));
             
             for (int col = 0; col < cols; col++)
             {
                 super.addHolder(Key.values()[index], startX, y, StackType.Same);
                 
-                startX += (Card.CARD_WIDTH * PLACE_CARD_WIDTH_RATIO);
+                startX += (getDefaultWidth() * PLACE_CARD_WIDTH_RATIO);
                 
                 //change the index
                 index++;

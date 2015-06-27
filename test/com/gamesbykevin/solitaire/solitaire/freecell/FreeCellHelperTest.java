@@ -3,7 +3,6 @@ package com.gamesbykevin.solitaire.solitaire.freecell;
 import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Card.*;
 import com.gamesbykevin.solitaire.card.Holder;
-import com.gamesbykevin.solitaire.card.Holder.StackType;
 import com.gamesbykevin.solitaire.solitaire.freecell.FreeCell.Key;
 
 import org.junit.After;
@@ -42,6 +41,7 @@ public class FreeCellHelperTest
     {
         //create holders
         holder = new Holder(Holder.StackType.Same);
+        holder.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
         
         //create test cards
         card1 = new Card(Suit.Clubs, Value.Ace, Back.Back1, Key.Playable1);
@@ -84,11 +84,11 @@ public class FreeCellHelperTest
         holder.add(card2);
         
         //update location
-        card1.setLocation(Card.CARD_WIDTH, Card.CARD_HEIGHT);
-        card2.setLocation(Card.CARD_WIDTH, Card.CARD_HEIGHT + 100);
+        card1.setLocation(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
+        card2.setLocation(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT + 100);
         
         //assume false because the cards aren't in order
-        assertFalse(FreeCellHelper.hasSequence(holder, Card.CARD_WIDTH, Card.CARD_HEIGHT + 1));
+        assertFalse(FreeCellHelper.hasSequence(holder, Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT + 1));
         
         //create test cards
         card1 = new Card(Suit.Clubs, Value.Jack, Back.Back1, Key.Playable1);

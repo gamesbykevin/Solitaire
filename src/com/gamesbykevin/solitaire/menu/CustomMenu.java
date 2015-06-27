@@ -38,7 +38,7 @@ public final class CustomMenu extends Menu
      */
     public enum OptionKey 
     {
-        Sound, FullScreen, 
+        Sound, FullScreen, Game
     }
     
     /**
@@ -71,6 +71,19 @@ public final class CustomMenu extends Menu
     
     //the images for the mouse cursor will be contained here
     private ImageManager images;
+    
+    //different game selections
+    public static final int GAME_CLASSIC = 0;
+    public static final int GAME_POKER = 1;
+    public static final int GAME_GOLF = 2;
+    public static final int GAME_PYRAMID = 3;
+    public static final int GAME_PYRAMID_GOLF = 4;
+    public static final int GAME_BAKERS = 5;
+    public static final int GAME_YUKON = 6;
+    public static final int GAME_LITTLE_SPIDER = 7;
+    public static final int GAME_FREE_CELL = 8;
+    public static final int GAME_BLOCK_TEN = 9;
+    public static final int GAME_GOOD_MEASURE = 10;
     
     /**
      * Unique id's used to access the resources and must match the id in the xml file

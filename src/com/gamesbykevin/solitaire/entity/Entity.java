@@ -3,6 +3,7 @@ package com.gamesbykevin.solitaire.entity;
 import com.gamesbykevin.framework.base.Animation;
 import com.gamesbykevin.framework.base.Sprite;
 import com.gamesbykevin.framework.resources.Disposable;
+
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -13,11 +14,6 @@ import java.awt.Image;
 public abstract class Entity extends Sprite implements Disposable
 {
     /**
-     * No time delay
-     */
-    public static final long DELAY_NONE = 0;
-    
-    /**
      * Original width of a card
      */
     public static final int ORIGINAL_CARD_WIDTH = 140;
@@ -26,21 +22,11 @@ public abstract class Entity extends Sprite implements Disposable
      * Original height of a card
      */
     public static final int ORIGINAL_CARD_HEIGHT = 190;
-
-    /**
-     * The display size dimensions of the card a fraction of the original size
-     */
-    public static final double CARD_SIZE_RATIO = .5;
     
     /**
-     * Adjusted width of a card
+     * No time delay
      */
-    public static final int CARD_WIDTH = (int)(ORIGINAL_CARD_WIDTH * CARD_SIZE_RATIO);
-    
-    /**
-     * Adjusted height of a card
-     */
-    public static final int CARD_HEIGHT = (int)(ORIGINAL_CARD_HEIGHT * CARD_SIZE_RATIO);
+    public static final long DELAY_NONE = 0;
     
     /**
      * Default animation key to use
@@ -51,12 +37,6 @@ public abstract class Entity extends Sprite implements Disposable
     {
         //create the spritesheet
         super.createSpriteSheet();
-        
-        /**
-         * Set the card dimensions
-         */
-        super.setWidth(CARD_WIDTH);
-        super.setHeight(CARD_HEIGHT);
     }
     
     /**
@@ -130,7 +110,6 @@ public abstract class Entity extends Sprite implements Disposable
         if (getSpriteSheet().getCurrent() == null)
             setAnimation(key);
     }
-    
     
     /**
      * Get the x-coordinate

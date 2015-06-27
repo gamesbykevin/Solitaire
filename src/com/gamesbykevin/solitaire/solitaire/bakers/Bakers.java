@@ -42,20 +42,6 @@ public final class Bakers extends Solitaire
      */
     private static final Point DESTINATION_LOCATION = new Point(650, 100);
     
-    //the new dimensions of the card
-    private static final int NEW_CARD_WIDTH = (int)(Card.CARD_WIDTH * .95);
-    private static final int NEW_CARD_HEIGHT = (int)(Card.CARD_HEIGHT * .95);
-    
-    /**
-     * The width between each column
-     */
-    private static final int PIXEL_WIDTH = (int)(NEW_CARD_WIDTH * 1.15);
-    
-    /**
-     * The width between each row
-     */
-    private static final int PIXEL_HEIGHT = (int)(NEW_CARD_HEIGHT * 1.15);
-    
     /**
      * The size of each holder
      */
@@ -66,11 +52,20 @@ public final class Bakers extends Solitaire
      */
     private static final Point DECK_START_LOCATION = new Point(-Card.ORIGINAL_CARD_WIDTH, -Card.ORIGINAL_CARD_HEIGHT);
     
+    //new card size
+    private static final float CARD_SIZE_RATIO = .45f;
+    
     public Bakers(final Image image)
     {
-        super(image, Holder.StackType.Vertical);
+        super(image, CARD_SIZE_RATIO, Holder.StackType.Vertical);
         
         int index = 0;
+
+        //width between each column
+        final int PIXEL_WIDTH = (int)(getDefaultWidth() * 1.15);
+    
+        //width between each row
+        final int PIXEL_HEIGHT = (int)(getDefaultHeight() * 1.15);
         
         int x = ROW_1_START_LOCATION.x;
         int y = ROW_1_START_LOCATION.y;
@@ -79,9 +74,6 @@ public final class Bakers extends Solitaire
         {
             //add holder
             super.addHolder(Key.values()[index], x, y, Holder.StackType.Vertical);
-
-            //set the dimensions
-            super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
             
             //modify next location
             x += PIXEL_WIDTH;
@@ -96,9 +88,6 @@ public final class Bakers extends Solitaire
         {
             //add holder
             super.addHolder(Key.values()[index], x, y, Holder.StackType.Vertical);
-
-            //set the dimensions
-            super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
             
             //modify next location
             x += PIXEL_WIDTH;
@@ -108,21 +97,12 @@ public final class Bakers extends Solitaire
         
         //add deck
         super.addHolder(Key.Deck, DECK_START_LOCATION, Holder.StackType.Same);
-        
-        //set the dimensions
-        super.getHolder(Key.Deck).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
             
         //add destinations
         super.addHolder(Key.Destination1, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (0 * PIXEL_HEIGHT), Holder.StackType.Same);
         super.addHolder(Key.Destination2, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (1 * PIXEL_HEIGHT), Holder.StackType.Same);
         super.addHolder(Key.Destination3, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (2 * PIXEL_HEIGHT), Holder.StackType.Same);
         super.addHolder(Key.Destination4, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (3 * PIXEL_HEIGHT), Holder.StackType.Same);
-        
-        //set the dimensions
-        super.getHolder(Key.Destination1).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-        super.getHolder(Key.Destination2).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-        super.getHolder(Key.Destination3).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-        super.getHolder(Key.Destination4).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
     }
     
     @Override
@@ -147,14 +127,8 @@ public final class Bakers extends Solitaire
         {
             for (Card.Value value : Card.Value.values())
             {
-                //create a new card
-                final Card card = new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION);
-                
-                //set the dimensions
-                card.setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-                
                 //add to our deck
-                getHolder(Key.Deck).add(card);
+                getHolder(Key.Deck).add(new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION));
             }
         }
         

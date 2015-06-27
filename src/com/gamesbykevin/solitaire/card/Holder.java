@@ -154,6 +154,9 @@ public final class Holder extends Entity implements Disposable
         //also store this as the starting location
         card.setStart();
         
+        //make sure the dimensions of the card are set
+        card.setDimensions(getWidth(), getHeight());
+        
         //add to list
         getCards().add(card);
     }

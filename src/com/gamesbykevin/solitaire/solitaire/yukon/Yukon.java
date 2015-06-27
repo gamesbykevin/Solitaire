@@ -27,9 +27,6 @@ public final class Yukon extends Solitaire
         Deck, 
     }
     
-    //the amount of space to put between each playable column
-    private static final int PIXEL_WIDTH = (int)(CARD_WIDTH * 1.2);
-    
     /**
      * The (x,y) locations for the playable holders
      */
@@ -54,6 +51,9 @@ public final class Yukon extends Solitaire
     public Yukon(final Image image)
     {
         super(image, StackType.Vertical);
+        
+        //the amount of space to put between each playable column
+        final int PIXEL_WIDTH = (int)(getDefaultWidth() * 1.2);
         
         //add the holder locations in the game
         addHolder(Key.Destination1, DESTINATION_LOCATION_1, StackType.Same);

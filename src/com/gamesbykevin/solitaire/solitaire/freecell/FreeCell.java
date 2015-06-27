@@ -50,7 +50,7 @@ public final class FreeCell extends Solitaire
     /**
      * Where the deck start is placed
      */
-    private static final Point DECK_START_LOCATION = new Point(-Card.CARD_WIDTH, -Card.CARD_HEIGHT);
+    private static final Point DECK_START_LOCATION = new Point(-Card.ORIGINAL_CARD_WIDTH, -Card.ORIGINAL_CARD_HEIGHT);
     
     /**
      * The (x,y) locations for the temporary holders
@@ -67,9 +67,6 @@ public final class FreeCell extends Solitaire
      */
     private static final Point PLAYABLE_START_LOCATION = new Point(75, 250);
     
-    //the width between each column
-    private static final int COLUMN_WIDTH = (int)(Card.CARD_WIDTH * 1.2);
-    
     //keep track of destination for the deal
     private Key destination = Key.Playable1;
     
@@ -82,6 +79,9 @@ public final class FreeCell extends Solitaire
         
         int x = TEMP_START_LOCATION.x;
         
+        //the width between each column
+        final int COLUMN_WIDTH = (int)(getDefaultWidth() * 1.2);
+    
         //setup temporary locations
         for (int index = 0; index < 4; index++)
         {

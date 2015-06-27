@@ -2,7 +2,6 @@ package com.gamesbykevin.solitaire.solitaire.klondike;
 
 import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Card.*;
-import com.gamesbykevin.solitaire.card.Holder;
 import com.gamesbykevin.solitaire.card.Holder.StackType;
 import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;

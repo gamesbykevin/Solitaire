@@ -79,25 +79,15 @@ public final class PyramidGolf extends Solitaire
     /**
      * Ratio of the default card size
      */
-    private static final double SIZE_RATIO = .85;
+    private static final float CARD_SIZE_RATIO = .45f;
     
-    /**
-     * Adjusted card dimensions
-     */
-    private static final int NEW_CARD_WIDTH = (int)(Card.CARD_WIDTH * SIZE_RATIO);
-    
-    /**
-     * Adjusted card dimensions
-     */
-    private static final int NEW_CARD_HEIGHT = (int)(Card.CARD_HEIGHT * SIZE_RATIO);
-
     //the amount of time to move the cards from one point to the next
     private static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(175L);
     
     public PyramidGolf(final Image image)
     {
         //store the sprite sheet image
-        super(image, StackType.Same);
+        super(image, CARD_SIZE_RATIO, StackType.Same);
         
         //the total number of columns
         int cols = 1;
@@ -109,21 +99,18 @@ public final class PyramidGolf extends Solitaire
         for (int row = 0; row < ROWS; row++)
         {
             //the y coordinate for this row
-            final int y = (int)(PYRAMID_1_ROW_1_COLUMN_1_START_LOCATION.y + (row * (NEW_CARD_HEIGHT * PLACE_CARD_HEIGHT_RATIO)));
+            final int y = (int)(PYRAMID_1_ROW_1_COLUMN_1_START_LOCATION.y + (row * (getDefaultHeight() * PLACE_CARD_HEIGHT_RATIO)));
             
             //the start x coordinate
-            int startX = (int)(PYRAMID_1_ROW_1_COLUMN_1_START_LOCATION.x - (cols * (NEW_CARD_WIDTH / 2)));
+            int startX = (int)(PYRAMID_1_ROW_1_COLUMN_1_START_LOCATION.x - (cols * (getDefaultWidth() / 2)));
             
             for (int col = 0; col < cols; col++)
             {
                 //add holder
                 super.addHolder(Key.values()[index], startX, y, StackType.Same);
                 
-                //set dimension size
-                super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-                
                 //adjust x-coordinate
-                startX += (NEW_CARD_WIDTH * PLACE_CARD_WIDTH_RATIO);
+                startX += (getDefaultWidth() * PLACE_CARD_WIDTH_RATIO);
                 
                 //change the index
                 index++;
@@ -140,21 +127,18 @@ public final class PyramidGolf extends Solitaire
         for (int row = 0; row < ROWS; row++)
         {
             //the y coordinate for this row
-            final int y = (int)(PYRAMID_2_ROW_1_COLUMN_1_START_LOCATION.y + (row * (NEW_CARD_HEIGHT * PLACE_CARD_HEIGHT_RATIO)));
+            final int y = (int)(PYRAMID_2_ROW_1_COLUMN_1_START_LOCATION.y + (row * (getDefaultHeight() * PLACE_CARD_HEIGHT_RATIO)));
             
             //the start x coordinate
-            int startX = (int)(PYRAMID_2_ROW_1_COLUMN_1_START_LOCATION.x - (cols * (NEW_CARD_WIDTH / 2)));
+            int startX = (int)(PYRAMID_2_ROW_1_COLUMN_1_START_LOCATION.x - (cols * (getDefaultWidth() / 2)));
             
             for (int col = 0; col < cols; col++)
             {
                 //add holder
                 super.addHolder(Key.values()[index], startX, y, StackType.Same);
                 
-                //set dimension size
-                super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-                
                 //adjust x-coordinate
-                startX += (NEW_CARD_WIDTH * PLACE_CARD_WIDTH_RATIO);
+                startX += (getDefaultWidth() * PLACE_CARD_WIDTH_RATIO);
                 
                 //change the index
                 index++;
@@ -169,12 +153,6 @@ public final class PyramidGolf extends Solitaire
         
         //add holder for cards to select
         addHolder(Key.OptionalCard, OPTIONAL_START_LOCATION, StackType.Same);
-        
-        //set dimension size
-        super.getHolder(Key.Deck).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-
-        //set dimension size
-        super.getHolder(Key.OptionalCard).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
     }
     
     @Override
@@ -199,14 +177,8 @@ public final class PyramidGolf extends Solitaire
         {
             for (Value value : Value.values())
             {
-                //create a new card
-                final Card card = new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION);
-                
-                //set the new dimensions
-                card.setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-                
                 //add to our deck
-                getHolder(Key.Deck).add(card);
+                getHolder(Key.Deck).add(new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION));
             }
         }
         

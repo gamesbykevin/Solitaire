@@ -65,10 +65,18 @@
             <option>Off</option>
             <option>On</option>
         </options>
-        <options name="Difficulty: " id="Difficulty">
-            <option>Easy</option>
-            <option>Medium</option>
-            <option>Hard</option>
+        <options name="Game: " id="Game">
+            <option>Classic</option>
+            <option>Poker</option>
+            <option>Golf</option>
+            <option>Pyramid</option>
+            <option>Pyramid Golf</option>
+            <option>Bakers</option>
+            <option>Yukon</option>
+            <option>Little Spider</option>
+            <option>Free Cell</option>
+            <option>Block Ten</option>
+            <option>Good Measure</option>
         </options>
         <options name="Go Back" next="MainTitle" id="MainTitle"></options>
     </layer>

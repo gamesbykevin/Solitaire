@@ -44,6 +44,14 @@ public abstract class Solitaire extends Entity implements ISolitaire
     //did the player win
     private boolean winner = false;
     
+    //we use this to adjust the card and holder size
+    private float sizeRatio = 0.5f;
+
+    /**
+     * The default card size ratio
+     */
+    private static final float DEFAULT_SIZE_RATIO = .5f;
+    
     /**
      * Create our solitaire game
      * @param image The sprite sheet containing the card graphics
@@ -51,14 +59,53 @@ public abstract class Solitaire extends Entity implements ISolitaire
      */
     protected Solitaire(final Image image, final StackType stackType)
     {
+        this(image, DEFAULT_SIZE_RATIO, stackType);
+    }
+    
+    /**
+     * Create our solitaire game
+     * @param image The sprite sheet containing the card graphics
+     * @param sizeRatio The card size
+     * @param stackType The stack type for our default holder
+     */
+    protected Solitaire(final Image image, final float sizeRatio, final StackType stackType)
+    {
         //create container for all of the holders
         this.holders = new HashMap<>();
         
         //store the sprite sheet
         super.setImage(image);
         
+        //set the card/holder size
+        setSizeRatio(sizeRatio);
+        
         //create default holder
         this.holder = new Holder(stackType);
+        this.holder.setDimensions(getDefaultWidth(), getDefaultHeight());
+    }
+    
+    protected final int getDefaultWidth()
+    {
+        return (int)(Entity.ORIGINAL_CARD_WIDTH * getSizeRatio());
+    }
+    
+    protected final int getDefaultHeight()
+    {
+        return (int)(Entity.ORIGINAL_CARD_HEIGHT * getSizeRatio());
+    }
+    
+    protected final float getSizeRatio()
+    {
+        return this.sizeRatio;
+    }
+    
+    /**
+     * 
+     * @param sizeRatio A % of the original card size
+     */
+    protected final void setSizeRatio(final float sizeRatio)
+    {
+        this.sizeRatio = sizeRatio;
     }
     
     /**
@@ -115,6 +162,9 @@ public abstract class Solitaire extends Entity implements ISolitaire
      */
     public void addHolder(final Object key, final Holder holder)
     {
+        //make sure holder is the appropriate dimensions
+        holder.setDimensions(getDefaultWidth(), getDefaultHeight());
+        
         holders.put(key, holder);
     }
     

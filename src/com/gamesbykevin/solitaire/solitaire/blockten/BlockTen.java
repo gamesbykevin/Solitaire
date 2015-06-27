@@ -5,7 +5,6 @@ import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Holder.StackType;
 
 import com.gamesbykevin.solitaire.engine.Engine;
-import com.gamesbykevin.solitaire.entity.Entity;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 
 import java.awt.Image;
@@ -83,11 +82,11 @@ public final class BlockTen extends Solitaire
                 index++;
                 
                 //increase x-coordinate
-                x += Card.CARD_WIDTH + PIXEL_WIDTH;
+                x += getDefaultWidth() + PIXEL_WIDTH;
             }
             
             //increase y-coordinate
-            y += Card.CARD_HEIGHT + PIXEL_HEIGHT;
+            y += getDefaultHeight() + PIXEL_HEIGHT;
         }
         
         //add deck and destination holders
@@ -117,11 +116,8 @@ public final class BlockTen extends Solitaire
         {
             for (Card.Value value : Card.Value.values())
             {
-                //create a new card
-                final Card card = new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION);
-                
                 //add to our deck
-                getHolder(Key.Deck).add(card);
+                getHolder(Key.Deck).add(new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION));
             }
         }
         

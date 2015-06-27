@@ -68,6 +68,7 @@ public class HolderTest
     public void hasLocationTest()
     {
         holder = new Holder(StackType.Same);
+        holder.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
         
         assertTrue(holder.hasLocation(0, 0));
         
@@ -152,12 +153,16 @@ public class HolderTest
         
         //horizontal will have the same y, but different x since at least 1 card exists
         holder = new Holder(StackType.Horizontal);
+        holder.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);        
+        
         holder.add(card);
         assertTrue(holder.getDestinationPoint().x > holder.getX());
         assertTrue(holder.getDestinationPoint().y == holder.getY());
         
         //vertical will have the same x, but different y since at least 1 card exists
         holder = new Holder(StackType.Vertical);
+        holder.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
+        
         holder.add(card);
         assertTrue(holder.getDestinationPoint().x == holder.getX());
         assertTrue(holder.getDestinationPoint().y > holder.getY());
@@ -213,6 +218,7 @@ public class HolderTest
     {
         //create our holder
         holder = new Holder(StackType.Vertical);
+        holder.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
         
         //no cards have been added yet
         assertFalse(holder.hasCard(card));
@@ -245,6 +251,7 @@ public class HolderTest
     {
         //create our holder
         holder = new Holder(StackType.Vertical);
+        holder.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);
         assertNull(holder.getCard(0, 0));
         assertNull(holder.getCard(0));
         
@@ -393,6 +400,9 @@ public class HolderTest
     {
         //create our holder
         holder = new Holder(StackType.Vertical);
+        
+        //need dimensions before render
+        holder.setDimensions(100, 100);
         
         Graphics graphics = Shared.INVISIBLE_PIXEL.createGraphics();
         

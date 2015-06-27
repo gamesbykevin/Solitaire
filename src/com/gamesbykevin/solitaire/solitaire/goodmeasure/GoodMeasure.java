@@ -53,16 +53,6 @@ public final class GoodMeasure extends Solitaire
     private static final Point DESTINATION_LOCATION = new Point(650, 90);
     
     /**
-     * The width between each column
-     */
-    private static final int PIXEL_WIDTH = (int)(Card.CARD_WIDTH * 1.15);
-    
-    /**
-     * The width between each row
-     */
-    private static final int PIXEL_HEIGHT = (int)(Card.CARD_HEIGHT * 1.15);
-    
-    /**
      * Where the deck start is placed
      */
     private static final Point DECK_START_LOCATION = new Point(-Card.ORIGINAL_CARD_WIDTH, -Card.ORIGINAL_CARD_HEIGHT);
@@ -75,6 +65,12 @@ public final class GoodMeasure extends Solitaire
         
         int x = ROW_1_START_LOCATION.x;
         int y = ROW_1_START_LOCATION.y;
+        
+        //The width between each column
+        final int PIXEL_WIDTH = (int)(getDefaultWidth() * 1.15);
+
+        //The distance between each row
+        final int PIXEL_HEIGHT = (int)(getDefaultHeight() * 1.15);
         
         for (int col = 0; col < 5; col++)
         {

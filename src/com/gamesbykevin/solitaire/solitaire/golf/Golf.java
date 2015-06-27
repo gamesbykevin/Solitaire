@@ -31,10 +31,6 @@ public final class Golf extends Solitaire
      */
     private static final Point COLUMN_1_START_LOCATION = new Point(125, 100);
     
-    /**
-     * The amount of pixels between each columns
-     */
-    private static final int EACH_COLUMN_WIDTH = (int)(Card.CARD_WIDTH * 1.25);
     
     /**
      * Where the deck start is placed
@@ -62,6 +58,9 @@ public final class Golf extends Solitaire
         //add garbage pile holder
         addHolder(Key.GarbagePile, GARBAGE_PILE_START_LOCATION, StackType.Same);
         
+        //The amount of pixels between each columns
+        final int EACH_COLUMN_WIDTH = (int)(getDefaultWidth() * 1.25);
+    
         //add columns
         addHolder(Key.Column1, COLUMN_1_START_LOCATION.x + (0 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
         addHolder(Key.Column2, COLUMN_1_START_LOCATION.x + (1 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
@@ -109,7 +108,6 @@ public final class Golf extends Solitaire
     @Override
     public void validate() throws Exception
     {
-        
         //if all columns are empty we won
         if (getHolder(Key.Column1).isEmpty() && 
             getHolder(Key.Column2).isEmpty() && 

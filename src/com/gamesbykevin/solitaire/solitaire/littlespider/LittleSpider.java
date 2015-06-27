@@ -55,31 +55,11 @@ public final class LittleSpider extends Solitaire
      * Where the first card is placed for row 3
      */
     private static final Point ROW_3_START_LOCATION = new Point(75, 350);
-
-    /**
-     * The amount of pixels between any given holder on the same row
-     */
-    private static final int HOLDER_SPACE_WIDTH = (int)(Card.CARD_WIDTH * 5.0);
     
     /**
      * Where the deck start is placed
      */
     private static final Point DECK_START_LOCATION = new Point(75, 245);
-    
-    /**
-     * Ratio of the default card size
-     */
-    private static final double SIZE_RATIO = .95;
-    
-    /**
-     * Adjusted card dimensions
-     */
-    private static final int NEW_CARD_WIDTH = (int)(Card.CARD_WIDTH * SIZE_RATIO);
-    
-    /**
-     * Adjusted card dimensions
-     */
-    private static final int NEW_CARD_HEIGHT = (int)(Card.CARD_HEIGHT * SIZE_RATIO);
     
     public LittleSpider(final Image image)
     {
@@ -89,14 +69,17 @@ public final class LittleSpider extends Solitaire
         int startX = ROW_1_START_LOCATION.x;
         int startY = ROW_1_START_LOCATION.y;
         
+        //The amount of pixels between any given holder on the same row
+        final int HOLDER_SPACE_WIDTH = (int)(getDefaultWidth() * 5.0);
+
+        //Adjusted card dimensions
+        final int NEW_CARD_HEIGHT = (int)(getDefaultHeight() * .95);
+        
         //setup row 1 holders
         for (int index = 0; index < 2; index++)
         {
             //add holder at location
             super.addHolder(Key.values()[index], startX, startY, StackType.Horizontal);
-            
-            //set dimension size
-            super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
                 
             //space each holder out
             startX += HOLDER_SPACE_WIDTH;
@@ -110,9 +93,6 @@ public final class LittleSpider extends Solitaire
         {
             //add holder at location
             super.addHolder(Key.values()[index], startX, startY, StackType.Horizontal);
-            
-            //set dimension size
-            super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
                 
             //space each holder out
             startX += HOLDER_SPACE_WIDTH;
@@ -127,11 +107,8 @@ public final class LittleSpider extends Solitaire
             //add holder at location
             super.addHolder(Key.values()[index], startX, startY, StackType.Same);
             
-            //set dimension size
-            super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-            
             //space each holder out
-            startX += (Card.CARD_WIDTH * 1.25);
+            startX += (getDefaultWidth() * 1.25);
         }
         
         startX = ROW_3_START_LOCATION.x;
@@ -142,9 +119,6 @@ public final class LittleSpider extends Solitaire
         {
             //add holder at location
             super.addHolder(Key.values()[index], startX, startY, StackType.Horizontal);
-            
-            //set dimension size
-            super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
             
             //space each holder out
             startX += HOLDER_SPACE_WIDTH;
@@ -159,18 +133,12 @@ public final class LittleSpider extends Solitaire
             //add holder at location
             super.addHolder(Key.values()[index], startX, startY, StackType.Horizontal);
             
-            //set dimension size
-            super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-            
             //space each holder out
             startX += HOLDER_SPACE_WIDTH;
         }
         
         //add the deck
         super.addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
-            
-        //set dimension size
-        super.getHolder(Key.Deck).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
     }
     
     @Override
@@ -195,14 +163,8 @@ public final class LittleSpider extends Solitaire
         {
             for (Card.Value value : Card.Value.values())
             {
-                //create a new card
-                final Card card = new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION);
-                
-                //set card dimensions
-                card.setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-                
                 //add to our deck
-                getHolder(Key.Deck).add(card);
+                getHolder(Key.Deck).add(new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION));
             }
         }
         

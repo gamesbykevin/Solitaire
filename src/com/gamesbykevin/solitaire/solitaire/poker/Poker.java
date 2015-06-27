@@ -42,20 +42,6 @@ public final class Poker extends Solitaire
      */
     private static final Point ROW_1_COLUMN_1_START_LOCATION = new Point(175, 90);
     
-    //the new dimensions of the card
-    private static final int NEW_CARD_WIDTH = (int)(Card.CARD_WIDTH * .85);
-    private static final int NEW_CARD_HEIGHT = (int)(Card.CARD_HEIGHT * .85);
-    
-    /**
-     * The width between each column
-     */
-    private static final int PIXEL_WIDTH = (int)(NEW_CARD_WIDTH * 1.15);
-    
-    /**
-     * The width between each row
-     */
-    private static final int PIXEL_HEIGHT = (int)(NEW_CARD_HEIGHT * 1.05);
-    
     /**
      * The dimensions of our poker board
      */
@@ -64,12 +50,20 @@ public final class Poker extends Solitaire
     //the amount of time to move the cards from one point to the next
     private static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(200L);
 
+    //new card size
+    private static final float CARD_SIZE_RATIO = .42f;
     
     public Poker(final Image image)
     {
-        super(image, StackType.Same);
+        super(image, CARD_SIZE_RATIO, StackType.Same);
         
         int index = 0;
+        
+        //The width between each column
+        final int PIXEL_WIDTH = (int)(getDefaultWidth() * 1.15);
+
+        //The width between each row
+        final int PIXEL_HEIGHT = (int)(getDefaultHeight() * 1.05);
         
         for (int row = 0; row < ROWS; row++)
         {
@@ -82,9 +76,6 @@ public final class Poker extends Solitaire
                 //add holder
                 super.addHolder(Key.values()[index], x, y, StackType.Same);
                 
-                //set the dimensions
-                super.getHolder(Key.values()[index]).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
-                
                 //increase the index
                 index++;
             }
@@ -92,9 +83,6 @@ public final class Poker extends Solitaire
         
         //add the deck
         super.addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
-        
-        //set the dimensions
-        super.getHolder(Key.Deck).setDimensions(NEW_CARD_WIDTH, NEW_CARD_HEIGHT);
     }
     
     @Override
@@ -119,15 +107,8 @@ public final class Poker extends Solitaire
         {
             for (Card.Value value : Card.Value.values())
             {
-                //create a new card
-                final Card card = new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION);
-                
-                //set the card dimensions
-                card.setWidth(NEW_CARD_WIDTH);
-                card.setHeight(NEW_CARD_HEIGHT);
-                
                 //add to our deck
-                getHolder(Key.Deck).add(card);
+                getHolder(Key.Deck).add(new Card(suit, value, back, Key.Deck, MOVE_CARD_DURATION));
             }
         }
         
