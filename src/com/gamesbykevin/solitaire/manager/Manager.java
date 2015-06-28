@@ -1,5 +1,6 @@
 package com.gamesbykevin.solitaire.manager;
 
+import com.gamesbykevin.framework.util.Timers;
 import com.gamesbykevin.solitaire.solitaire.bakers.Bakers;
 import com.gamesbykevin.solitaire.solitaire.blockten.BlockTen;
 import com.gamesbykevin.solitaire.solitaire.freecell.FreeCell;
@@ -40,6 +41,9 @@ public final class Manager implements IManager
     //our solitaire game
     private Solitaire solitaire;
     
+    //keep track of time to update timer
+    private long previous;
+    
     /**
      * Constructor for Manager, this is the point where we load any menu option configurations
      * @param engine Engine for our game that contains all objects needed
@@ -63,46 +67,57 @@ public final class Manager implements IManager
         {
             case CustomMenu.GAME_CLASSIC:
                 this.solitaire = new Klondike(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Classic Solitaire");
                 break;
             
             case CustomMenu.GAME_POKER:
                 this.solitaire = new Poker(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Poker Solitaire");
                 break;
                 
             case CustomMenu.GAME_GOLF:
                 this.solitaire = new Golf(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Golf Solitaire");
                 break;
                 
             case CustomMenu.GAME_PYRAMID:
                 this.solitaire = new Pyramid(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Pyramid Solitaire");
                 break;
                 
             case CustomMenu.GAME_PYRAMID_GOLF:
                 this.solitaire = new PyramidGolf(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Pyramid Golf Solitaire");
                 break;
                 
             case CustomMenu.GAME_BAKERS:
                 this.solitaire = new Bakers(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Bakers Solitaire");
                 break;
                 
             case CustomMenu.GAME_YUKON:
                 this.solitaire = new Yukon(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Yukon Solitaire");
                 break;
                 
             case CustomMenu.GAME_LITTLE_SPIDER:
                 this.solitaire = new LittleSpider(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Little Spider Solitaire");
                 break;
                 
             case CustomMenu.GAME_FREE_CELL:
                 this.solitaire = new FreeCell(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Free Cell Solitaire");
                 break;
                 
             case CustomMenu.GAME_BLOCK_TEN:
                 this.solitaire = new BlockTen(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Block Ten Solitaire");
                 break;
                 
             case CustomMenu.GAME_GOOD_MEASURE:
                 this.solitaire = new GoodMeasure(engine.getResources().getGameImage(GameImages.Keys.Cards));
+                this.solitaire.getStats().setMessage3("Good Measure Solitaire");
                 break;
                 
             default:
@@ -188,23 +203,45 @@ public final class Manager implements IManager
         {
             //if the game is over no need to continue
             if (solitaire.hasGameover())
-                return;
-        
-            if (!solitaire.isCreateComplete())
             {
-                solitaire.create(engine.getRandom());
-            }
-            else if (!solitaire.isShuffleComplete())
-            {
-                solitaire.shuffle(engine.getRandom());
-            }
-            else if (!solitaire.isDealComplete())
-            {
-                solitaire.deal(engine.getTime());
+                solitaire.getStats().setMessage1(solitaire.isWinner() ? "Game Over, Win" : "Game Over, Lose");
             }
             else
             {
-                solitaire.update(engine);
+                if (!solitaire.isCreateComplete())
+                {
+                    solitaire.getStats().setMessage1("Creating Deck");
+                    solitaire.getStats().setMessage2("Hit 'Esc' for menu");
+                    solitaire.create(engine.getRandom());
+                }
+                else if (!solitaire.isShuffleComplete())
+                {
+                    solitaire.getStats().setMessage1("Shuffling Deck");
+                    solitaire.shuffle(engine.getRandom());
+                }
+                else if (!solitaire.isDealComplete())
+                {
+                    solitaire.getStats().setMessage1("Dealing Cards");
+                    solitaire.deal(engine.getTime());
+
+                    if (solitaire.isDealComplete())
+                        solitaire.getStats().setMessage1("Game Start");
+                }
+                else
+                {
+                    //update main game
+                    solitaire.update(engine);
+
+                    //update game timer
+                    solitaire.getStats().getTimer().update(engine.getTime());
+
+                    //if 1 second has passed update time and render a new image
+                    if (System.nanoTime() - previous >= Timers.NANO_SECONDS_PER_SECOND)
+                    {
+                        solitaire.getStats().flagChange();
+                        previous = System.nanoTime();
+                    }
+                }
             }
         }
     }

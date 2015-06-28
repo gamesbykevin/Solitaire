@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.freecell;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.freecell.FreeCell.Key;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
@@ -26,11 +26,11 @@ public final class FreeCellTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
         assertTrue(FreeCell.TEMP_HOLDER_LIMIT == 1);
         
-        Solitaire freeCell = new FreeCell(Shared.INVISIBLE_PIXEL);
+        Solitaire freeCell = new FreeCell(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -41,9 +41,9 @@ public final class FreeCellTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire freeCell = new FreeCell(Shared.INVISIBLE_PIXEL);
+        Solitaire freeCell = new FreeCell(TEST_IMAGE);
         freeCell.dispose();
         freeCell = null;
         
@@ -58,7 +58,7 @@ public final class FreeCellTest extends SolitaireTest
         super.setUp();
         
         //create new game
-        freeCell = new FreeCell(Shared.INVISIBLE_PIXEL);
+        freeCell = new FreeCell(TEST_IMAGE);
         
         //assume not null
         assertNotNull(freeCell);
@@ -152,7 +152,7 @@ public final class FreeCellTest extends SolitaireTest
         freeCell.shuffle(getEngine().getRandom(), freeCell.getHolder(Key.Deck));
         freeCell.deal(getEngine().getTime());
         freeCell.validate();
-        freeCell.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        freeCell.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -163,7 +163,7 @@ public final class FreeCellTest extends SolitaireTest
         freeCell.deal(getEngine().getTime());
         freeCell.validate();
         freeCell.update(getEngine());
-        freeCell.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        freeCell.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

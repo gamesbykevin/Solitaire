@@ -53,7 +53,10 @@ public final class Poker extends Solitaire
     //new card size
     private static final float CARD_SIZE_RATIO = .42f;
     
-    public Poker(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(475, 175);
+    
+    public Poker(final Image image) throws Exception
     {
         super(image, CARD_SIZE_RATIO, StackType.Same);
         
@@ -83,6 +86,9 @@ public final class Poker extends Solitaire
         
         //add the deck
         super.addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -133,6 +139,20 @@ public final class Poker extends Solitaire
                 return;
         }
         
+        //calculate score
+        calculateScore();
+        
+        //flag game over
+        super.setGameover(true);
+        super.setWinner(true);
+    }
+    
+    /**
+     * Calculate the score
+     * @throws Exception 
+     */
+    private void calculateScore() throws Exception
+    {
         int score = 0;
         
         //calculate the score for row 1
@@ -225,12 +245,8 @@ public final class Poker extends Solitaire
             getHolder(Key.Row5Column5).getFirstCard()
         );
         
-        if (Shared.DEBUG)
-            System.out.println("Score = " + score);
-        
-        //flag game over
-        super.setGameover(true);
-        super.setWinner(true);
+        //assign score
+        super.getStats().setScore(score);
     }
     
     /**
@@ -245,6 +261,10 @@ public final class Poker extends Solitaire
      */
     private int getScore(final Card card1, final Card card2, final Card card3, final Card card4, final Card card5) throws Exception
     {
+        //we need all cards to determine the score
+        if (card1 == null || card2 == null || card3 == null || card4 == null || card5 == null)
+            return 0;
+        
         //starting score
         int score = 0;
         
@@ -414,6 +434,9 @@ public final class Poker extends Solitaire
                     //now remove all cards from default holder
                     getDefaultHolder().removeAll();
 
+                    //calculate score
+                    calculateScore();
+                    
                     //validate and check if the game has ended
                     validate();
                 }

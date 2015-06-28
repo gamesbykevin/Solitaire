@@ -57,7 +57,13 @@ public final class GoodMeasure extends Solitaire
      */
     private static final Point DECK_START_LOCATION = new Point(-Card.ORIGINAL_CARD_WIDTH, -Card.ORIGINAL_CARD_HEIGHT);
     
-    public GoodMeasure(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(450, 210);
+    
+    //points to add for each card placed
+    private static final int POINTS_SCORE = 10;
+    
+    public GoodMeasure(final Image image) throws Exception
     {
         super(image, StackType.Same);
         
@@ -105,6 +111,9 @@ public final class GoodMeasure extends Solitaire
         super.addHolder(Key.Destination2, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (1 * PIXEL_HEIGHT), Holder.StackType.Same);
         super.addHolder(Key.Destination3, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (2 * PIXEL_HEIGHT), Holder.StackType.Same);
         super.addHolder(Key.Destination4, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (3 * PIXEL_HEIGHT), Holder.StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -495,6 +504,10 @@ public final class GoodMeasure extends Solitaire
                     {
                         final Card card = getDefaultHolder().getCard(index);
 
+                        //if destination add score
+                        if (isDestination(card.getDestinationHolderKey()))
+                            super.getStats().setScore(super.getStats().getScore() + POINTS_SCORE);
+                        
                         //add to the destination holder
                         getHolder(card.getDestinationHolderKey()).add(card);
                     }
@@ -510,6 +523,16 @@ public final class GoodMeasure extends Solitaire
                 }
             }
         }
+    }
+    
+    /**
+     * Is this the final destination for the card
+     * @param key The key of the holder we want to check
+     * @return true=yes, false=no
+     */
+    private boolean isDestination(final Object key)
+    {
+        return (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || key == Key.Destination4);
     }
     
     /**

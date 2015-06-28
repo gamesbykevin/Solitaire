@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.golf;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.golf.Golf.Key;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
@@ -25,9 +25,9 @@ public final class GolfTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
-        Solitaire golf = new Golf(Shared.INVISIBLE_PIXEL);
+        Solitaire golf = new Golf(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -40,9 +40,9 @@ public final class GolfTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire golf = new Golf(Shared.INVISIBLE_PIXEL);
+        Solitaire golf = new Golf(TEST_IMAGE);
         golf.dispose();
         golf = null;
     }
@@ -54,7 +54,7 @@ public final class GolfTest extends SolitaireTest
         super.setUp();
         
         //create new game
-        golf = new Golf(Shared.INVISIBLE_PIXEL);
+        golf = new Golf(TEST_IMAGE);
         
         //object now exists
         assertNotNull(golf);
@@ -132,7 +132,7 @@ public final class GolfTest extends SolitaireTest
         golf.shuffle(getEngine().getRandom(), golf.getHolder(Key.Deck));
         golf.deal(getEngine().getTime());
         golf.validate();
-        golf.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        golf.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -143,7 +143,7 @@ public final class GolfTest extends SolitaireTest
         golf.deal(getEngine().getTime());
         golf.validate();
         golf.update(getEngine());
-        golf.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        golf.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

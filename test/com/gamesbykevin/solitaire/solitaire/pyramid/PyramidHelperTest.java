@@ -5,9 +5,10 @@ import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Card.*;
 import com.gamesbykevin.solitaire.card.Holder;
 import com.gamesbykevin.solitaire.card.Holder.StackType;
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid.Key;
+import static com.gamesbykevin.solitaire.solitaire.SolitaireTest.TEST_IMAGE;
 
 import java.util.Random;
 import org.junit.After;
@@ -60,7 +61,7 @@ public class PyramidHelperTest
     public void setUp() throws Exception
     {
         //create new instance
-        pyramid = new Pyramid(Shared.INVISIBLE_PIXEL);
+        pyramid = new Pyramid(TEST_IMAGE);
         
         //create holders
         holder1 = new Holder(StackType.Same);

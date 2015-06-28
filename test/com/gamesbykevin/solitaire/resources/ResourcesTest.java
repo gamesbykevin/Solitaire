@@ -6,7 +6,7 @@ import com.gamesbykevin.solitaire.resources.GameAudio;
 import com.gamesbykevin.solitaire.resources.GameFont;
 import com.gamesbykevin.solitaire.resources.GameImages;
 import com.gamesbykevin.solitaire.resources.GameText;
-import com.gamesbykevin.solitaire.shared.Shared;
+import static com.gamesbykevin.solitaire.solitaire.SolitaireTest.TEST_IMAGE;
 
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
@@ -197,7 +197,7 @@ public class ResourcesTest
     @Test
     public void renderTest() throws Exception
     {
-        Graphics graphics = Shared.INVISIBLE_PIXEL.createGraphics();
+        Graphics graphics = TEST_IMAGE.createGraphics();
         
         resources.render(graphics, engine.getScreen());
         

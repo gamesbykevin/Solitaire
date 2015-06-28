@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.bakers;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.bakers.Bakers.Key;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
@@ -25,12 +25,12 @@ public final class BakersTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
         //assume true
         assertTrue(Bakers.HOLDER_SIZE == 4);
         
-        Solitaire bakers = new Bakers(Shared.INVISIBLE_PIXEL);
+        Solitaire bakers = new Bakers(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -40,9 +40,9 @@ public final class BakersTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire bakers = new Bakers(Shared.INVISIBLE_PIXEL);
+        Solitaire bakers = new Bakers(TEST_IMAGE);
         bakers.dispose();
         bakers = null;
     }
@@ -54,7 +54,7 @@ public final class BakersTest extends SolitaireTest
         super.setUp();
         
         //create new solitaire game
-        bakers = new Bakers(Shared.INVISIBLE_PIXEL);
+        bakers = new Bakers(TEST_IMAGE);
         
         //assume not null
         assertNotNull(bakers);
@@ -144,7 +144,7 @@ public final class BakersTest extends SolitaireTest
         bakers.shuffle(getEngine().getRandom(), bakers.getHolder(Key.Deck));
         bakers.deal(getEngine().getTime());
         bakers.validate();
-        bakers.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        bakers.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -155,7 +155,7 @@ public final class BakersTest extends SolitaireTest
         bakers.deal(getEngine().getTime());
         bakers.validate();
         bakers.update(getEngine());
-        bakers.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        bakers.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

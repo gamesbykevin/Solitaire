@@ -1,7 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.pyramid;
 
 import com.gamesbykevin.solitaire.solitaire.pyramid.Pyramid.Key;
-import com.gamesbykevin.solitaire.shared.Shared;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
 import org.junit.After;
@@ -25,7 +24,7 @@ public final class PyramidTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
         //there will be 7 rows in the game
         assertTrue(Pyramid.ROWS == 7);
@@ -33,7 +32,7 @@ public final class PyramidTest extends SolitaireTest
         //user can select up to 2 cards
         assertTrue(Pyramid.SELECT_LIMIT == 2);
 
-        Solitaire pyramid = new Pyramid(Shared.INVISIBLE_PIXEL);
+        Solitaire pyramid = new Pyramid(TEST_IMAGE);
         
         //assume all animations have been added
         for (Key key : Key.values())
@@ -43,9 +42,9 @@ public final class PyramidTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire pyramid = new Pyramid(Shared.INVISIBLE_PIXEL);
+        Solitaire pyramid = new Pyramid(TEST_IMAGE);
         pyramid.dispose();
         pyramid = null;
     }
@@ -57,7 +56,7 @@ public final class PyramidTest extends SolitaireTest
         super.setUp();
         
         //create new instance
-        pyramid = new Pyramid(Shared.INVISIBLE_PIXEL);
+        pyramid = new Pyramid(TEST_IMAGE);
         
         //assume not null
         assertNotNull(pyramid);
@@ -135,7 +134,7 @@ public final class PyramidTest extends SolitaireTest
         pyramid.shuffle(getEngine().getRandom(), pyramid.getHolder(Key.Deck));
         pyramid.deal(getEngine().getTime());
         pyramid.validate();
-        pyramid.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        pyramid.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -146,7 +145,7 @@ public final class PyramidTest extends SolitaireTest
         pyramid.deal(getEngine().getTime());
         pyramid.validate();
         pyramid.update(getEngine());
-        pyramid.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        pyramid.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

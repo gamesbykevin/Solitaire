@@ -1,9 +1,10 @@
 package com.gamesbykevin.solitaire.solitaire.yukon;
 
 import com.gamesbykevin.framework.util.Timers;
+
 import com.gamesbykevin.solitaire.card.Card;
-import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.card.Holder.StackType;
+import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.solitaire.klondike.KlondikeHelper;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 
@@ -48,7 +49,13 @@ public final class Yukon extends Solitaire
      */
     private static final Point DECK_START_LOCATION = new Point(-Card.ORIGINAL_CARD_WIDTH, -Card.ORIGINAL_CARD_HEIGHT);
     
-    public Yukon(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(115, 350);
+    
+    //points to add for each card placed
+    private static final int POINTS_SCORE = 10;
+    
+    public Yukon(final Image image) throws Exception
     {
         super(image, StackType.Vertical);
         
@@ -68,6 +75,9 @@ public final class Yukon extends Solitaire
         addHolder(Key.Playable6, PLAYABLE_LOCATION_1.x + (5 * PIXEL_WIDTH), PLAYABLE_LOCATION_1.y, StackType.Vertical);
         addHolder(Key.Playable7, PLAYABLE_LOCATION_1.x + (6 * PIXEL_WIDTH), PLAYABLE_LOCATION_1.y, StackType.Vertical);
         addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     /**
@@ -219,6 +229,11 @@ public final class Yukon extends Solitaire
                     if (key == Key.Deck)
                         continue;
                     
+                    //ignore the destinations
+                    if (key == Key.Destination1 || key == Key.Destination2 ||
+                        key == Key.Destination3 || key == Key.Destination4)
+                        continue;
+                    
                     //did we click in this holder deck and are there cards here
                     if (getHolder(key).hasCard(x, y))
                     {
@@ -304,6 +319,10 @@ public final class Yukon extends Solitaire
                 {
                     final Card card = getDefaultHolder().getCard(index);
                     
+                    //if destination add score
+                    if (isDestination(card.getDestinationHolderKey()))
+                        super.getStats().setScore(super.getStats().getScore() + POINTS_SCORE);
+                    
                     //add to the destination holder
                     getHolder(card.getDestinationHolderKey()).add(card);
                 }
@@ -318,6 +337,16 @@ public final class Yukon extends Solitaire
                 validate();
             }
         }
+    }
+    
+    /**
+     * Is this the final destination for the card
+     * @param key The key of the holder we want to check
+     * @return true=yes, false=no
+     */
+    private boolean isDestination(final Object key)
+    {
+        return (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || key == Key.Destination4);
     }
     
     /**

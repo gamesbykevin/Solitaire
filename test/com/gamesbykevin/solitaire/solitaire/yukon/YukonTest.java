@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.yukon;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
 import com.gamesbykevin.solitaire.solitaire.yukon.Yukon;
@@ -26,9 +26,9 @@ public final class YukonTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
-        Solitaire yukon = new Yukon(Shared.INVISIBLE_PIXEL);
+        Solitaire yukon = new Yukon(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -38,9 +38,9 @@ public final class YukonTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire yukon = new Yukon(Shared.INVISIBLE_PIXEL);
+        Solitaire yukon = new Yukon(TEST_IMAGE);
         yukon.dispose();
         yukon = null;
     }
@@ -52,7 +52,7 @@ public final class YukonTest extends SolitaireTest
         super.setUp();
         
         //create new object
-        yukon = new Yukon(Shared.INVISIBLE_PIXEL);
+        yukon = new Yukon(TEST_IMAGE);
         
         //object has now been created
         assertNotNull(yukon);
@@ -130,7 +130,7 @@ public final class YukonTest extends SolitaireTest
         yukon.shuffle(getEngine().getRandom(), yukon.getHolder(Key.Deck));
         yukon.deal(getEngine().getTime());
         yukon.validate();
-        yukon.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        yukon.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -141,7 +141,7 @@ public final class YukonTest extends SolitaireTest
         yukon.deal(getEngine().getTime());
         yukon.validate();
         yukon.update(getEngine());
-        yukon.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        yukon.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

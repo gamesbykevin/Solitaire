@@ -84,7 +84,10 @@ public final class PyramidGolf extends Solitaire
     //the amount of time to move the cards from one point to the next
     private static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(175L);
     
-    public PyramidGolf(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(50, 350);
+    
+    public PyramidGolf(final Image image) throws Exception
     {
         //store the sprite sheet image
         super(image, CARD_SIZE_RATIO, StackType.Same);
@@ -153,6 +156,9 @@ public final class PyramidGolf extends Solitaire
         
         //add holder for cards to select
         addHolder(Key.OptionalCard, OPTIONAL_START_LOCATION, StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -232,7 +238,7 @@ public final class PyramidGolf extends Solitaire
             if (!PyramidGolfHelper.isBlocked(this, key))
             {
                 //if these cards are neighbors, there is still a valid move and game is not over
-                if (GolfHelper.isNeighbor(getHolder(key).getFirstCard(), getHolder(Key.OptionalCard).getFirstCard()))
+                if (GolfHelper.isNeighbor(getHolder(key).getFirstCard(), getHolder(Key.OptionalCard).getLastCard()))
                     return;
             }
         }
@@ -280,6 +286,9 @@ public final class PyramidGolf extends Solitaire
             
             //we didn't find a target so we are done dealing
             setDealComplete(true);
+            
+            //calculate score
+            super.getStats().setScore(getScore());
         }
         else
         {
@@ -345,6 +354,9 @@ public final class PyramidGolf extends Solitaire
                                 //now check if they are neighbors by the card's face value, if the card exists
                                 if (optional == null || GolfHelper.isNeighbor(card, optional))
                                 {
+                                    //calculate score
+                                    super.getStats().setScore(getScore());
+                                    
                                     //set the destination
                                     setDestination(card, key, Key.OptionalCard);
                                     
@@ -385,6 +397,27 @@ public final class PyramidGolf extends Solitaire
     }
     
     /**
+     * Get the score
+     * @return The score will be the total number of cards remaining
+     */
+    private int getScore()
+    {
+        int score = 0;
+        
+        for (Key key : Key.values())
+        {
+            //don't check these
+            if (key == Key.Deck || key == Key.OptionalCard)
+                continue;
+            
+            //the score will be the total number of cards remaining
+            score += getHolder(key).getSize();
+        }
+        
+        return score;
+    }
+    
+    /**
      * Set the destination of the specified card
      * @param card Card we want to move
      * @param source The holder where it came from
@@ -418,6 +451,9 @@ public final class PyramidGolf extends Solitaire
     @Override
     public void render(final Graphics graphics) throws Exception
     {
+        //render and draw the stats
+        getStats().drawStats(graphics);
+        
         for (Key key : Key.values())
         {
             getHolder(key).render(graphics, getImage(), getHolder(key).isEmpty() ? false : true);

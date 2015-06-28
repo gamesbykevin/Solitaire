@@ -47,7 +47,10 @@ public final class Golf extends Solitaire
      */
     protected static final int COLUMN_LIMIT = 5;
     
-    public Golf(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(50, 350);
+    
+    public Golf(final Image image) throws Exception
     {
         //store the sprite sheet image
         super(image, StackType.Same);
@@ -69,6 +72,9 @@ public final class Golf extends Solitaire
         addHolder(Key.Column5, COLUMN_1_START_LOCATION.x + (4 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
         addHolder(Key.Column6, COLUMN_1_START_LOCATION.x + (5 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
         addHolder(Key.Column7, COLUMN_1_START_LOCATION.x + (6 * EACH_COLUMN_WIDTH), COLUMN_1_START_LOCATION.y, StackType.Vertical);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -120,6 +126,7 @@ public final class Golf extends Solitaire
             //flag game over and loser
             super.setGameover(true);
             super.setWinner(true);
+            return;
         }
         
         //if there are cards in the deck, the game can't be over
@@ -199,6 +206,9 @@ public final class Golf extends Solitaire
             {
                 //the holders have the specified card limit
                 setDealComplete(true);
+
+                //calculate score
+                super.getStats().setScore(getScore());
                 
                 //no need to continue
                 return;
@@ -313,6 +323,9 @@ public final class Golf extends Solitaire
                     getHolder(card.getDestinationHolderKey()).add(card);
                 }
 
+                //calculate score
+                super.getStats().setScore(getScore());
+                
                 //now remove all cards from default holder
                 getDefaultHolder().removeAll();
 
@@ -320,6 +333,17 @@ public final class Golf extends Solitaire
                 validate();
             }
         }
+    }
+    
+    /**
+     * Get the score
+     * @return The number of remaining cards, the lower the score the better
+     */
+    private int getScore()
+    {
+        return (getHolder(Key.Column1).getSize() + getHolder(Key.Column2).getSize() + getHolder(Key.Column3).getSize() + 
+                getHolder(Key.Column4).getSize() + getHolder(Key.Column5).getSize() + getHolder(Key.Column6).getSize() + 
+                getHolder(Key.Column7).getSize());
     }
     
     /**

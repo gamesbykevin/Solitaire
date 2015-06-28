@@ -73,7 +73,13 @@ public final class FreeCell extends Solitaire
     //the amount of time until each card is placed
     private static final long CARD_MOVE_DURATION = Timers.toNanoSeconds(100L);
     
-    public FreeCell(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(25, 400);
+    
+    //points to add for each card placed
+    private static final int POINTS_SCORE = 10;
+    
+    public FreeCell(final Image image) throws Exception
     {
         super(image, StackType.Vertical);
         
@@ -115,6 +121,9 @@ public final class FreeCell extends Solitaire
         
         //add the deck
         super.addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -429,6 +438,10 @@ public final class FreeCell extends Solitaire
                     //get the first card for reference
                     final Card card = getDefaultHolder().getFirstCard();
 
+                    //if destination add score
+                    if (isDestination(card.getDestinationHolderKey()))
+                        super.getStats().setScore(super.getStats().getScore() + POINTS_SCORE);
+                    
                     //add cards to the destination
                     getHolder(card.getDestinationHolderKey()).add(getDefaultHolder());
 
@@ -440,5 +453,16 @@ public final class FreeCell extends Solitaire
                 }
             }
         }
+    }
+    
+    
+    /**
+     * Is this the final destination for the card
+     * @param key The key of the holder we want to check
+     * @return true=yes, false=no
+     */
+    private boolean isDestination(final Object key)
+    {
+        return (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || key == Key.Destination4);
     }
 }

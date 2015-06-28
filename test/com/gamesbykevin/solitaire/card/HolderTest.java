@@ -2,7 +2,7 @@ package com.gamesbykevin.solitaire.card;
 
 import com.gamesbykevin.solitaire.card.Card.*;
 import com.gamesbykevin.solitaire.card.Holder.StackType;
-import com.gamesbykevin.solitaire.shared.Shared;
+import static com.gamesbykevin.solitaire.solitaire.SolitaireTest.TEST_IMAGE;
 
 import java.awt.Graphics;
 
@@ -404,20 +404,20 @@ public class HolderTest
         //need dimensions before render
         holder.setDimensions(100, 100);
         
-        Graphics graphics = Shared.INVISIBLE_PIXEL.createGraphics();
+        Graphics graphics = TEST_IMAGE.createGraphics();
         
         //render without having a card
-        holder.render(graphics, Shared.INVISIBLE_PIXEL);
-        holder.render(graphics, Shared.INVISIBLE_PIXEL, true);
-        holder.render(graphics, Shared.INVISIBLE_PIXEL, false);
+        holder.render(graphics, TEST_IMAGE);
+        holder.render(graphics, TEST_IMAGE, true);
+        holder.render(graphics, TEST_IMAGE, false);
         
         //now add card
         holder.add(card);
         
         //render with a card
-        holder.render(graphics, Shared.INVISIBLE_PIXEL);
-        holder.render(graphics, Shared.INVISIBLE_PIXEL, true);
-        holder.render(graphics, Shared.INVISIBLE_PIXEL, false);
+        holder.render(graphics, TEST_IMAGE);
+        holder.render(graphics, TEST_IMAGE, true);
+        holder.render(graphics, TEST_IMAGE, false);
     }
     
     @Test

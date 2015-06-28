@@ -4,6 +4,7 @@ import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Holder;
 import com.gamesbykevin.solitaire.card.Holder.StackType;
 import com.gamesbykevin.solitaire.entity.Entity;
+import com.gamesbykevin.solitaire.stats.Stats;
 
 import java.awt.Graphics;
 
@@ -23,6 +24,9 @@ public abstract class Solitaire extends Entity implements ISolitaire
     
     //the default holder for the cards the human can control
     private Holder holder;
+    
+    //object containing our game stats
+    private Stats stats;
     
     /**
      * The number of times to shuffle the deck
@@ -52,12 +56,16 @@ public abstract class Solitaire extends Entity implements ISolitaire
      */
     private static final float DEFAULT_SIZE_RATIO = .5f;
     
+    //dimensions of our stat object
+    private static final int STAT_WIDTH = 170;
+    private static final int STAT_HEIGHT = 100;
+    
     /**
      * Create our solitaire game
      * @param image The sprite sheet containing the card graphics
      * @param stackType The stack type for our default holder
      */
-    protected Solitaire(final Image image, final StackType stackType)
+    protected Solitaire(final Image image, final StackType stackType) throws Exception
     {
         this(image, DEFAULT_SIZE_RATIO, stackType);
     }
@@ -68,7 +76,7 @@ public abstract class Solitaire extends Entity implements ISolitaire
      * @param sizeRatio The card size
      * @param stackType The stack type for our default holder
      */
-    protected Solitaire(final Image image, final float sizeRatio, final StackType stackType)
+    protected Solitaire(final Image image, final float sizeRatio, final StackType stackType) throws Exception
     {
         //create container for all of the holders
         this.holders = new HashMap<>();
@@ -82,13 +90,33 @@ public abstract class Solitaire extends Entity implements ISolitaire
         //create default holder
         this.holder = new Holder(stackType);
         this.holder.setDimensions(getDefaultWidth(), getDefaultHeight());
+        
+        //create our stats object
+        this.stats = new Stats(STAT_WIDTH, STAT_HEIGHT, image);
     }
     
+    /**
+     * Get stats object that contains the time, score, etc...
+     * @return Our stats object which is displayed in the game
+     */
+    public final Stats getStats()
+    {
+        return this.stats;
+    }
+    
+    /**
+     * Get the width
+     * @return The default width of our card size
+     */
     protected final int getDefaultWidth()
     {
         return (int)(Entity.ORIGINAL_CARD_WIDTH * getSizeRatio());
     }
     
+    /**
+     * Get the height
+     * @return The default height of our card size
+     */
     protected final int getDefaultHeight()
     {
         return (int)(Entity.ORIGINAL_CARD_HEIGHT * getSizeRatio());
@@ -328,6 +356,9 @@ public abstract class Solitaire extends Entity implements ISolitaire
     @Override
     public void render(final Graphics graphics) throws Exception
     {
+        //render and draw the stats
+        getStats().drawStats(graphics);
+        
         //render all of our holders
         for (Holder tmp : holders.values())
         {

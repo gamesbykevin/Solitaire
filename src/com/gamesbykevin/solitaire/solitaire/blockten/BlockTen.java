@@ -22,9 +22,9 @@ public final class BlockTen extends Solitaire
      */
     protected enum Key
     {
-        Row_1_Column_1, Row_1_Column_2, Row_1_Column_3, Row_1_Column_4, //Row_1_Column_5, 
-        Row_2_Column_1, Row_2_Column_2, Row_2_Column_3, Row_2_Column_4, //Row_2_Column_5, 
-        Row_3_Column_1, Row_3_Column_2, Row_3_Column_3, Row_3_Column_4, //Row_3_Column_5, 
+        Row_1_Column_1, Row_1_Column_2, Row_1_Column_3, Row_1_Column_4, 
+        Row_2_Column_1, Row_2_Column_2, Row_2_Column_3, Row_2_Column_4, 
+        Row_3_Column_1, Row_3_Column_2, Row_3_Column_3, Row_3_Column_4, 
         
         Destination, 
         
@@ -60,7 +60,13 @@ public final class BlockTen extends Solitaire
     //the amount of time to move the cards from one point to the next
     private static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(250L);
     
-    public BlockTen(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(50, 350);
+    
+    //points to add for each card placed
+    private static final int POINTS_SCORE = 10;
+    
+    public BlockTen(final Image image) throws Exception
     {
         //store the sprite sheet image
         super(image, StackType.Same);
@@ -92,6 +98,9 @@ public final class BlockTen extends Solitaire
         //add deck and destination holders
         super.addHolder(Key.Deck,        DECK_LOCATION,        StackType.Same);
         super.addHolder(Key.Destination, DESTINATION_LOCATION, StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -131,9 +140,31 @@ public final class BlockTen extends Solitaire
     @Override
     public void validate() throws Exception
     {
-        //we only win when we clear the deck
+        //if the deck is not empty
         if (!getHolder(Key.Deck).isEmpty())
+        {
+            for (int index1 = 0; index1 < 12; index1++)
+            {
+                for (int index2 = 0; index2 < 12; index2++)
+                {
+                    //we don't want to check the same card
+                    if (index1 == index2)
+                        continue;
+
+                    //get the score of the two cards
+                    int score = BlockTenHelper.getScore(getHolder(Key.values()[index1]).getLastCard(), getHolder(Key.values()[index2]).getLastCard());
+
+                    //if these two cards make a match, the game can continue
+                    if (score == BlockTenHelper.GOAL_SCORE)
+                        return;
+                }
+            }
+            
+            //if we made it here there are no more valid moves, game over we lose
+            super.setGameover(true);
+            super.setWinner(false);
             return;
+        }
         
         //flag game over and if we won
         super.setGameover(true);
@@ -298,6 +329,10 @@ public final class BlockTen extends Solitaire
                 {
                     //get the card
                     final Card card = getDefaultHolder().getCard(index);
+                    
+                    //if we have a 10 score match, increase score
+                    if (card.getDestinationHolderKey() == Key.Destination)
+                        super.getStats().setScore(getStats().getScore() + POINTS_SCORE);
                     
                     //no longer select the card
                     card.setSelected(false);

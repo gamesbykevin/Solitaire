@@ -73,6 +73,7 @@ public final class BlockTenHelperTest
     @Test
     public void getScoreTest() throws Exception
     {
+        //set values
         card1.setValue(Value.Ace);
         card2.setValue(Value.Nine);
         
@@ -83,7 +84,7 @@ public final class BlockTenHelperTest
         //assume true
         assertTrue(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
         
-
+        //set values
         card1.setValue(Value.Two);
         card2.setValue(Value.Eight);
         
@@ -94,7 +95,7 @@ public final class BlockTenHelperTest
         //assume true
         assertTrue(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
         
-        
+        //set values
         card1.setValue(Value.Three);
         card2.setValue(Value.Seven);
         
@@ -105,7 +106,7 @@ public final class BlockTenHelperTest
         //assume true
         assertTrue(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
         
-        
+        //set values
         card1.setValue(Value.Four);
         card2.setValue(Value.Six);
         
@@ -116,7 +117,7 @@ public final class BlockTenHelperTest
         //assume true
         assertTrue(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
         
-        
+        //set values
         card1.setValue(Value.Five);
         card2.setValue(Value.Five);
         
@@ -127,7 +128,7 @@ public final class BlockTenHelperTest
         //assume true
         assertTrue(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
         
-        
+        //set values
         card1.setValue(Value.Jack);
         card2.setValue(Value.Queen);
         
@@ -138,7 +139,7 @@ public final class BlockTenHelperTest
         //assume true
         assertFalse(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
         
-        
+        //set values
         card1.setValue(Value.Queen);
         card2.setValue(Value.Queen);
         
@@ -149,7 +150,7 @@ public final class BlockTenHelperTest
         //assume true
         assertTrue(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
         
-        
+        //set values
         card1.setValue(Value.King);
         card2.setValue(Value.King);
         
@@ -159,5 +160,27 @@ public final class BlockTenHelperTest
         
         //assume true
         assertTrue(BlockTenHelper.getScore(holder) == BlockTenHelper.GOAL_SCORE);
+        
+        
+        //set values
+        card1.setValue(Value.Three);
+        card2.setValue(Value.Seven);
+        
+        //assume true
+        assertTrue(BlockTenHelper.getScore(card1, card2) == BlockTenHelper.GOAL_SCORE);
+        
+        //set values
+        card1.setValue(Value.Four);
+        card2.setValue(Value.Nine);
+        
+        //assume false
+        assertFalse(BlockTenHelper.getScore(card1, card2) == BlockTenHelper.GOAL_SCORE);
+        
+        //set values
+        card1.setValue(Value.Jack);
+        card2.setValue(Value.Queen);
+        
+        //assume false
+        assertFalse(BlockTenHelper.getScore(card1, card2) == BlockTenHelper.GOAL_SCORE);
     }
 }

@@ -42,31 +42,40 @@ public class BlockTenHelper
         if (holder.getSize() != BlockTen.SELECTION_LIMIT)
             throw new Exception("Holder amount is not the correct size " + holder.getSize());
         
-        //if one card is the below they all have to be the same face value, or else we will not count the score
-        if (holder.hasValue(Value.Jack) || holder.hasValue(Value.Queen) || holder.hasValue(Value.King))
+        return getScore(holder.getFirstCard(), holder.getLastCard());
+    }
+    
+    /**
+     * Get the score of the cards
+     * @param card1 Card 1
+     * @param card2 Card 2
+     * @return The total score of the cards
+     * @throws Exception If there is an issue scoring
+     */
+    protected static final int getScore(final Card card1, final Card card2) throws Exception
+    {
+        //make sure face values match if these below
+        if (card1.hasValue(Value.Jack) || card1.hasValue(Value.Queen) || card1.hasValue(Value.King))
         {
-            //check each card to make sure all have the same face value
-            for (int index = 1; index < holder.getSize(); index++)
-            {
-                //get the 2 cards
-                final Card card1 = holder.getCard(index);
-                final Card card2 = holder.getCard(index - 1);
-                
-                //if the cards are not the same return SCORE_TEN aka 0
-                if (!card1.hasValue(card2))
-                    return SCORE_TEN;
-            }
+            //if the cards are not the same return SCORE_TEN aka 0
+            if (!card1.hasValue(card2))
+                return SCORE_TEN;
+        }
+        
+        //make sure face values match if these below
+        if (card2.hasValue(Value.Jack) || card2.hasValue(Value.Queen) || card2.hasValue(Value.King))
+        {
+            //if the cards are not the same return SCORE_TEN aka 0
+            if (!card2.hasValue(card1))
+                return SCORE_TEN;
         }
         
         //our score
         int score = 0;
         
-        //check each card to make sure all have the same face value
-        for (int index = 0; index < holder.getSize(); index++)
-        {
-            //add the card score to the total
-            score += getScore(holder.getCard(index));
-        }
+        //add the score to the toal
+        score += getScore(card1);
+        score += getScore(card2);
         
         //return our calculated score
         return score;

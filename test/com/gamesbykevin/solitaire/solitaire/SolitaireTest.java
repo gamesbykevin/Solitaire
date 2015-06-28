@@ -3,6 +3,7 @@ package com.gamesbykevin.solitaire.solitaire;
 import com.gamesbykevin.framework.util.Timers;
 import com.gamesbykevin.solitaire.engine.Engine;
 
+import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
 import org.junit.After;
@@ -22,6 +23,9 @@ public class SolitaireTest
     
     //we need a game engine to test
     private Engine engine;
+    
+    //use this test image
+    public static final BufferedImage TEST_IMAGE = new BufferedImage(2000,2000, BufferedImage.TYPE_INT_ARGB);
     
     /**
      * The amount of time to deduct per update

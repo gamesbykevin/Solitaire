@@ -6,13 +6,12 @@ import com.gamesbykevin.solitaire.card.Holder.StackType;
 import com.gamesbykevin.solitaire.engine.Engine;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.Random;
 
 /**
- * The Classic solitaire game (Klondike )
+ * The Classic solitaire game (Klondike)
  * @author GOD
  */
 public final class Klondike extends Solitaire
@@ -43,48 +42,57 @@ public final class Klondike extends Solitaire
     private static final Point DECK_START_LOCATION = new Point(75, 100);
     
     /**
-     * Where the optional cards are located
-     */
-    private static final Point OPTIONAL_PILE_START_LOCATION = new Point(175, 100);
-    
-    /**
-     * The (x,y) locations for the destinations
+     * The (x,y) locations for the destination
      */
     private static final Point DESTINATION_LOCATION_1 = new Point(325, 100);
-    private static final Point DESTINATION_LOCATION_2 = new Point(425, 100);
-    private static final Point DESTINATION_LOCATION_3 = new Point(525, 100);
-    private static final Point DESTINATION_LOCATION_4 = new Point(625, 100);
 
     /**
-     * The (x,y) locations for the playable holders
+     * The (x,y) locations for the playable holder
      */
     private static final Point PLAYABLE_LOCATION_1 = new Point(75, 200);
-    private static final Point PLAYABLE_LOCATION_2 = new Point(175, 200);
-    private static final Point PLAYABLE_LOCATION_3 = new Point(275, 200);
-    private static final Point PLAYABLE_LOCATION_4 = new Point(375, 200);
-    private static final Point PLAYABLE_LOCATION_5 = new Point(475, 200);
-    private static final Point PLAYABLE_LOCATION_6 = new Point(575, 200);
-    private static final Point PLAYABLE_LOCATION_7 = new Point(675, 200);
     
-    public Klondike(final Image image)
+    //the distance between each column
+    private static final int COLUMN_WIDTH = 100;
+    
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(50, 350);
+    
+    //points to add for each card placed in destination
+    private static final int REWARD_SCORE = 10;
+    
+    public Klondike(final Image image) throws Exception
     {
         //store the sprite sheet image
         super(image, StackType.Vertical);
         
+        int x = DESTINATION_LOCATION_1.x;
+        int y = DESTINATION_LOCATION_1.y;
+        
         //add the holder locations in the game
-        addHolder(Key.Destination1, DESTINATION_LOCATION_1, StackType.Same);
-        addHolder(Key.Destination2, DESTINATION_LOCATION_2, StackType.Same);
-        addHolder(Key.Destination3, DESTINATION_LOCATION_3, StackType.Same);
-        addHolder(Key.Destination4, DESTINATION_LOCATION_4, StackType.Same);
-        addHolder(Key.Playable1, PLAYABLE_LOCATION_1, StackType.Vertical);
-        addHolder(Key.Playable2, PLAYABLE_LOCATION_2, StackType.Vertical);
-        addHolder(Key.Playable3, PLAYABLE_LOCATION_3, StackType.Vertical);
-        addHolder(Key.Playable4, PLAYABLE_LOCATION_4, StackType.Vertical);
-        addHolder(Key.Playable5, PLAYABLE_LOCATION_5, StackType.Vertical);
-        addHolder(Key.Playable6, PLAYABLE_LOCATION_6, StackType.Vertical);
-        addHolder(Key.Playable7, PLAYABLE_LOCATION_7, StackType.Vertical);
-        addHolder(Key.OptionalPile, OPTIONAL_PILE_START_LOCATION, StackType.Same);
+        for (int index = 0; index < 4; index++)
+        {
+            super.addHolder(Key.values()[index], x, y, StackType.Same);
+            
+            //adjust x-coordinate
+            x += COLUMN_WIDTH;
+        }
+        
+        x = PLAYABLE_LOCATION_1.x;
+        y = PLAYABLE_LOCATION_1.y;
+        
+        for (int index = 4; index < 11; index++)
+        {
+            super.addHolder(Key.values()[index], x, y, StackType.Vertical);
+            
+            //adjust x-coordinate
+            x += COLUMN_WIDTH;
+        }
+        
         addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
+        addHolder(Key.OptionalPile, DECK_START_LOCATION.x + COLUMN_WIDTH, DECK_START_LOCATION.y, StackType.Same);
+        
+        //assign the stats location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -270,8 +278,10 @@ public final class Klondike extends Solitaire
             {
                 for (Key key : Key.values())
                 {
-                    //we can't take cards directly from the deck
+                    //we can't take cards directly from the deck, or from the destination
                     if (key == Key.Deck)
+                        continue;
+                    if (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || key == Key.Destination4)
                         continue;
                     
                     //did we click in this holder deck and are there cards here
@@ -405,6 +415,10 @@ public final class Klondike extends Solitaire
                     //get the first card for reference
                     final Card card = getDefaultHolder().getFirstCard();
                     
+                    //if placing at destination, add score
+                    if (isDestination(card.getDestinationHolderKey()))
+                        getStats().setScore(getStats().getScore() + REWARD_SCORE);
+                    
                     //add cards back to the destination
                     getHolder(card.getDestinationHolderKey()).add(getDefaultHolder());
                     
@@ -416,6 +430,11 @@ public final class Klondike extends Solitaire
                 }
             }
         }
+    }
+    
+    private boolean isDestination(final Object key)
+    {
+        return (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || key == Key.Destination4);
     }
     
     /**
@@ -431,11 +450,5 @@ public final class Klondike extends Solitaire
         KlondikeHelper.showPlayableCard(getHolder(Key.Playable5));
         KlondikeHelper.showPlayableCard(getHolder(Key.Playable6));
         KlondikeHelper.showPlayableCard(getHolder(Key.Playable7));
-    }
-    
-    @Override
-    public void render(final Graphics graphics) throws Exception
-    {
-        super.render(graphics);
     }
 }

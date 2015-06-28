@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.poker;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.poker.Poker;
 import com.gamesbykevin.solitaire.solitaire.poker.Poker.Key;
@@ -26,9 +26,9 @@ public final class PokerTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
-        Solitaire poker = new Poker(Shared.INVISIBLE_PIXEL);
+        Solitaire poker = new Poker(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -38,9 +38,9 @@ public final class PokerTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire poker = new Poker(Shared.INVISIBLE_PIXEL);
+        Solitaire poker = new Poker(TEST_IMAGE);
         poker.dispose();
         poker = null;
     }
@@ -55,7 +55,7 @@ public final class PokerTest extends SolitaireTest
         assertNull(poker);
         
         //create new object
-        poker = new Poker(Shared.INVISIBLE_PIXEL);
+        poker = new Poker(TEST_IMAGE);
         
         //our object now exists
         assertNotNull(poker);
@@ -142,7 +142,7 @@ public final class PokerTest extends SolitaireTest
         poker.shuffle(getEngine().getRandom(), poker.getHolder(Key.Deck));
         poker.deal(getEngine().getTime());
         poker.validate();
-        poker.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        poker.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -153,7 +153,7 @@ public final class PokerTest extends SolitaireTest
         poker.deal(getEngine().getTime());
         poker.validate();
         poker.update(getEngine());
-        poker.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        poker.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

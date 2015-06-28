@@ -61,7 +61,13 @@ public final class LittleSpider extends Solitaire
      */
     private static final Point DECK_START_LOCATION = new Point(75, 245);
     
-    public LittleSpider(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(600, 200);
+    
+    //points to add for each card placed
+    private static final int POINTS_SCORE = 10;
+    
+    public LittleSpider(final Image image) throws Exception
     {
         //store the sprite sheet image
         super(image, StackType.Same);
@@ -139,6 +145,9 @@ public final class LittleSpider extends Solitaire
         
         //add the deck
         super.addHolder(Key.Deck, DECK_START_LOCATION, StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -178,38 +187,18 @@ public final class LittleSpider extends Solitaire
     @Override
     public void validate() throws Exception
     {
-        //if any cards exist here the game is not over
-        if (!getHolder(Key.Playable1).isEmpty())
+        for (Key key : Key.values())
         {
-            return;
-        }
-        else if (!getHolder(Key.Playable2).isEmpty())
-        {
-            return;
-        }
-        else if (!getHolder(Key.Playable3).isEmpty())
-        {
-            return;
-        }
-        else if (!getHolder(Key.Playable4).isEmpty())
-        {
-            return;
-        }
-        else if (!getHolder(Key.Playable5).isEmpty())
-        {
-            return;
-        }
-        else if (!getHolder(Key.Playable6).isEmpty())
-        {
-            return;
-        }
-        else if (!getHolder(Key.Playable7).isEmpty())
-        {
-            return;
-        }
-        else if (!getHolder(Key.Playable8).isEmpty())
-        {
-            return;
+            //don't check the deck
+            if (key == Key.Deck)
+                continue;
+            if (key == Key.Destination1 || key == Key.Destination2 ||
+                key == Key.Destination3 || key == Key.Destination4)
+                continue;
+            
+            //if any cards exist here the game is not over
+            if (!getHolder(key).isEmpty())
+                return;
         }
         
         //flag game over and if we won
@@ -493,7 +482,6 @@ public final class LittleSpider extends Solitaire
                         key != Key.Destination4)
                         continue;
                     
-                    
                     //make sure we want this card
                     if (getHolder(key).getFirstCard().hasLocation(x, y))
                     {
@@ -575,6 +563,10 @@ public final class LittleSpider extends Solitaire
                     //de-select the card
                     card.setSelected(false);
 
+                    //if the target is a destination holder, add to the score
+                    if (isDestination(card.getDestinationHolderKey()))
+                        super.getStats().setScore(getStats().getScore() + POINTS_SCORE);
+                    
                     //add to the destination holder
                     getHolder(card.getDestinationHolderKey()).add(card);
 
@@ -589,6 +581,16 @@ public final class LittleSpider extends Solitaire
                 }
             }
         }
+    }
+    
+    /**
+     * Is this the final destination for the card
+     * @param key The key of the holder we want to check
+     * @return true=yes, false=no
+     */
+    private boolean isDestination(final Object key)
+    {
+        return (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || key == Key.Destination4);
     }
     
     /**
@@ -617,6 +619,9 @@ public final class LittleSpider extends Solitaire
     @Override
     public void render(final Graphics graphics) throws Exception
     {
+        //render and draw the stats
+        getStats().drawStats(graphics);
+        
         for (Key key : Key.values())
         {
             getHolder(key).render(graphics, getImage(), getHolder(key).isEmpty() ? false : true);

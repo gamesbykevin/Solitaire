@@ -1,7 +1,7 @@
 package com.gamesbykevin.solitaire.solitaire.blockten;
 
 import com.gamesbykevin.solitaire.solitaire.blockten.BlockTen.Key;
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
 import org.junit.After;
@@ -25,14 +25,14 @@ public final class BlockTenTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
         //assume true
         assertTrue(BlockTen.COLS == 4);
         assertTrue(BlockTen.ROWS == 3);
         assertTrue(BlockTen.SELECTION_LIMIT == 2);
         
-        Solitaire blockTen = new BlockTen(Shared.INVISIBLE_PIXEL);
+        Solitaire blockTen = new BlockTen(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -42,9 +42,9 @@ public final class BlockTenTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire blockTen = new BlockTen(Shared.INVISIBLE_PIXEL);
+        Solitaire blockTen = new BlockTen(TEST_IMAGE);
         
         blockTen.dispose();
         blockTen = null;
@@ -58,7 +58,7 @@ public final class BlockTenTest extends SolitaireTest
     {
         super.setUp();
         
-        blockTen = new BlockTen(Shared.INVISIBLE_PIXEL);
+        blockTen = new BlockTen(TEST_IMAGE);
         
         assertNotNull(blockTen);
     }
@@ -135,9 +135,14 @@ public final class BlockTenTest extends SolitaireTest
     {
         blockTen.create(getEngine().getRandom());
         blockTen.shuffle(getEngine().getRandom(), blockTen.getHolder(Key.Deck));
-        blockTen.deal(getEngine().getTime());
+        
+        while (!blockTen.isDealComplete())
+        {
+            blockTen.deal(getEngine().getTime());
+        }
+        
         blockTen.validate();
-        blockTen.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        blockTen.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -145,10 +150,15 @@ public final class BlockTenTest extends SolitaireTest
     {
         blockTen.create(getEngine().getRandom());
         blockTen.shuffle(getEngine().getRandom(), blockTen.getHolder(Key.Deck));
-        blockTen.deal(getEngine().getTime());
+        
+        while (!blockTen.isDealComplete())
+        {
+            blockTen.deal(getEngine().getTime());
+        }
+        
         blockTen.validate();
         blockTen.update(getEngine());
-        blockTen.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        blockTen.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.klondike;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
 import com.gamesbykevin.solitaire.solitaire.klondike.Klondike.Key;
@@ -26,15 +26,15 @@ public class KlondikeTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
-        Solitaire klondike = new Klondike(Shared.INVISIBLE_PIXEL);
+        Solitaire klondike = new Klondike(TEST_IMAGE);
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire klondike = new Klondike(Shared.INVISIBLE_PIXEL);
+        Solitaire klondike = new Klondike(TEST_IMAGE);
         klondike.dispose();
         klondike = null;
     }
@@ -46,7 +46,7 @@ public class KlondikeTest extends SolitaireTest
         super.setUp();
         
         //create new instance
-        klondike = new Klondike(Shared.INVISIBLE_PIXEL);
+        klondike = new Klondike(TEST_IMAGE);
         
         //assume this is not null
         assertNotNull(klondike);
@@ -114,7 +114,7 @@ public class KlondikeTest extends SolitaireTest
         klondike.shuffle(getEngine().getRandom(), klondike.getHolder(Key.Deck));
         klondike.deal(getEngine().getTime());
         klondike.validate();
-        klondike.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        klondike.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -125,7 +125,7 @@ public class KlondikeTest extends SolitaireTest
         klondike.deal(getEngine().getTime());
         klondike.validate();
         klondike.update(getEngine());
-        klondike.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        klondike.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

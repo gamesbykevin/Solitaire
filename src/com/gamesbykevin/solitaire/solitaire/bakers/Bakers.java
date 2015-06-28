@@ -55,7 +55,13 @@ public final class Bakers extends Solitaire
     //new card size
     private static final float CARD_SIZE_RATIO = .45f;
     
-    public Bakers(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(475, 210);
+    
+    //score for each card placed
+    private static final int POINTS_SCORE = 5;
+    
+    public Bakers(final Image image) throws Exception
     {
         super(image, CARD_SIZE_RATIO, Holder.StackType.Vertical);
         
@@ -103,6 +109,9 @@ public final class Bakers extends Solitaire
         super.addHolder(Key.Destination2, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (1 * PIXEL_HEIGHT), Holder.StackType.Same);
         super.addHolder(Key.Destination3, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (2 * PIXEL_HEIGHT), Holder.StackType.Same);
         super.addHolder(Key.Destination4, DESTINATION_LOCATION.x, DESTINATION_LOCATION.y + (3 * PIXEL_HEIGHT), Holder.StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -277,7 +286,7 @@ public final class Bakers extends Solitaire
         if (getDefaultHolder().isEmpty())
         {
             //check user input
-            if (engine.getMouse().isMouseDragged() || engine.getMouse().isMouseReleased())
+            if (engine.getMouse().isMouseDragged())
             {
                 //get the mouse location
                 final int x = engine.getMouse().getLocation().x;
@@ -287,6 +296,11 @@ public final class Bakers extends Solitaire
                 {
                     //don't check the deck
                     if (key == Key.Deck)
+                        continue;
+                    
+                    //don't check the destinations
+                    if (key == Key.Destination1 || key == Key.Destination2 || 
+                        key == Key.Destination3 || key == Key.Destination4)
                         continue;
                     
                     //did we click in this holder deck and are there cards here
@@ -385,6 +399,10 @@ public final class Bakers extends Solitaire
                     {
                         final Card card = getDefaultHolder().getCard(index);
 
+                        //if a card is placed on a destination holder, add to the score
+                        if (isDestination(card.getDestinationHolderKey()))
+                            super.getStats().setScore(super.getStats().getScore() + POINTS_SCORE);
+                        
                         //add to the destination holder
                         getHolder(card.getDestinationHolderKey()).add(card);
                     }
@@ -397,5 +415,15 @@ public final class Bakers extends Solitaire
                 }
             }
         }
-    }    
+    }
+    
+    /**
+     * Is this the final destination for the card
+     * @param key The key of the holder we want to check
+     * @return true=yes, false=no
+     */
+    private boolean isDestination(final Object key)
+    {
+        return (key == Key.Destination1 || key == Key.Destination2 || key == Key.Destination3 || key == Key.Destination4);
+    }
 }

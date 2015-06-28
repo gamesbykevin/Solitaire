@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.littlespider;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.littlespider.LittleSpider.Key;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.SolitaireTest;
@@ -26,12 +26,12 @@ public final class LittleSpiderTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
         //assume true
         assertTrue(LittleSpider.HOLDER_SIZE == 6);
         
-        Solitaire littleSpider = new LittleSpider(Shared.INVISIBLE_PIXEL);
+        Solitaire littleSpider = new LittleSpider(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -41,9 +41,9 @@ public final class LittleSpiderTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire littleSpider = new LittleSpider(Shared.INVISIBLE_PIXEL);
+        Solitaire littleSpider = new LittleSpider(TEST_IMAGE);
         littleSpider.dispose();
         littleSpider = null;
         
@@ -57,7 +57,7 @@ public final class LittleSpiderTest extends SolitaireTest
         super.setUp();
         
         //create new game
-        littleSpider = new LittleSpider(Shared.INVISIBLE_PIXEL);
+        littleSpider = new LittleSpider(TEST_IMAGE);
         
         //assume not null
         assertNotNull(littleSpider);
@@ -144,7 +144,7 @@ public final class LittleSpiderTest extends SolitaireTest
         littleSpider.shuffle(getEngine().getRandom(), littleSpider.getHolder(Key.Deck));
         littleSpider.deal(getEngine().getTime());
         littleSpider.validate();
-        littleSpider.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        littleSpider.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -155,7 +155,7 @@ public final class LittleSpiderTest extends SolitaireTest
         littleSpider.deal(getEngine().getTime());
         littleSpider.validate();
         littleSpider.update(getEngine());
-        littleSpider.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        littleSpider.render(TEST_IMAGE.createGraphics());
     }
     
     @Test

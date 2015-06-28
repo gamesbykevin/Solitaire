@@ -87,7 +87,13 @@ public final class Pyramid extends Solitaire
      */
     private static final Point ROW_1_COLUMN_1_START_LOCATION = new Point(425, 100);
     
-    public Pyramid(final Image image)
+    //the location of the stats window
+    private static final Point STATS_LOCATION = new Point(50, 350);
+    
+    //score to add per 13 match
+    private static final int POINTS_SCORE = 5;
+    
+    public Pyramid(final Image image) throws Exception
     {
         //store the sprite sheet image
         super(image, StackType.Same);
@@ -129,6 +135,9 @@ public final class Pyramid extends Solitaire
         
         //create holder for the destination
         addHolder(Key.Destination, DESTINATION_LOCATION, StackType.Same);
+        
+        //assign location
+        super.getStats().setLocation(STATS_LOCATION);
     }
     
     @Override
@@ -378,6 +387,9 @@ public final class Pyramid extends Solitaire
 
             if (score == MATCH_SCORE)
             {
+                //add score
+                getStats().setScore(getStats().getScore() + POINTS_SCORE);
+                
                 //add to the destination deck
                 getHolder(Key.Destination).add(card);
 
@@ -404,6 +416,9 @@ public final class Pyramid extends Solitaire
     @Override
     public void render(final Graphics graphics) throws Exception
     {
+        //render and draw the stats
+        getStats().drawStats(graphics);
+        
         for (Key key : Key.values())
         {
             getHolder(key).render(graphics, getImage(), getHolder(key).isEmpty() ? false : true);

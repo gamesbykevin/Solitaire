@@ -1,6 +1,6 @@
 package com.gamesbykevin.solitaire.solitaire.goodmeasure;
 
-import com.gamesbykevin.solitaire.shared.Shared;
+
 import com.gamesbykevin.solitaire.solitaire.goodmeasure.GoodMeasure;
 import com.gamesbykevin.solitaire.solitaire.goodmeasure.GoodMeasure.Key;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
@@ -26,12 +26,12 @@ public class GoodMeasureTest extends SolitaireTest
     }
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
         assertTrue(GoodMeasure.HOLDER_SIZE == 5);
         assertTrue(GoodMeasure.DEFAULT_HOLDER_SIZE == 1);
         
-        Solitaire goodMeasure = new GoodMeasure(Shared.INVISIBLE_PIXEL);
+        Solitaire goodMeasure = new GoodMeasure(TEST_IMAGE);
         
         //assume all holders have been added
         for (Key key : Key.values())
@@ -41,9 +41,9 @@ public class GoodMeasureTest extends SolitaireTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
-        Solitaire goodMeasure = new GoodMeasure(Shared.INVISIBLE_PIXEL);
+        Solitaire goodMeasure = new GoodMeasure(TEST_IMAGE);
         goodMeasure.dispose();
         goodMeasure = null;
         
@@ -57,7 +57,7 @@ public class GoodMeasureTest extends SolitaireTest
         super.setUp();
         
         //create new solitaire game
-        goodMeasure = new GoodMeasure(Shared.INVISIBLE_PIXEL);
+        goodMeasure = new GoodMeasure(TEST_IMAGE);
         
         //assume not null
         assertNotNull(goodMeasure);
@@ -144,7 +144,7 @@ public class GoodMeasureTest extends SolitaireTest
         goodMeasure.shuffle(getEngine().getRandom(), goodMeasure.getHolder(Key.Deck));
         goodMeasure.deal(getEngine().getTime());
         goodMeasure.validate();
-        goodMeasure.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        goodMeasure.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
@@ -155,7 +155,7 @@ public class GoodMeasureTest extends SolitaireTest
         goodMeasure.deal(getEngine().getTime());
         goodMeasure.validate();
         goodMeasure.update(getEngine());
-        goodMeasure.render(Shared.INVISIBLE_PIXEL.createGraphics());
+        goodMeasure.render(TEST_IMAGE.createGraphics());
     }
     
     @Test
