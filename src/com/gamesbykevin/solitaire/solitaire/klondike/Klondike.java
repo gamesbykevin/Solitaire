@@ -344,6 +344,9 @@ public final class Klondike extends Solitaire
                     }
                 }
                 
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
+                
                 //get the first card
                 final Card tmp = getDefaultHolder().getFirstCard();
                 
@@ -412,6 +415,9 @@ public final class Klondike extends Solitaire
                 }
                 else
                 {
+                    //play sound effect
+                    engine.getResources().playPlaceCardAudio(engine.getRandom());
+                    
                     //get the first card for reference
                     final Card card = getDefaultHolder().getFirstCard();
                     

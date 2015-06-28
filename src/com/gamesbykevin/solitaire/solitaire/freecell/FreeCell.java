@@ -5,7 +5,6 @@ import com.gamesbykevin.solitaire.card.Card;
 import com.gamesbykevin.solitaire.card.Card.*;
 import com.gamesbykevin.solitaire.card.Holder.StackType;
 import com.gamesbykevin.solitaire.engine.Engine;
-import com.gamesbykevin.solitaire.entity.Entity;
 import com.gamesbykevin.solitaire.solitaire.Solitaire;
 import com.gamesbykevin.solitaire.solitaire.klondike.KlondikeHelper;
 import java.awt.Image;
@@ -23,22 +22,9 @@ public final class FreeCell extends Solitaire
      */
     protected enum Key
     {
-        Temp1, 
-        Temp2, 
-        Temp3,
-        Temp4,
-        Destination1, 
-        Destination2, 
-        Destination3, 
-        Destination4, 
-        Playable1, 
-        Playable2, 
-        Playable3, 
-        Playable4, 
-        Playable5, 
-        Playable6, 
-        Playable7, 
-        Playable8, 
+        Temp1, Temp2, Temp3, Temp4,
+        Destination1, Destination2, Destination3, Destination4, 
+        Playable1, Playable2, Playable3, Playable4, Playable5, Playable6, Playable7, Playable8, 
         Deck, 
     }
     
@@ -354,10 +340,10 @@ public final class FreeCell extends Solitaire
                             key != Key.Temp3 && key != Key.Temp4)
                             continue;
 
-                        //can only place cards on empty holders
+                        //we can only place in empty holders
                         if (!getHolder(key).isEmpty())
                             continue;
-
+                        
                         //if we selected this loction with the mouse
                         if (getHolder(key).hasLocation(x, y))
                         {
@@ -425,6 +411,9 @@ public final class FreeCell extends Solitaire
                 
                 //set the destination for all cards back to the source
                 getDefaultHolder().setDestination(getHolder(tmp.getSourceHolderKey()), tmp.getSourceHolderKey());
+                
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
             }
             else
             {
@@ -435,12 +424,18 @@ public final class FreeCell extends Solitaire
                 }
                 else
                 {
+                    //play sound effect
+                    engine.getResources().playPlaceCardAudio(engine.getRandom());
+                                
                     //get the first card for reference
                     final Card card = getDefaultHolder().getFirstCard();
 
                     //if destination add score
                     if (isDestination(card.getDestinationHolderKey()))
                         super.getStats().setScore(super.getStats().getScore() + POINTS_SCORE);
+                    
+                    //set the destination as the source
+                    card.setSourceHolderKey(card.getDestinationHolderKey());
                     
                     //add cards to the destination
                     getHolder(card.getDestinationHolderKey()).add(getDefaultHolder());

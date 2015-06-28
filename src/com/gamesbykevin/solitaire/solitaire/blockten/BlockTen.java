@@ -61,7 +61,7 @@ public final class BlockTen extends Solitaire
     private static final long MOVE_CARD_DURATION = Timers.toNanoSeconds(250L);
     
     //the location of the stats window
-    private static final Point STATS_LOCATION = new Point(50, 350);
+    private static final Point STATS_LOCATION = new Point(40, 350);
     
     //points to add for each card placed
     private static final int POINTS_SCORE = 10;
@@ -315,6 +315,9 @@ public final class BlockTen extends Solitaire
                     //set the destination
                     card.setDestination(getHolder(card.getSourceHolderKey()).getDestinationPoint(), card.getSourceHolderKey());
                 }
+                
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
             }
                 
             //now check if we are at the destination
@@ -325,6 +328,9 @@ public final class BlockTen extends Solitaire
             }
             else
             {
+                //play sound effect
+                engine.getResources().playPlaceCardAudio(engine.getRandom());
+                
                 for (int index = 0; index < getDefaultHolder().getSize(); index++)
                 {
                     //get the card

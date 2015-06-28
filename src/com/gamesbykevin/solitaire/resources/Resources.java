@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.Random;
 
 /**
  * This class will load all resources in the collection and provide a way to access them
@@ -26,6 +27,10 @@ public class Resources implements IResources
     public static final String XML_CONFIG_GAME_IMAGE = CONFIGURATION_DIR + "image.xml"; 
     public static final String XML_CONFIG_GAME_TEXT  = CONFIGURATION_DIR + "text.xml"; 
     public static final String XML_CONFIG_MENU       = CONFIGURATION_DIR + "menu.xml"; 
+    
+    //the number of different sounds
+    private static final int AUDIO_PLACE_TOTAL = 11;
+    private static final int AUDIO_INVALID_TOTAL = 5;
     
     //are we loading resources
     private boolean loading = true;
@@ -175,6 +180,83 @@ public class Resources implements IResources
     {
         playGameAudio(key, false);
     }
+    
+    public void playPlaceCardAudio(final Random random)
+    {
+        switch (random.nextInt(AUDIO_PLACE_TOTAL))
+        {
+            case 0:
+                playGameAudio(GameAudio.Keys.Place1);
+                break;
+                
+            case 1:
+                playGameAudio(GameAudio.Keys.Place2);
+                break;
+                
+            case 2:
+                playGameAudio(GameAudio.Keys.Place3);
+                break;
+                
+            case 3:
+                playGameAudio(GameAudio.Keys.Place4);
+                break;
+                
+            case 4:
+                playGameAudio(GameAudio.Keys.Place5);
+                break;
+                
+            case 5:
+                playGameAudio(GameAudio.Keys.Place6);
+                break;
+                
+            case 6:
+                playGameAudio(GameAudio.Keys.Place7);
+                break;
+                
+            case 7:
+                playGameAudio(GameAudio.Keys.Place8);
+                break;
+                
+            case 8:
+                playGameAudio(GameAudio.Keys.Place9);
+                break;
+                
+            case 9:
+                playGameAudio(GameAudio.Keys.Place10);
+                break;
+                
+            case 10:
+                playGameAudio(GameAudio.Keys.Place11);
+                break;
+        }
+    }
+    
+    public void playInvalidCardAudio(final Random random)
+    {
+        switch (random.nextInt(AUDIO_INVALID_TOTAL))
+        {
+            case 0:
+                playGameAudio(GameAudio.Keys.Invalid1);
+                break;
+                
+            case 1:
+                playGameAudio(GameAudio.Keys.Invalid2);
+                break;
+                
+            case 2:
+                playGameAudio(GameAudio.Keys.Invalid3);
+                break;
+                
+            case 3:
+                playGameAudio(GameAudio.Keys.Invalid4);
+                break;
+                
+            case 4:
+                playGameAudio(GameAudio.Keys.Invalid5);
+                break;
+        }
+    }
+    
     
     /**
      * Play game audio

@@ -313,6 +313,11 @@ public final class Pyramid extends Solitaire
                         //remove from deck
                         getHolder(Key.Deck).remove(card);
                     }
+                    else
+                    {
+                        //play sound effect
+                        engine.getResources().playInvalidCardAudio(engine.getRandom());
+                    }
                 }
                 else
                 {
@@ -365,52 +370,59 @@ public final class Pyramid extends Solitaire
         else
         {
             //if we can't make a selection it is time to score the selection(s)
-            scoreSelections();
-        }
-    }
-    
-    /**
-     * Score the current selections.<br>
-     * If the matching score is met the cards will be removed from the pyramid etc.....<br>
-     * We will also check if the game has ended
-     * @throws Exception 
-     */
-    private void scoreSelections() throws Exception
-    {
-        //if we can't make a selection it is time to score the selection(s)
-        final int score = PyramidHelper.getScore(getDefaultHolder());
+            final int score = PyramidHelper.getScore(getDefaultHolder());
 
-        //now handle the cards
-        for (int index = 0; index < getDefaultHolder().getSize(); index++)
-        {
-            final Card card = getDefaultHolder().getCard(index);
-
-            if (score == MATCH_SCORE)
+            boolean match = false;
+            
+            //now handle the cards
+            for (int index = 0; index < getDefaultHolder().getSize(); index++)
             {
-                //add score
-                getStats().setScore(getStats().getScore() + POINTS_SCORE);
-                
-                //add to the destination deck
-                getHolder(Key.Destination).add(card);
+                final Card card = getDefaultHolder().getCard(index);
 
-                //remove from the source holder as well
-                getHolder(card.getSourceHolderKey()).remove(card);
+                if (score == MATCH_SCORE)
+                {
+                    //add score
+                    getStats().setScore(getStats().getScore() + POINTS_SCORE);
+
+                    //add to the destination deck
+                    getHolder(Key.Destination).add(card);
+
+                    //remove from the source holder as well
+                    getHolder(card.getSourceHolderKey()).remove(card);
+                    
+                    //we have a match
+                    match = true;
+                }
+                else
+                {
+                    //no longer mark this as selected
+                    card.setSelected(false);
+
+                    //add back to the source
+                    getHolder(card.getSourceHolderKey()).add(card);
+                    
+                    //we don't have a match
+                    match = false;
+                }
+            }
+
+            if (!match)
+            {
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
             }
             else
             {
-                //no longer mark this as selected
-                card.setSelected(false);
-
-                //add back to the source
-                getHolder(card.getSourceHolderKey()).add(card);
+                //play sound effect
+                engine.getResources().playPlaceCardAudio(engine.getRandom());
             }
+            
+            //now remove all cards from default holder
+            getDefaultHolder().removeAll();
+
+            //validate and check if the game has ended
+            validate();
         }
-
-        //now remove all cards from default holder
-        getDefaultHolder().removeAll();
-
-        //validate and check if the game has ended
-        validate();
     }
     
     @Override

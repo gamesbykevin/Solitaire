@@ -3,4 +3,23 @@
     <!--
     <sound id="Fill">audio/game/fill.wav</sound>
     -->
+    <sound id="Deal">audio/game/deal.wav</sound>
+    <sound id="Place1">audio/game/place1.wav</sound>
+    <sound id="Place2">audio/game/place2.wav</sound>
+    <sound id="Place3">audio/game/place3.wav</sound>
+    <sound id="Place4">audio/game/place4.wav</sound>
+    <sound id="Place5">audio/game/place5.wav</sound>
+    <sound id="Place6">audio/game/place6.wav</sound>
+    <sound id="Place7">audio/game/place7.wav</sound>
+    <sound id="Place8">audio/game/place8.wav</sound>
+    <sound id="Place9">audio/game/place9.wav</sound>
+    <sound id="Place10">audio/game/place10.wav</sound>
+    <sound id="Place11">audio/game/place11.wav</sound>
+    <sound id="Invalid1">audio/game/invalid1.wav</sound>
+    <sound id="Invalid2">audio/game/invalid2.wav</sound>
+    <sound id="Invalid3">audio/game/invalid3.wav</sound>
+    <sound id="Invalid4">audio/game/invalid4.wav</sound>
+    <sound id="Invalid5">audio/game/invalid5.wav</sound>
+    <sound id="Win">audio/game/win.mp3</sound>
+    <sound id="Lose">audio/game/lose.mp3</sound>
 </sounds>

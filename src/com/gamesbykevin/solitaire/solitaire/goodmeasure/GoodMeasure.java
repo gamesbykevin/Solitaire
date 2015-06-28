@@ -58,7 +58,7 @@ public final class GoodMeasure extends Solitaire
     private static final Point DECK_START_LOCATION = new Point(-Card.ORIGINAL_CARD_WIDTH, -Card.ORIGINAL_CARD_HEIGHT);
     
     //the location of the stats window
-    private static final Point STATS_LOCATION = new Point(450, 210);
+    private static final Point STATS_LOCATION = new Point(440, 210);
     
     //points to add for each card placed
     private static final int POINTS_SCORE = 10;
@@ -479,6 +479,9 @@ public final class GoodMeasure extends Solitaire
                         }
                     }
                     
+                    //play sound effect
+                    engine.getResources().playInvalidCardAudio(engine.getRandom());
+                
                     //get the first card
                     final Card tmp = getDefaultHolder().getFirstCard();
                 
@@ -499,6 +502,9 @@ public final class GoodMeasure extends Solitaire
                 }
                 else
                 {
+                    //play sound effect
+                    engine.getResources().playPlaceCardAudio(engine.getRandom());
+                    
                     //now handle the cards
                     for (int index = 0; index < getDefaultHolder().getSize(); index++)
                     {

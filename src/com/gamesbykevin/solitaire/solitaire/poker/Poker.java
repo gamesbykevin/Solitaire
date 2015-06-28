@@ -400,7 +400,7 @@ public final class Poker extends Solitaire
                     {
                         //this will be the destination
                         getDefaultHolder().setDestination(getHolder(key), key);
-                        
+                
                         //no need to continue
                         return;
                     }
@@ -408,6 +408,9 @@ public final class Poker extends Solitaire
                 
                 //none found, set the deck as the destination
                 getDefaultHolder().setDestination(getHolder(Key.Deck), Key.Deck);
+                
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
             }
             else if (!engine.getMouse().isMouseDragged() && !engine.getMouse().isMouseReleased() && !engine.getMouse().isMousePressed())
             {
@@ -431,6 +434,9 @@ public final class Poker extends Solitaire
                         getHolder(card.getDestinationHolderKey()).add(card);
                     }
 
+                    //play sound effect
+                    engine.getResources().playPlaceCardAudio(engine.getRandom());
+                
                     //now remove all cards from default holder
                     getDefaultHolder().removeAll();
 

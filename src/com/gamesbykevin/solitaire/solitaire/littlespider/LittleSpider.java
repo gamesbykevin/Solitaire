@@ -446,8 +446,14 @@ public final class LittleSpider extends Solitaire
                         
                         //remove card from source
                         getHolder(key).remove(card);
+                        
+                        //no need to continue
+                        return;
                     }
                 }
+                
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
             }
         }
         else
@@ -547,6 +553,9 @@ public final class LittleSpider extends Solitaire
                         }
                     }
                 }
+                
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
             }
             else
             {
@@ -557,6 +566,9 @@ public final class LittleSpider extends Solitaire
                 }
                 else
                 {
+                    //play sound effect
+                    engine.getResources().playPlaceCardAudio(engine.getRandom());
+                
                     //get the card
                     final Card card = getDefaultHolder().getFirstCard();
 

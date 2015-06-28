@@ -16,7 +16,12 @@ public final class GameAudio extends AudioManager
      */
     public enum Keys
     {
-        
+        Deal, 
+        Place1, Place2, Place3, Place4,
+        Place5, Place6, Place7, Place8,
+        Place9, Place10, Place11,
+        Invalid1, Invalid2, Invalid3, Invalid4, Invalid5, 
+        Win, Lose
     }
     
     public GameAudio() throws Exception

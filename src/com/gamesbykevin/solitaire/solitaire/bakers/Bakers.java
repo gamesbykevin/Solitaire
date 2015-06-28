@@ -382,6 +382,9 @@ public final class Bakers extends Solitaire
 
                     //set the start location for all
                     getDefaultHolder().setStart();
+                    
+                    //play sound effect
+                    engine.getResources().playInvalidCardAudio(engine.getRandom());
                 }
             }
             else if (!engine.getMouse().isMouseDragged() && !engine.getMouse().isMouseReleased())
@@ -394,6 +397,9 @@ public final class Bakers extends Solitaire
                 }
                 else
                 {
+                    //play sound effect
+                    engine.getResources().playPlaceCardAudio(engine.getRandom());
+                                
                     //now handle the cards
                     for (int index = 0; index < getDefaultHolder().getSize(); index++)
                     {

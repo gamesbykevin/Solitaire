@@ -218,6 +218,9 @@ public final class Manager implements IManager
                 {
                     solitaire.getStats().setMessage1("Shuffling Deck");
                     solitaire.shuffle(engine.getRandom());
+                    
+                    //play sound effect
+                    engine.getResources().playGameAudio(GameAudio.Keys.Deal, true);
                 }
                 else if (!solitaire.isDealComplete())
                 {
@@ -225,7 +228,19 @@ public final class Manager implements IManager
                     solitaire.deal(engine.getTime());
 
                     if (solitaire.isDealComplete())
+                    {
                         solitaire.getStats().setMessage1("Game Start");
+                        engine.getResources().stopGameAudio(GameAudio.Keys.Deal);
+                    }
+                    
+                    if (solitaire.hasGameover())
+                    {
+                        //stop all current sound
+                        engine.getResources().stopAllSound();
+                        
+                        //play win or lost sound effect
+                        engine.getResources().playGameAudio(solitaire.isWinner() ? GameAudio.Keys.Win : GameAudio.Keys.Lose);
+                    }
                 }
                 else
                 {
@@ -240,6 +255,21 @@ public final class Manager implements IManager
                     {
                         solitaire.getStats().flagChange();
                         previous = System.nanoTime();
+                    }
+                    
+                    if (solitaire.hasGameover())
+                    {
+                        //stop all current sound
+                        engine.getResources().stopAllSound();
+                        
+                        //play win or lost sound effect
+                        engine.getResources().playGameAudio(solitaire.isWinner() ? GameAudio.Keys.Win : GameAudio.Keys.Lose);
+                    }
+                    else
+                    {
+                        //if we have to deal play sound effect
+                        if (!solitaire.isDealComplete())
+                            engine.getResources().playGameAudio(GameAudio.Keys.Deal, true);
                     }
                 }
             }

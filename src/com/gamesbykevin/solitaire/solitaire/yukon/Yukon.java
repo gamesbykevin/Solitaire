@@ -294,6 +294,9 @@ public final class Yukon extends Solitaire
                     }
                 }
                 
+                //play sound effect
+                engine.getResources().playInvalidCardAudio(engine.getRandom());
+                
                 //get the first card
                 final Card tmp = getDefaultHolder().getFirstCard();
                 
@@ -306,35 +309,41 @@ public final class Yukon extends Solitaire
         }
         else
         {
-            //if not at destination yet
-            if (!getDefaultHolder().hasDestination())
+            if (!getDefaultHolder().isEmpty())
             {
-                //move to the destination
-                getDefaultHolder().moveTowardsDestination(engine.getTime());
-            }
-            else
-            {
-                //now handle the cards
-                for (int index = 0; index < getDefaultHolder().getSize(); index++)
+                //if not at destination yet
+                if (!getDefaultHolder().hasDestination())
                 {
-                    final Card card = getDefaultHolder().getCard(index);
-                    
-                    //if destination add score
-                    if (isDestination(card.getDestinationHolderKey()))
-                        super.getStats().setScore(super.getStats().getScore() + POINTS_SCORE);
-                    
-                    //add to the destination holder
-                    getHolder(card.getDestinationHolderKey()).add(card);
+                    //move to the destination
+                    getDefaultHolder().moveTowardsDestination(engine.getTime());
                 }
+                else
+                {
+                    //now handle the cards
+                    for (int index = 0; index < getDefaultHolder().getSize(); index++)
+                    {
+                        final Card card = getDefaultHolder().getCard(index);
 
-                //make sure the top cards are visible
-                showPlayableCards();
-                
-                //now remove all cards from default holder
-                getDefaultHolder().removeAll();
+                        //if destination add score
+                        if (isDestination(card.getDestinationHolderKey()))
+                            super.getStats().setScore(super.getStats().getScore() + POINTS_SCORE);
 
-                //validate and check if the game has ended
-                validate();
+                        //add to the destination holder
+                        getHolder(card.getDestinationHolderKey()).add(card);
+                    }
+
+                    //make sure the top cards are visible
+                    showPlayableCards();
+
+                    //play sound effect
+                    engine.getResources().playPlaceCardAudio(engine.getRandom());
+
+                    //now remove all cards from default holder
+                    getDefaultHolder().removeAll();
+
+                    //validate and check if the game has ended
+                    validate();
+                }
             }
         }
     }

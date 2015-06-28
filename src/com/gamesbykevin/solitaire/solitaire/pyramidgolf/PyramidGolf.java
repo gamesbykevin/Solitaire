@@ -361,8 +361,13 @@ public final class PyramidGolf extends Solitaire
                                     setDestination(card, key, Key.OptionalCard);
                                     
                                     //no need to continue here
-                                    break;
+                                    return;
                                 }
+                            }
+                            else
+                            {
+                                //play sound effect
+                                engine.getResources().playInvalidCardAudio(engine.getRandom());
                             }
                         }
                     }
@@ -378,6 +383,9 @@ public final class PyramidGolf extends Solitaire
             }
             else
             {
+                //play sound effect
+                engine.getResources().playPlaceCardAudio(engine.getRandom());
+                
                 //get the card
                 final Card card = getDefaultHolder().getFirstCard();
 

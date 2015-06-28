@@ -292,6 +292,11 @@ public final class Golf extends Solitaire
                                     //start the move
                                     startMove(key, Key.GarbagePile);
                                 }
+                                else
+                                {
+                                    //play sound effect
+                                    engine.getResources().playInvalidCardAudio(engine.getRandom());
+                                }
                             }
                             
                             //no need to continue
@@ -311,6 +316,9 @@ public final class Golf extends Solitaire
             }
             else
             {
+                //play sound effect
+                engine.getResources().playPlaceCardAudio(engine.getRandom());
+                
                 //now handle the cards
                 for (int index = 0; index < getDefaultHolder().getSize(); index++)
                 {
