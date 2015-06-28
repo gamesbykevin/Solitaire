@@ -13,21 +13,21 @@
         <force>true</force>
         <pause>false</pause>
         <duration>2000</duration>
-        <image>images/menu/untitled.png</image>
+        <image>images/menu/solitaire.png</image>
     </layer>
     <layer id="Credits" next="MainTitle">
         <transition>SCROLL_VERTICAL_NORTH</transition>
         <force>true</force>
         <pause>false</pause>
         <duration>5000</duration>
-        <image>images/menu/untitled.png</image>
+        <image>images/menu/credits.png</image>
     </layer>
     <layer id="MainTitle">
         <transition>NONE</transition>
         <force>false</force>
         <pause>true</pause>
         <duration>10000</duration>
-        <image>images/menu/untitled.png</image>
+        <image>images/menu/background.jpg</image>
         <optionContainerRatio>0.65</optionContainerRatio>
         <optionBorderThickness>5</optionBorderThickness>
         <title>Solitaire</title>
@@ -44,14 +44,14 @@
         <force>false</force>
         <pause>true</pause>
         <duration></duration>
-        <image>images/menu/untitled.png</image>
+        <image>images/menu/credits.png</image>
     </layer>
     <layer id="Options">
         <transition>NONE</transition>
         <force>false</force>
         <pause>true</pause>
         <duration>10000</duration>
-        <image>images/menu/untitled.png</image>
+        <image>images/menu/background.jpg</image>
         <optionContainerRatio>0.65</optionContainerRatio>
         <optionBorderThickness>5</optionBorderThickness>
         <title>Options</title>
@@ -85,14 +85,21 @@
         <force>false</force>
         <pause>true</pause>
         <duration></duration>
-        <image>images/menu/untitled.png</image>
+        <image>images/menu/controls1.png</image>
     </layer>
-    <layer id="Instructions1" next="MainTitle">
+    <layer id="Instructions1" next="Instructions2">
         <transition>NONE</transition>
         <force>false</force>
         <pause>true</pause>
         <duration></duration>
-        <image>images/menu/untitled.png</image>
+        <image>images/menu/instructions1.png</image>
+    </layer>
+    <layer id="Instructions2" next="MainTitle">
+        <transition>NONE</transition>
+        <force>false</force>
+        <pause>true</pause>
+        <duration></duration>
+        <image>images/menu/instructions2.png</image>
     </layer>
     <layer id="GameStart">
         <!-- THIS LAYER IS INTENTIONALLY LEFT BLANK, THIS IS WHERE MAIN GAMEPLAY WILL START -->
