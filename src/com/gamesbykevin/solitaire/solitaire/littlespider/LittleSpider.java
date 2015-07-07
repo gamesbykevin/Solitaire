@@ -608,7 +608,7 @@ public final class LittleSpider extends Solitaire
     /**
      * Make sure at least the top card is playable
      */
-    private void showPlayableCards()
+    private void showPlayableCards() throws Exception
     {
         if (!getHolder(Key.Playable1).isEmpty())
             getHolder(Key.Playable1).getLastCard().setHidden(false);

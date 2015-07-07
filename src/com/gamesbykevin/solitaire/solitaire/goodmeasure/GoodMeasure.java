@@ -544,7 +544,7 @@ public final class GoodMeasure extends Solitaire
     /**
      * Make sure the top card in each playable holder is visible
      */
-    private void showPlayableCards()
+    private void showPlayableCards() throws Exception
     {
         if (!getHolder(Key.Playable1).isEmpty())
             getHolder(Key.Playable1).getLastCard().setHidden(false);

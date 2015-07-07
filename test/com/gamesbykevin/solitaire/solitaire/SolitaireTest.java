@@ -24,7 +24,7 @@ public class SolitaireTest
     //we need a game engine to test
     private Engine engine;
     
-    //use this test image
+    //use this as a test image
     public static final BufferedImage TEST_IMAGE = new BufferedImage(2000,2000, BufferedImage.TYPE_INT_ARGB);
     
     /**

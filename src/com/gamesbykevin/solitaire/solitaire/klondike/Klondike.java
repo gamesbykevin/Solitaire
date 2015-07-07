@@ -446,7 +446,7 @@ public final class Klondike extends Solitaire
     /**
      * Make sure all playable cards are visible
      */
-    private void showPlayableCards()
+    private void showPlayableCards() throws Exception
     {
         KlondikeHelper.showPlayableCard(getHolder(Key.OptionalPile));
         KlondikeHelper.showPlayableCard(getHolder(Key.Playable1));

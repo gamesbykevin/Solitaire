@@ -161,7 +161,7 @@ public abstract class Solitaire extends Entity implements ISolitaire
      * @param location The (x,y) coordinate of the holder
      * @param type The way to stack cards on the holder
      */
-    protected void addHolder(final Object key, final Point location, final StackType type)
+    protected void addHolder(final Object key, final Point location, final StackType type) throws Exception
     {
         addHolder(key, location.x, location.y, type);
     }
@@ -173,7 +173,7 @@ public abstract class Solitaire extends Entity implements ISolitaire
      * @param y The (x,y) coordinate of the holder
      * @param type The way to stack cards on the holder
      */
-    protected void addHolder(final Object key, final int x, final int y, final StackType type)
+    protected void addHolder(final Object key, final int x, final int y, final StackType type) throws Exception
     {
         //create a holder and set location
         Holder holder = new Holder(type);

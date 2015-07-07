@@ -643,7 +643,7 @@ public class Card extends Entity implements Disposable
      * This will also update the appropriate animation
      * @param hide true=yes, false=no
      */
-    public final void setHidden(final boolean hide)
+    public final void setHidden(final boolean hide) throws Exception
     {
         //flag hidden
         this.hide = hide;

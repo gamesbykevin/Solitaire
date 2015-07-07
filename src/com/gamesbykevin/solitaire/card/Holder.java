@@ -57,7 +57,7 @@ public final class Holder extends Entity implements Disposable
     //temporary point
     private Point tmp;
     
-    public Holder(final StackType stackType)
+    public Holder(final StackType stackType) throws Exception
     {
         super();
         

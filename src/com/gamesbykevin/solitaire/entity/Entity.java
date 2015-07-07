@@ -69,7 +69,7 @@ public abstract class Entity extends Sprite implements Disposable
     /**
      * Reset the current animation
      */
-    public void resetAnimation()
+    public void resetAnimation() throws Exception
     {
         super.getSpriteSheet().reset();
     }
@@ -79,7 +79,7 @@ public abstract class Entity extends Sprite implements Disposable
      * @param key The key we are looking for
      * @return True if the animation already exists in the sprite sheet, false otherwise
      */
-    public boolean hasAnimation(final Object key)
+    public boolean hasAnimation(final Object key) throws Exception
     {
         return (getSpriteSheet().getSpriteSheetAnimation(key) != null);
     }
@@ -88,7 +88,7 @@ public abstract class Entity extends Sprite implements Disposable
      * Assign the current animation.<br>
      * @param key The key of the animation
      */
-    public void setAnimation(final Object key)
+    public void setAnimation(final Object key) throws Exception
     {
         super.getSpriteSheet().setCurrent(key);
     }
@@ -101,7 +101,7 @@ public abstract class Entity extends Sprite implements Disposable
      * @param w width of animation
      * @param h height of animation
      */
-    protected void addAnimation(final Object key, final int x, final int y, final int w, final int h)
+    protected void addAnimation(final Object key, final int x, final int y, final int w, final int h) throws Exception
     {
         //add animation to spritesheet
         super.getSpriteSheet().add(new Animation(x, y, w, h, DELAY_NONE), key);
