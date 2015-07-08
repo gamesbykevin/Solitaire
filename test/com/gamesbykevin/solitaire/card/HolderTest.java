@@ -28,7 +28,7 @@ public class HolderTest
     private static final String DEFAULT_KEY = "Key";
     
     @BeforeClass
-    public static void setUpClass() 
+    public static void setUpClass() throws Exception
     {
         for (StackType type : StackType.values())
         {
@@ -37,7 +37,7 @@ public class HolderTest
     }
     
     @AfterClass
-    public static void tearDownClass() 
+    public static void tearDownClass() throws Exception
     {
         for (StackType type : StackType.values())
         {
@@ -65,7 +65,7 @@ public class HolderTest
     }
     
     @Test
-    public void hasLocationTest()
+    public void hasLocationTest() throws Exception
     {
         holder = new Holder(StackType.Same);
         holder.setDimensions(Card.ORIGINAL_CARD_WIDTH, Card.ORIGINAL_CARD_HEIGHT);

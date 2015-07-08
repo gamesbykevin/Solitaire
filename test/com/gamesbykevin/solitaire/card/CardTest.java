@@ -218,14 +218,14 @@ public class CardTest
     }
     
     @Test
-    public void setHiddenTest()
+    public void setHiddenTest() throws Exception
     {
         card.setHidden(true);
         card.setHidden(false);
     }
     
     @Test
-    public void isHiddenTest()
+    public void isHiddenTest() throws Exception
     {
         card.setHidden(true);
         assertTrue(card.isHidden());
