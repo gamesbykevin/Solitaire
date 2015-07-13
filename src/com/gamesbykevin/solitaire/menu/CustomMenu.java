@@ -172,8 +172,8 @@ public final class CustomMenu extends Menu
         if (!super.hasFinished())
         {
             //are we currently in one of these layers
-            boolean optionsInGame = super.hasCurrent(LayerKey.OptionsInGame);
-            boolean optionsMain = super.hasCurrent(LayerKey.Options);
+            boolean optionsInGame = super.isCurrentLayer(LayerKey.OptionsInGame);
+            boolean optionsMain = super.isCurrentLayer(LayerKey.Options);
             
             //flag to check if anything changed
             boolean changeSound = false;
@@ -211,7 +211,7 @@ public final class CustomMenu extends Menu
             }
             
             //if starting a new game change layer, stop all sound
-            if (super.hasCurrent(LayerKey.CreateNewGame))
+            if (super.isCurrentLayer(LayerKey.CreateNewGame))
             {
                 //go to specified layer
                 super.setLayer(LayerKey.GameStart);
@@ -244,7 +244,7 @@ public final class CustomMenu extends Menu
             super.update(engine.getMouse(), engine.getKeyboard(), engine.getTime());
             
             //if confirming exit from the game, stop sound
-            if (super.hasCurrent(LayerKey.ExitGameConfirmed))
+            if (super.isCurrentLayer(LayerKey.ExitGameConfirmed))
             {
                 //reset game upon exit
                 engine.reset();

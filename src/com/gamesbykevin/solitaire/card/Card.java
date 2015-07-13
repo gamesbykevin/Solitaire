@@ -631,11 +631,7 @@ public class Card extends Entity implements Disposable
         destinationHolderKey = null;
         sourceHolderKey = null;
         
-        if (timer != null)
-        {
-            timer.dispose();
-            timer = null;
-        }
+        timer = null;
     }
     
     /**
